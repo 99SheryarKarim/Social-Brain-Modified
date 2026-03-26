@@ -1,0 +1,36 @@
+.wrapper {
+    min-height: 100vh;
+    padding-top: 20px;
+}
+
+.heading {
+    font-weight: 600;
+    font-size: 2rem;
+    color: #333;
+}
+
+.cardGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.card {
+    width: 200px;
+    height: 220px;
+    transition: transform 0.2s, border-color 0.2s;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.card:hover {
+    transform: scale(1.03);
+    border-color: teal;
+}
+
+.connected {
+    border-color: teal;
+    background-color: #e6fffa;
+}

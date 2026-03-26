@@ -1,0 +1,64 @@
+.tile {
+    border: 2px solid transparent;
+    border-radius: 1rem;
+    padding: 1.25rem 1.5rem;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    position: relative;
+}
+
+.tile:hover {
+    box-shadow: 0 4px 16px rgba(0, 128, 128, 0.15);
+}
+
+.selected {
+    border-color: teal;
+    background-color: #f0fbfa;
+}
+
+.labelText {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #333;
+    padding-left: 2rem;
+}
+
+/* Left-corner Badge */
+.badge {
+    position: absolute;
+    top: 12px;
+    left: 0;
+    background-color: #264653;
+    color: white;
+    padding: 4px 11px 4px 6px;
+    font-weight: 600;
+    font-size: 14px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Modal */
+
+.modalContentStyle{    
+    border-radius: 1rem;
+    padding: 0.5rem;
+    background-color: #ffffff;
+    border: none!important;
+}
+
+
+.modelInput {
+    border-radius: 2rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px 15px;
+    font-size: 1rem;
+    resize: none;
+    width: 100%;
+
+}

@@ -1,0 +1,44 @@
+.billing-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.billing-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.billing-card .card-body {
+    padding: 2rem;
+}
+
+.card-price {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.card-feature {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.selected-card {
+    border: 2px solid #007bff;
+}
+
+.selected-card .btn {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.selected-card .btn:disabled {
+    background-color: #d6e7ff;
+    border-color: #d6e7ff;
+}
+
+.btn-primary {
+    border-radius: 20px;
+    padding: 10px 20px;
+}

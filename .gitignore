@@ -1,0 +1,24 @@
+# Dependencies
+**/node_modules/
+**/dist/
+**/build/
+
+# Environment variables / secrets
+**/.env
+**/.env.*
+
+# Logs
+**/*.log
+
+# Python
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/venv/
+**/.venv/
+
+# OS / Editor
+**/.DS_Store
+**/Thumbs.db
+**/.vscode/
+**/.idea/

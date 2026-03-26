@@ -1,0 +1,16 @@
+.card {
+    border: 2px solid transparent;
+    transition: transform 0.2s, border-color 0.2s;
+    border-radius: 12px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.card:hover {
+    transform: scale(1.02);
+    border-color: teal;
+}
+
+.connected {
+    border-color: teal;
+    background-color: #e6fffa;
+}

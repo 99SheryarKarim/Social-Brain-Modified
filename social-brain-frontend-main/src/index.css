@@ -1,0 +1,40 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(to bottom right, #f8f9fa, #eef3f5);
+
+  padding: 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+:root {
+  --primary: #46a29f;
+  --primary-light: #3b8c86;
+
+  --background-color: #e8f0f2;
+  --text-color: #333;
+}
+
+
+
+input[type=checkbox] {
+  accent-color: var(--primary) !important;
+}
+
+.header-sep {
+  border-top: '3px solid var(--primary)';
+  width: '80px';
+  opacity: 1;
+  width: 10%;
+}

@@ -1,0 +1,70 @@
+.cardWrapper {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  background: white;
+}
+
+.postImage {
+  object-fit: cover;
+  max-height: 400px!important;
+  min-height: 350px!important;
+}
+
+.postTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #264653;
+}
+
+.postText {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+.editBtn,
+.uploadBtn {
+  padding: 8px 18px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: all 0.3s ease;
+}
+
+.editBtn {
+  background-color: #f4a261;
+  color: white;
+}
+
+.editBtn:hover {
+  background-color: #e07a4b;
+}
+
+.uploadBtn {
+  background-color: #2a9d8f;
+  color: white;
+}
+
+.uploadBtn:hover {
+  background-color: #21867a;
+}
+
+/* Number Badge */
+.badge {
+  position: absolute;
+  top: 12px;
+  left: 96%;
+
+  background-color: #264653;
+  color: white;
+  padding: 6px 15px;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 30px;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
