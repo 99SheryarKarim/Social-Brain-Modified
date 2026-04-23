@@ -1,13 +1,32 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Sidebar from '../components/sidebar/Sidebar';
 import Navbar from '../components/navbar/Navbar';
 import PostGeniePage from '../pages/post-genie/PostGeniePage';
 import ConnectSocial from '../pages/connect-social/ConnectSocial';
-import QueuePage from '../pages/queue/QueuePage';
 import PostsPage from '../pages/posts/PostsPage';
 import QuickPost from '../pages/quick-post/QuickPost';
-import BillingPage from '../pages/billing/BillingPage';
+import AuthPage from '../pages/auth/AuthPage';
+
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Check if user has a token
+    const token = localStorage.getItem('token');
+    setIsAuthenticated(!!token);
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <AuthPage onAuthSuccess={() => setIsAuthenticated(true)} />;
+  }
+
   return (
     <BrowserRouter>
       <div className="container-fluid">
@@ -29,11 +48,7 @@ function App() {
                 <Route path="/notifications" element={<div>Notifications</div>} />
                 <Route path="/quick-post" element={<QuickPost></QuickPost>} />
                 <Route path="/connect-social" element={<ConnectSocial></ConnectSocial>} />
-                <Route path="/queue" element={<QueuePage></QueuePage>} />
-                <Route path="/queue" element={<QueuePage></QueuePage>} />
                 <Route path="/posts" element={<PostsPage></PostsPage>} />
-                <Route path="/billing" element={<BillingPage></BillingPage>} />
-
               </Routes>
             </div>
           </div>

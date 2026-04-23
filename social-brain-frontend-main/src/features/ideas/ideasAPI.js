@@ -7,7 +7,7 @@ export const fetchIdeasFromAPI = async (prompt, num_posts, tone, words) => {
 
   try {
     const res = await axios.post(
-      "http://localhost:8000/generate_ideas",
+      "http://localhost:3001/generate_ideas",
       {
         prompt: prompt,
         num_posts: num_posts,
@@ -24,10 +24,16 @@ export const fetchIdeasFromAPI = async (prompt, num_posts, tone, words) => {
 
     console.log("Response from server:", res.data.post_prompts);
 
-    // AI service returns: { post_prompts: [{ prompt, hashtags }, ...] }
-    // The UI expects `text` to be a string.
+    // AI service returns: { post_prompts: [{ prompt, hashtags }, ...], isMockData, dataSource }
     const postPrompts = res.data.post_prompts || [];
-    return postPrompts.map((p) => (p && typeof p === "object" ? p.prompt : p));
+    const isMockData = res.data.isMockData || false;
+    const dataSource = res.data.dataSource || "api";
+
+    return {
+      ideas: postPrompts.map((p) => (p && typeof p === "object" ? p.prompt : p)),
+      isMockData: isMockData,
+      dataSource: dataSource,
+    };
   } catch (error) {
     console.log("Error fetching ideas:", error);
     throw new Error("Failed to fetch ideas");

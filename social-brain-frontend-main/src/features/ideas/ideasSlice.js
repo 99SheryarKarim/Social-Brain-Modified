@@ -13,8 +13,8 @@ export const fetchIdeas = createAsyncThunk(
       tone
     );
     try {
-      const titles = await fetchIdeasFromAPI(prompt, num, tone, words); // Use the API function
-      return titles;
+      const result = await fetchIdeasFromAPI(prompt, num, tone, words);
+      return result; // Return { ideas, isMockData, dataSource }
     } catch (error) {
       console.log("Error fetching ideas:", error);
       return thunkAPI.rejectWithValue("Failed to fetch ideas.");
@@ -28,6 +28,8 @@ const ideasSlice = createSlice({
     items: [],
     loading: false,
     error: null,
+    isMockData: false,
+    dataSource: "api",
   },
   reducers: {
     updateIdea: (state, action) => {
@@ -45,8 +47,10 @@ const ideasSlice = createSlice({
       })
       .addCase(fetchIdeas.fulfilled, (state, action) => {
         state.loading = false;
-        // items are expected to be strings (idea prompts)
-        state.items = action.payload;
+        // action.payload now has { ideas, isMockData, dataSource }
+        state.items = action.payload.ideas || [];
+        state.isMockData = action.payload.isMockData || false;
+        state.dataSource = action.payload.dataSource || "api";
       })
       .addCase(fetchIdeas.rejected, (state, action) => {
         state.loading = false;

@@ -7,7 +7,7 @@ export const generateSocialPostAPI = async ({ input, selectedIdeas }) => {
   console.log("Arguments Test:", { input, selectedIdeas });
   try {
     const res = await axios.post(
-      `http://localhost:8000/generate_posts_with_media`,
+      `http://localhost:3001/generate_posts_with_media`,
       {
         input: input,
         prompts: selectedIdeas,

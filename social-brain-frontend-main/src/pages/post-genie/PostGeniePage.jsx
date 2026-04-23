@@ -1,6 +1,7 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 import styles from './PostGeniePage.module.css';
 import IdeaTile from '../../components/idea-tile/IdeaTile';
@@ -15,8 +16,48 @@ const PostGeniePage = () => {
     const textareaRef = useRef(null);
     const dispatch = useDispatch();
 
-    const { items: ideas, loading, error } = useSelector((state) => state.ideas);
+    const { items: ideas, loading, error, isMockData, dataSource } = useSelector((state) => state.ideas);
+    const lastNotificationRef = useRef(null);
 
+    // Show notification when ideas are generated
+    useEffect(() => {
+        if (ideas && ideas.length > 0) {
+            // Avoid duplicate toasts
+            if (lastNotificationRef.current !== ideas.length) {
+                lastNotificationRef.current = ideas.length;
+                
+                if (isMockData) {
+                    toast.custom((t) => (
+                        <div className={`${styles.notification} ${styles.notificationMock} ${t.visible ? styles.show : ''}`}>
+                            <div className={styles.notificationContent}>
+                                <div className={styles.notificationIcon}>⚡</div>
+                                <div className={styles.notificationText}>
+                                    <p className={styles.notificationTitle}>Demo Data</p>
+                                    <p className={styles.notificationSubtitle}>
+                                        {ideas.length} {ideas.length === 1 ? 'idea' : 'ideas'} generated using sample data
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    ), { duration: 5000 });
+                } else {
+                    toast.custom((t) => (
+                        <div className={`${styles.notification} ${styles.notificationSuccess} ${t.visible ? styles.show : ''}`}>
+                            <div className={styles.notificationContent}>
+                                <div className={styles.notificationIcon}>✨</div>
+                                <div className={styles.notificationText}>
+                                    <p className={styles.notificationTitle}>Ideas Generated!</p>
+                                    <p className={styles.notificationSubtitle}>
+                                        {ideas.length} {ideas.length === 1 ? 'idea' : 'ideas'} from AI
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    ), { duration: 5000 });
+                }
+            }
+        }
+    }, [ideas, isMockData]);
 
     const tones = ['Professional', 'Creative', 'Friendly', 'Casual', 'Witty', 'Sarcastic', 'Motivational', 'Empowering'];
     const [selectedTone, setSelectedTone] = useState('Creative');
