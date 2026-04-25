@@ -39,11 +39,11 @@ const postsSlice = createSlice({
       })
       .addCase(generateSocialPost.fulfilled, (state, action) => {
         state.loading = false;
-        state.posts = action.payload.data; // Store the generated posts
+        state.posts = action.payload?.data || [];
       })
       .addCase(generateSocialPost.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload.error; // Store error message
+        state.error = action.payload?.error || "Failed to generate posts";
       });
   },
 });

@@ -29,6 +29,13 @@ const PostGeniePage = () => {
                 if (isMockData) {
                     toast.custom((t) => (
                         <div className={`${styles.notification} ${styles.notificationMock} ${t.visible ? styles.show : ''}`}>
+                            <button 
+                                className={styles.closeBtn}
+                                onClick={() => toast.dismiss(t.id)}
+                                aria-label="Close notification"
+                            >
+                                ✕
+                            </button>
                             <div className={styles.notificationContent}>
                                 <div className={styles.notificationIcon}>⚡</div>
                                 <div className={styles.notificationText}>
@@ -43,6 +50,13 @@ const PostGeniePage = () => {
                 } else {
                     toast.custom((t) => (
                         <div className={`${styles.notification} ${styles.notificationSuccess} ${t.visible ? styles.show : ''}`}>
+                            <button 
+                                className={styles.closeBtn}
+                                onClick={() => toast.dismiss(t.id)}
+                                aria-label="Close notification"
+                            >
+                                ✕
+                            </button>
                             <div className={styles.notificationContent}>
                                 <div className={styles.notificationIcon}>✨</div>
                                 <div className={styles.notificationText}>
@@ -100,7 +114,7 @@ const PostGeniePage = () => {
             alert('Please select at least one idea.');
             return;
         }
-        dispatch(generateSocialPost({
+        const result = await dispatch(generateSocialPost({
             input: {
                 prompt,
                 num_posts: selectedIdeas.length,
@@ -110,8 +124,9 @@ const PostGeniePage = () => {
             },
             selectedIdeas: selectedIdeas
         }));
-        navigate('/posts');
-
+        if (result.type === 'socialPosts/generateSocialPost/fulfilled') {
+            navigate('/posts');
+        }
     };
 
     return (

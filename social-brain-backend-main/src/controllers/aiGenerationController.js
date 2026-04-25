@@ -1,5 +1,7 @@
 const { extractKeywordsWithTracking, generatePostPromptsWithTracking, generatePostContentWithTracking } = require("../services/geminiService");
 
+
+
 /**
  * Generate post ideas (prompts) from user input
  * POST /generate_ideas
@@ -68,9 +70,11 @@ exports.generatePostsWithMedia = async (req, res) => {
     const posts = [];
     let hasMockData = false;
 
+    const originalTopic = input?.prompt || "";
+
     for (const prompt of prompts) {
       try {
-        const result = await generatePostContentWithTracking(prompt, input?.tone || "casual", input?.num_words || 150);
+        const result = await generatePostContentWithTracking(prompt, input?.tone || "casual", input?.num_words || 150, originalTopic);
         if (result.isMock) hasMockData = true;
 
         posts.push({
@@ -78,6 +82,8 @@ exports.generatePostsWithMedia = async (req, res) => {
           content: result.content,
           hashtags: result.hashtags,
           imagePrompt: result.imagePrompt,
+          originalTopic: originalTopic,
+          tone: input?.tone || 'casual',
         });
       } catch (err) {
         console.error(`Error generating post for prompt "${prompt}":`, err);
