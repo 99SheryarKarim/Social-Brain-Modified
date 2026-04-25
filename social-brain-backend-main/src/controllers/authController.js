@@ -28,10 +28,18 @@ exports.signup = async (req, res) => {
 
     console.log("User created successfully:", createdUser);
 
+    // Generate JWT token so user is logged in immediately after signup
+    const token = jwt.sign(
+      { id: createdUser.id, email: createdUser.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
     return res.status(201).json({
-      message: "User created successfully",
+      message: "Account created successfully",
       email: createdUser.email,
       userID: createdUser.id,
+      token,
     });
   } catch (err) {
     return res

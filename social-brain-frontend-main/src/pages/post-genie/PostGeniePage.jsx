@@ -9,6 +9,7 @@ import PrimaryButton from '../../components/primary-button/PrimaryButton.jsx';
 
 import { generateSocialPost } from '../../features/posts/postsSlice';
 import { fetchIdeas, updateIdea } from '../../features/ideas/ideasSlice';
+import { saveActivity } from '../../services/activityService';
 
 const PostGeniePage = () => {
     const navigate = useNavigate();
@@ -99,6 +100,7 @@ const PostGeniePage = () => {
     const handleGenerateIdeas = () => {
         if (!prompt.trim()) return;
         dispatch(fetchIdeas({ prompt, num: numPosts, tone: selectedTone, words: numWords }));
+        saveActivity('ideas_generated', `Generated ideas for "${prompt}"`, { prompt, tone: selectedTone, numPosts });
     };
 
     console.log('Ideas from genei page:', ideas);
@@ -125,6 +127,7 @@ const PostGeniePage = () => {
             selectedIdeas: selectedIdeas
         }));
         if (result.type === 'socialPosts/generateSocialPost/fulfilled') {
+            saveActivity('posts_generated', `Generated ${selectedIdeas.length} post(s) for "${prompt}"`, { prompt, tone: selectedTone, count: selectedIdeas.length });
             navigate('/posts');
         }
     };

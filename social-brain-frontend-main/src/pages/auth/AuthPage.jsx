@@ -12,40 +12,20 @@ export default function AuthPage({ onAuthSuccess }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    if (!email || !password) return showErrorToast('Please fill in all fields');
+    if (isSignUp && password !== confirmPassword) return showErrorToast('Passwords do not match');
 
+    setLoading(true);
     try {
       const endpoint = isSignUp ? '/api/auth/signup' : '/api/auth/signin';
-      
-      // Validate
-      if (!email || !password) {
-        showErrorToast('Please fill in all fields');
-        setLoading(false);
-        return;
-      }
+      const response = await axios.post(`http://localhost:3001${endpoint}`, { email, password });
 
-      if (isSignUp && password !== confirmPassword) {
-        showErrorToast('Passwords do not match');
-        setLoading(false);
-        return;
-      }
-
-      // Make request
-      const response = await axios.post(`http://localhost:3001${endpoint}`, {
-        email,
-        password
-      });
-
-      // Save token
       if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('userID', response.data.userID);
-        showSuccessToast(`${isSignUp ? 'Account created' : 'Login successful'}!`);
-        onAuthSuccess();
+        showSuccessToast(isSignUp ? '🎉 Account created successfully!' : '👋 Welcome back!');
+        onAuthSuccess({ token: response.data.token, email: response.data.email });
       }
     } catch (error) {
-      const errorMsg = error.response?.data?.message || error.message;
-      showErrorToast(errorMsg);
+      showErrorToast(error.response?.data?.message || 'Something went wrong');
     } finally {
       setLoading(false);
     }
@@ -61,16 +41,10 @@ export default function AuthPage({ onAuthSuccess }) {
 
         <div className="auth-form-wrapper">
           <div className="auth-tabs">
-            <button 
-              className={`auth-tab ${!isSignUp ? 'active' : ''}`}
-              onClick={() => setIsSignUp(false)}
-            >
+            <button className={`auth-tab ${!isSignUp ? 'active' : ''}`} onClick={() => setIsSignUp(false)}>
               Sign In
             </button>
-            <button 
-              className={`auth-tab ${isSignUp ? 'active' : ''}`}
-              onClick={() => setIsSignUp(true)}
-            >
+            <button className={`auth-tab ${isSignUp ? 'active' : ''}`} onClick={() => setIsSignUp(true)}>
               Sign Up
             </button>
           </div>
@@ -78,56 +52,37 @@ export default function AuthPage({ onAuthSuccess }) {
           <form onSubmit={handleSubmit} className="auth-form">
             <div className="form-group">
               <label>Email</label>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                disabled={loading}
-              />
+              <input type="email" placeholder="Enter your email" value={email}
+                onChange={(e) => setEmail(e.target.value)} disabled={loading} />
             </div>
-
             <div className="form-group">
               <label>Password</label>
-              <input
-                type="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                disabled={loading}
-              />
+              <input type="password" placeholder="Enter your password" value={password}
+                onChange={(e) => setPassword(e.target.value)} disabled={loading} />
             </div>
-
             {isSignUp && (
               <div className="form-group">
                 <label>Confirm Password</label>
-                <input
-                  type="password"
-                  placeholder="Confirm your password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  disabled={loading}
-                />
+                <input type="password" placeholder="Confirm your password" value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)} disabled={loading} />
               </div>
             )}
-
-            <button 
-              type="submit" 
-              className="auth-button"
-              disabled={loading}
-            >
+            <button type="submit" className="auth-button" disabled={loading}>
               {loading ? 'Loading...' : (isSignUp ? 'Create Account' : 'Sign In')}
             </button>
           </form>
 
+          <div className="auth-divider"><span>or</span></div>
+
+          <button className="google-button" onClick={() => window.location.href = 'http://localhost:3001/api/auth/google'}>
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" width="20" />
+            Continue with Google
+          </button>
+
           <p className="auth-toggle">
-            {isSignUp ? 'Already have an account?' : "Don't have an account?"} 
-            <button 
-              type="button"
-              onClick={() => setIsSignUp(!isSignUp)}
-              className="auth-toggle-btn"
-            >
-              {isSignUp ? 'Sign In' : 'Sign Up'}
+            {isSignUp ? 'Already have an account?' : "Don't have an account?"}
+            <button type="button" onClick={() => setIsSignUp(!isSignUp)} className="auth-toggle-btn">
+              {isSignUp ? ' Sign In' : ' Sign Up'}
             </button>
           </p>
         </div>

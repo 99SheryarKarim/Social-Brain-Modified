@@ -64,6 +64,25 @@ function initializeDatabase() {
         }
       });
 
+      // Activity table
+      db.run(`
+        CREATE TABLE IF NOT EXISTS activity (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          user_id INTEGER NOT NULL,
+          type TEXT NOT NULL,
+          description TEXT NOT NULL,
+          meta TEXT,
+          created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+          FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        )
+      `, (err) => {
+        if (err) console.error('Error creating activity table:', err);
+      });
+
+      db.run(`CREATE INDEX IF NOT EXISTS idx_activity_user_id ON activity(user_id)`, (err) => {
+        if (err) console.error('Error creating activity index:', err);
+      });
+
       // Create indexes
       db.run(`CREATE INDEX IF NOT EXISTS idx_posts_user_id ON posts(user_id)`, (err) => {
         if (err) console.error('Error creating index:', err);
