@@ -22,6 +22,7 @@
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.0",
     "node-schedule": "^2.1.1",
+    "nodemailer": "^8.0.6",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "sqlite3": "^5.1.7"

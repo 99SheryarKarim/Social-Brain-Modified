@@ -83,6 +83,19 @@ function initializeDatabase() {
         if (err) console.error('Error creating activity index:', err);
       });
 
+      // OTP table
+      db.run(`
+        CREATE TABLE IF NOT EXISTS otps (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          email TEXT NOT NULL,
+          otp TEXT NOT NULL,
+          expires_at DATETIME NOT NULL,
+          created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+      `, (err) => {
+        if (err) console.error('Error creating otps table:', err);
+      });
+
       // Create indexes
       db.run(`CREATE INDEX IF NOT EXISTS idx_posts_user_id ON posts(user_id)`, (err) => {
         if (err) console.error('Error creating index:', err);

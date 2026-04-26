@@ -1,12 +1,13 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const { signup, signin, authMiddleware } = require("../controllers/authController");
+const { sendOTP, verifyOTPAndSignup, signin, authMiddleware } = require("../controllers/authController");
 const passport = require("../config/googleAuth");
 
 const router = express.Router();
 
 // Email/Password routes
-router.post("/signup", signup);
+router.post("/send-otp", sendOTP);
+router.post("/verify-otp", verifyOTPAndSignup);
 router.post("/signin", signin);
 router.get("/protected", authMiddleware, (req, res) => {
   res.status(200).json({ message: "You have access", user: req.user });
@@ -23,7 +24,6 @@ router.get("/google/callback",
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
-    // Redirect to frontend with token and email
     res.redirect(`http://localhost:5173/#/profile?token=${token}&email=${encodeURIComponent(req.user.email)}`);
   }
 );
