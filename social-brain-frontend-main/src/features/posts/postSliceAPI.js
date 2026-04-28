@@ -28,3 +28,20 @@ export const deletePostAPI = async (postId) => {
     headers: { Authorization: `Bearer ${token}` }
   });
 };
+
+export const schedulePostAPI = async (postId, scheduledAt) => {
+  const token = localStorage.getItem('token');
+  const res = await axios.patch(`http://localhost:3001/api/library/${postId}/schedule`,
+    { scheduled_at: scheduledAt },
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  return res.data;
+};
+
+export const unschedulePostAPI = async (postId) => {
+  const token = localStorage.getItem('token');
+  const res = await axios.patch(`http://localhost:3001/api/library/${postId}/unschedule`, {},
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  return res.data;
+};

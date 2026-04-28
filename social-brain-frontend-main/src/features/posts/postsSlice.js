@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { generateSocialPostAPI, fetchLibraryAPI, deletePostAPI } from "./postSliceAPI";
+import { generateSocialPostAPI, fetchLibraryAPI, deletePostAPI, schedulePostAPI, unschedulePostAPI } from "./postSliceAPI";
 
 export const generateSocialPost = createAsyncThunk(
   "socialPosts/generateSocialPost",
@@ -28,6 +28,30 @@ export const deletePost = createAsyncThunk(
   async (postId, thunkAPI) => {
     try {
       await deletePostAPI(postId);
+      return postId;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
+export const schedulePost = createAsyncThunk(
+  "socialPosts/schedulePost",
+  async ({ postId, scheduledAt }, thunkAPI) => {
+    try {
+      await schedulePostAPI(postId, scheduledAt);
+      return { postId, scheduledAt };
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
+export const unschedulePost = createAsyncThunk(
+  "socialPosts/unschedulePost",
+  async (postId, thunkAPI) => {
+    try {
+      await unschedulePostAPI(postId);
       return postId;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.message });
@@ -67,6 +91,17 @@ const postsSlice = createSlice({
       // Delete
       .addCase(deletePost.fulfilled, (state, action) => {
         state.library = state.library.filter(p => p.id !== action.payload);
+      })
+      // Schedule
+      .addCase(schedulePost.fulfilled, (state, action) => {
+        const { postId, scheduledAt } = action.payload;
+        const post = state.library.find(p => p.id === postId);
+        if (post) post.scheduled_at = scheduledAt;
+      })
+      // Unschedule
+      .addCase(unschedulePost.fulfilled, (state, action) => {
+        const post = state.library.find(p => p.id === action.payload);
+        if (post) post.scheduled_at = null;
       });
   },
 });

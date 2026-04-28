@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { fetchLibrary, deletePost } from '../../features/posts/postsSlice';
+import { fetchLibrary, deletePost, schedulePost, unschedulePost } from '../../features/posts/postsSlice';
 import { showSuccessToast, showErrorToast } from '../../utils/toast';
 import PostCard from '../../components/post-card/PostCard';
-import styles from './PostsPage.module.css';
 
 const BASE = 'http://localhost:3001/api/facebook';
 const getHeaders = () => ({ Authorization: `Bearer ${localStorage.getItem('token')}` });
@@ -14,17 +13,15 @@ const PostsPage = ({ user }) => {
   const { posts, library, loading, libraryLoading } = useSelector((state) => state.posts);
   const [activeTab, setActiveTab] = useState('generated');
   const [publishing, setPublishing] = useState(null);
+  const [schedulingId, setSchedulingId] = useState(null); // which card shows the picker
+  const [scheduledTimes, setScheduledTimes] = useState({}); // local datetime input values
 
-  // Load library from DB on mount if logged in
   useEffect(() => {
     if (user) dispatch(fetchLibrary());
   }, [user]);
 
   const handleUpload = async (post, index) => {
-    if (!localStorage.getItem('token')) {
-      showErrorToast('Please log in to publish posts');
-      return;
-    }
+    if (!localStorage.getItem('token')) return showErrorToast('Please log in to publish posts');
     setPublishing(index);
     try {
       await axios.post(`${BASE}/post`, {
@@ -33,13 +30,10 @@ const PostsPage = ({ user }) => {
         hashtags: post.hashtags || '',
       }, { headers: getHeaders() });
       showSuccessToast('🚀 Post published to Facebook!');
+      if (user) dispatch(fetchLibrary()); // refresh to show published badge
     } catch (err) {
       const msg = err.response?.data?.message || 'Failed to publish';
-      if (msg.includes('No Facebook page connected')) {
-        showErrorToast('Please connect your Facebook page first in Connect Social');
-      } else {
-        showErrorToast(msg);
-      }
+      showErrorToast(msg.includes('No Facebook page') ? 'Please connect your Facebook page first in Connect Social' : msg);
     } finally {
       setPublishing(null);
     }
@@ -50,7 +44,30 @@ const PostsPage = ({ user }) => {
     showSuccessToast('Post deleted');
   };
 
+  const handleSchedule = async (postId) => {
+    const scheduledAt = scheduledTimes[postId];
+    if (!scheduledAt) return showErrorToast('Please pick a date and time');
+    if (new Date(scheduledAt) <= new Date()) return showErrorToast('Please pick a future date and time');
+
+    const result = await dispatch(schedulePost({ postId, scheduledAt }));
+    if (result.type.endsWith('fulfilled')) {
+      showSuccessToast(`⏰ Post scheduled for ${new Date(scheduledAt).toLocaleString()}`);
+      setSchedulingId(null);
+    } else {
+      showErrorToast('Failed to schedule post');
+    }
+  };
+
+  const handleUnschedule = async (postId) => {
+    const result = await dispatch(unschedulePost(postId));
+    if (result.type.endsWith('fulfilled')) showSuccessToast('Schedule cancelled');
+  };
+
   const formatDate = (d) => new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  const formatScheduled = (d) => new Date(d).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+  // Min datetime for picker = now
+  const minDateTime = new Date(Date.now() + 60000).toISOString().slice(0, 16);
 
   return (
     <div className="container py-5">
@@ -61,16 +78,12 @@ const PostsPage = ({ user }) => {
 
       {/* Tabs */}
       <div className="d-flex gap-2 mb-4 justify-content-center">
-        <button
-          className={`btn rounded-pill px-4 ${activeTab === 'generated' ? 'btn-dark' : 'btn-outline-secondary'}`}
-          onClick={() => setActiveTab('generated')}
-        >
+        <button className={`btn rounded-pill px-4 ${activeTab === 'generated' ? 'btn-dark' : 'btn-outline-secondary'}`}
+          onClick={() => setActiveTab('generated')}>
           ✨ Just Generated {posts.length > 0 && <span className="badge bg-primary ms-1">{posts.length}</span>}
         </button>
-        <button
-          className={`btn rounded-pill px-4 ${activeTab === 'library' ? 'btn-dark' : 'btn-outline-secondary'}`}
-          onClick={() => setActiveTab('library')}
-        >
+        <button className={`btn rounded-pill px-4 ${activeTab === 'library' ? 'btn-dark' : 'btn-outline-secondary'}`}
+          onClick={() => setActiveTab('library')}>
           🗂️ Archive {library.length > 0 && <span className="badge bg-secondary ms-1">{library.length}</span>}
         </button>
       </div>
@@ -95,7 +108,7 @@ const PostsPage = ({ user }) => {
         </>
       )}
 
-      {/* Library Tab */}
+      {/* Archive Tab */}
       {activeTab === 'library' && (
         <>
           {!user && (
@@ -116,33 +129,85 @@ const PostsPage = ({ user }) => {
               {library.map((post) => (
                 <div key={post.id} className="col-md-6 col-lg-4">
                   <div className="card border-0 shadow-sm rounded-4 h-100">
-                    {/* Image */}
                     <LibraryImage post={post} />
                     <div className="card-body d-flex flex-column">
+
                       {/* Badges */}
                       <div className="d-flex gap-2 mb-2 flex-wrap">
                         {post.tone && <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary">{post.tone}</span>}
                         {post.original_topic && <span className="badge rounded-pill bg-light text-dark">{post.original_topic}</span>}
                         {post.posted_to_facebook && <span className="badge rounded-pill bg-success">✓ Published</span>}
+                        {post.scheduled_at && !post.posted_to_facebook && (
+                          <span className="badge rounded-pill bg-warning text-dark">
+                            ⏰ {formatScheduled(post.scheduled_at)}
+                          </span>
+                        )}
                       </div>
+
                       {/* Content */}
                       <p className="text-muted small flex-grow-1" style={{ overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical' }}>
                         {post.content}
                       </p>
                       {post.hashtags && <p className="text-primary small">{post.hashtags}</p>}
                       <p className="text-muted" style={{ fontSize: 11 }}>{formatDate(post.created_at)}</p>
-                      {/* Actions */}
-                      <div className="d-flex gap-2 mt-2">
-                        <button className="btn btn-sm btn-dark rounded-pill flex-grow-1"
-                          onClick={() => handleUpload(post, `lib-${post.id}`)}
-                          disabled={publishing === `lib-${post.id}`}>
-                          {publishing === `lib-${post.id}` ? <><i className="fas fa-spinner fa-spin me-1" />Publishing...</> : '🚀 Publish'}
-                        </button>
-                        <button className="btn btn-sm btn-outline-danger rounded-pill"
-                          onClick={() => handleDelete(post.id)}>
-                          <i className="fas fa-trash" />
-                        </button>
-                      </div>
+
+                      {/* Schedule picker (shown when scheduling this card) */}
+                      {schedulingId === post.id && (
+                        <div className="mb-2 p-2 bg-light rounded-3">
+                          <label className="form-label small fw-semibold mb-1">Pick date & time:</label>
+                          <input type="datetime-local" className="form-control form-control-sm mb-2"
+                            min={minDateTime}
+                            value={scheduledTimes[post.id] || ''}
+                            onChange={(e) => setScheduledTimes(prev => ({ ...prev, [post.id]: e.target.value }))} />
+                          <div className="d-flex gap-1">
+                            <button className="btn btn-sm btn-warning rounded-pill flex-grow-1"
+                              onClick={() => handleSchedule(post.id)}>
+                              Confirm Schedule
+                            </button>
+                            <button className="btn btn-sm btn-outline-secondary rounded-pill"
+                              onClick={() => setSchedulingId(null)}>
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Action buttons */}
+                      {!post.posted_to_facebook && (
+                        <div className="d-flex gap-2 mt-2 flex-wrap">
+                          <button className="btn btn-sm btn-dark rounded-pill flex-grow-1"
+                            onClick={() => handleUpload(post, `lib-${post.id}`)}
+                            disabled={publishing === `lib-${post.id}`}>
+                            {publishing === `lib-${post.id}`
+                              ? <><i className="fas fa-spinner fa-spin me-1" />Publishing...</>
+                              : '🚀 Publish Now'}
+                          </button>
+
+                          {post.scheduled_at ? (
+                            <button className="btn btn-sm btn-outline-warning rounded-pill"
+                              onClick={() => handleUnschedule(post.id)} title="Cancel schedule">
+                              <i className="fas fa-clock-rotate-left" />
+                            </button>
+                          ) : (
+                            <button className="btn btn-sm btn-outline-warning rounded-pill"
+                              onClick={() => setSchedulingId(schedulingId === post.id ? null : post.id)}
+                              title="Schedule post">
+                              <i className="fas fa-clock" />
+                            </button>
+                          )}
+
+                          <button className="btn btn-sm btn-outline-danger rounded-pill"
+                            onClick={() => handleDelete(post.id)}>
+                            <i className="fas fa-trash" />
+                          </button>
+                        </div>
+                      )}
+
+                      {post.posted_to_facebook && (
+                        <div className="mt-2">
+                          <span className="text-success small"><i className="fas fa-check-circle me-1" />Published to Facebook</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -155,14 +220,12 @@ const PostsPage = ({ user }) => {
   );
 };
 
-// Separate component to handle Pexels image fetch for library cards
 const LibraryImage = ({ post }) => {
   const [imgSrc, setImgSrc] = useState(null);
 
   useEffect(() => {
     const query = post.original_topic || post.image_prompt || 'social media';
-    const tone = post.tone || '';
-    const searchQuery = tone ? `${query} ${tone}` : query;
+    const searchQuery = post.tone ? `${query} ${post.tone}` : query;
     const apiKey = import.meta.env.VITE_PEXELS_API_KEY;
 
     fetch(`https://api.pexels.com/v1/search?query=${encodeURIComponent(searchQuery)}&per_page=1`, {
@@ -170,8 +233,9 @@ const LibraryImage = ({ post }) => {
     })
       .then(r => r.json())
       .then(data => {
-        if (data.photos?.length > 0) setImgSrc(data.photos[0].src.landscape);
-        else setImgSrc(`https://picsum.photos/seed/${encodeURIComponent(query)}/400/200`);
+        setImgSrc(data.photos?.length > 0
+          ? data.photos[0].src.landscape
+          : `https://picsum.photos/seed/${encodeURIComponent(query)}/400/200`);
       })
       .catch(() => setImgSrc('https://picsum.photos/400/200'));
   }, [post.original_topic, post.image_prompt, post.tone]);

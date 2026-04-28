@@ -56,6 +56,7 @@ function initializeDatabase() {
           original_topic TEXT,
           posted_to_facebook INTEGER DEFAULT 0,
           facebook_post_id TEXT,
+          scheduled_at DATETIME,
           created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
           updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
