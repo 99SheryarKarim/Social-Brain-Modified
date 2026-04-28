@@ -11,6 +11,7 @@ const authRoutes = require("./routes/authRoutes");
 const postRoutes = require('./routes/postRoutes');
 const activityRoutes = require('./routes/activityRoutes');
 const facebookRoutes = require('./routes/facebookRoutes');
+const settingsRoutes = require('./routes/settingsRoutes');
 const authMiddleware = require('./middlewares/auth');
 const { generateIdeas, generatePostsWithMedia } = require('./controllers/aiGenerationController');
 const app = express();
@@ -32,6 +33,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/posts', authMiddleware, postRoutes);
 app.use('/api/activity', activityRoutes);
 app.use('/api/facebook', facebookRoutes);
+app.use('/api/settings', settingsRoutes);
 
 // Post library — fetch all saved posts for logged-in user
 app.get('/api/library', authMiddleware, async (req, res) => {

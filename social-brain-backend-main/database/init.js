@@ -100,6 +100,20 @@ function initializeDatabase() {
         if (err) console.error('Error creating otps table:', err);
       });
 
+      // Settings table
+      db.run(`
+        CREATE TABLE IF NOT EXISTS settings (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          user_id INTEGER UNIQUE NOT NULL,
+          brand_description TEXT DEFAULT '',
+          target_audience TEXT DEFAULT '',
+          updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+          FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        )
+      `, (err) => {
+        if (err) console.error('Error creating settings table:', err);
+      });
+
       // Create indexes
       db.run(`CREATE INDEX IF NOT EXISTS idx_posts_user_id ON posts(user_id)`, (err) => {
         if (err) console.error('Error creating index:', err);

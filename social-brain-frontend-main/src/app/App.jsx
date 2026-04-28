@@ -9,6 +9,7 @@ import QuickPost from '../pages/quick-post/QuickPost';
 import AuthPage from '../pages/auth/AuthPage';
 import ProfilePage from '../pages/profile/ProfilePage';
 import RecentPage from '../pages/recent/RecentPage';
+import SettingsPage from '../pages/settings/SettingsPage';
 
 // Handles Google OAuth redirect — reads token from URL before deciding what to render
 function AuthHandler({ onAuthSuccess }) {
@@ -63,6 +64,7 @@ function App() {
                 <Route path="/connect-social" element={<ConnectSocial />} />
                 <Route path="/posts" element={<PostsPage user={user} />} />
                 <Route path="/recent" element={<RecentPage user={user} />} />
+                <Route path="/settings" element={<SettingsPage user={user} />} />
                 <Route path="/profile" element={
                   user
                     ? <ProfilePage user={user} onLogout={handleLogout} />

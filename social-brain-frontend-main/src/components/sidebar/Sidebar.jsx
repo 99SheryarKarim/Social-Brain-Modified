@@ -99,13 +99,13 @@ const Sidebar = () => {
         </li>
         <li className="nav-item">
           <NavLink
-            to="/setting"
+            to="/settings"
             className={({ isActive }) =>
               `nav-link text-white d-flex align-items-center px-4 ${styles.navLink} ${isActive ? styles.active : ''}`
             }
           >
             <i className={`fas fa-cog me-3 ${styles.navLinkIcon}`}></i>
-            Setting
+            Settings
           </NavLink>
         </li>
       </ul>

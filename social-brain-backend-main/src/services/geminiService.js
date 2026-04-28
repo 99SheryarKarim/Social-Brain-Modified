@@ -2,23 +2,28 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
-/**
- * Generate post ideas directly from user topic
- */
-async function generatePostPrompts(userTopic, tone, numPosts) {
+async function generatePostPrompts(userTopic, tone, numPosts, brandSettings = {}) {
   const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-  const prompt = `You are a social media content planner.
+  const brandContext = brandSettings.brand_description
+    ? `\nYou are creating content for: ${brandSettings.brand_description}`
+    : '';
+  const audienceContext = brandSettings.target_audience
+    ? `\nTarget audience: ${brandSettings.target_audience}`
+    : '';
+
+  const prompt = `You are an AI Social Media Manager.${brandContext}${audienceContext}
 
 The user wants ${numPosts} social media post ideas about: "${userTopic}"
 Tone: ${tone}
 
-Generate exactly ${numPosts} short, specific post ideas. Each idea must be directly about "${userTopic}".
+Generate exactly ${numPosts} short, specific post ideas. Each idea must be directly about "${userTopic}"${brandSettings.brand_description ? ` and relevant to ${brandSettings.brand_description}` : ''}.
 
 Rules:
-- Every idea MUST be about "${userTopic}" — do not drift to other topics
+- Every idea MUST be about "${userTopic}"
 - Be specific and practical, not abstract or poetic
 - Each idea should be 1-2 sentences max
+${brandSettings.target_audience ? `- Keep ${brandSettings.target_audience} in mind` : ''}
 
 Format exactly like this:
 IDEA 1: [idea here]
@@ -36,7 +41,6 @@ IDEA 3: [idea here]`;
     if (ideas.length >= numPosts) break;
   }
 
-  // fallback if parsing fails
   if (ideas.length === 0) {
     return text.split("\n").filter(l => l.trim().length > 10).slice(0, numPosts);
   }
@@ -44,20 +48,25 @@ IDEA 3: [idea here]`;
   return ideas;
 }
 
-/**
- * Generate actual post content from an idea, always anchored to the original topic
- */
-async function generatePostContent(idea, tone, numWords, originalTopic) {
+async function generatePostContent(idea, tone, numWords, originalTopic, brandSettings = {}) {
   const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-  const prompt = `You are a social media content creator.
+  const brandContext = brandSettings.brand_description
+    ? `\nYou are an AI Social Media Manager for: ${brandSettings.brand_description}`
+    : '\nYou are an AI Social Media Manager.';
+  const audienceContext = brandSettings.target_audience
+    ? `\nTarget audience: ${brandSettings.target_audience}`
+    : '';
+
+  const prompt = `${brandContext}${audienceContext}
 
 Write a social media post with these requirements:
 - Topic: "${originalTopic}"
 - Post idea: "${idea}"
 - Tone: ${tone}
 - Length: approximately ${numWords} words
-- The post MUST be about "${originalTopic}" — do not write about anything else
+- The post MUST be about "${originalTopic}"${brandSettings.brand_description ? ` and align with ${brandSettings.brand_description}` : ''}
+${brandSettings.target_audience ? `- Write specifically for ${brandSettings.target_audience}` : ''}
 - Be direct, practical, and engaging
 - End with a call-to-action
 
@@ -91,9 +100,9 @@ async function extractKeywordsWithTracking(userPrompt) {
   return { keywords: [userPrompt], isMock: false };
 }
 
-async function generatePostPromptsWithTracking(userTopic, _keywords, tone, numPosts) {
+async function generatePostPromptsWithTracking(userTopic, _keywords, tone, numPosts, brandSettings) {
   try {
-    const prompts = await generatePostPrompts(userTopic, tone, numPosts);
+    const prompts = await generatePostPrompts(userTopic, tone, numPosts, brandSettings);
     return { prompts, isMock: false };
   } catch (error) {
     if (error.message.includes("429") || error.message.includes("quota")) {
@@ -106,9 +115,9 @@ async function generatePostPromptsWithTracking(userTopic, _keywords, tone, numPo
   }
 }
 
-async function generatePostContentWithTracking(idea, tone, numWords = 150, originalTopic = "") {
+async function generatePostContentWithTracking(idea, tone, numWords = 150, originalTopic = "", brandSettings = {}) {
   try {
-    const result = await generatePostContent(idea, tone, numWords, originalTopic || idea);
+    const result = await generatePostContent(idea, tone, numWords, originalTopic || idea, brandSettings);
     return { ...result, isMock: false };
   } catch (error) {
     if (error.message.includes("429") || error.message.includes("quota")) {
