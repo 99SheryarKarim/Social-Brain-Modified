@@ -1,9 +1,12 @@
-// routes/facebookRoutes.js
 const express = require('express');
 const router = express.Router();
-const facebookController = require('../controllers/facebookController');
+const { saveToken, getStatus, disconnect, publishPost } = require('../controllers/facebookController');
+const authMiddleware = require('../middlewares/auth');
 const upload = require('../middlewares/multer');
 
-router.post('/upload', upload.array('files', 10), facebookController.uploadToFacebook);
+router.post('/save-token', authMiddleware, saveToken);
+router.get('/status', authMiddleware, getStatus);
+router.post('/disconnect', authMiddleware, disconnect);
+router.post('/post', authMiddleware, publishPost);
 
 module.exports = router;

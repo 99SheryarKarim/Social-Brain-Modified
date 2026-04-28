@@ -1,94 +1,169 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import { showSuccessToast, showErrorToast } from "../../utils/toast";
 import SocialCard from "../../components/social-card/SocialCard";
 import styles from './ConnectSocial.module.css';
 
+const BASE = 'http://localhost:3001/api/facebook';
+
+const getHeaders = () => ({
+  Authorization: `Bearer ${localStorage.getItem('token')}`,
+});
+
 const ConnectSocial = () => {
-    const fbReady = useRef(false);
+  const fbReady = useRef(false);
+  const [fbConnected, setFbConnected] = useState(false);
+  const [fbPageName, setFbPageName] = useState('');
+  const [loading, setLoading] = useState(false);
 
-    // Load Facebook SDK
-    useEffect(() => {
-        window.fbAsyncInit = function () {
-            window.FB.init({
-                appId: '659023470326286', // 🔁 Replace this with your actual Facebook App ID
-                cookie: true,
-                xfbml: true,
-                version: 'v19.0',
-            });
-            fbReady.current = true;
-        };
+  // Check connection status on load
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
 
-        (function (d, s, id) {
-            if (d.getElementById(id)) return;
-            const js = d.createElement(s);
-            js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            const fjs = d.getElementsByTagName(s)[0];
-            fjs.parentNode.insertBefore(js, fjs);
-        })(document, "script", "facebook-jssdk");
-    }, []);
-
-    const handleFacebookLogin = () => {
-        if (!fbReady.current || !window.FB) {
-            alert("Facebook SDK not ready yet. Please try again in a moment.");
-            return;
+    axios.get(`${BASE}/status`, { headers: getHeaders() })
+      .then(res => {
+        if (res.data.connected) {
+          setFbConnected(true);
+          setFbPageName(res.data.pageName || '');
         }
+      })
+      .catch(console.error);
+  }, []);
 
-        if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
-            alert("Facebook Login only works over HTTPS or localhost in development.");
-            return;
-        }
-
-        window.FB.login((response) => {
-            if (response.authResponse) {
-                const accessToken = response.authResponse.accessToken;
-                console.log("✅ FB Access Token:", accessToken);
-                fetchFacebookPages(accessToken);
-            } else {
-                console.log("User cancelled login.");
-            }
-        }, { scope: 'pages_show_list,pages_read_engagement' });
+  // Load Facebook SDK
+  useEffect(() => {
+    window.fbAsyncInit = function () {
+      window.FB.init({
+        appId: '659023470326286',
+        cookie: true,
+        xfbml: true,
+        version: 'v19.0',
+      });
+      fbReady.current = true;
     };
 
-    const fetchFacebookPages = (token) => {
-        window.FB.api('/me/accounts', function (response) {
-            console.log('Facebook Pages:', response,token);
-        });
-    };
+    if (!document.getElementById('facebook-jssdk')) {
+      const js = document.createElement('script');
+      js.id = 'facebook-jssdk';
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      document.body.appendChild(js);
+    }
+  }, []);
 
-    const platforms = [
-        { name: "Facebook", connected: true, logo: "https://cdn-icons-png.flaticon.com/512/733/733547.png" },
-        { name: "Instagram", connected: false, logo: "https://cdn-icons-png.flaticon.com/512/174/174855.png" },
-        { name: "Pinterest", connected: false, logo: "https://cdn-icons-png.flaticon.com/512/145/145808.png" },
-        { name: "Google", connected: false, logo: "https://cdn-icons-png.flaticon.com/512/300/300221.png" },
-        { name: "LinkedIn", connected: false, logo: "https://cdn-icons-png.flaticon.com/512/174/174857.png" },
-        { name: "Twitter", connected: false, logo: "https://cdn-icons-png.flaticon.com/512/733/733579.png" },
-        { name: "YouTube", connected: false, logo: "https://cdn-icons-png.flaticon.com/512/1384/1384060.png" },
-        { name: "Reddit", connected: false, logo: "https://cdn-icons-png.flaticon.com/512/2111/2111589.png" },
-    ];
+  const handleFacebookLogin = () => {
+    if (!localStorage.getItem('token')) {
+      showErrorToast('Please log in to Social Brain first');
+      return;
+    }
 
-    return (
-        <div className={styles.wrapper}>
-            <div className="container py-5">
-                <h2 className={`text-center mb-4 ${styles.heading}`}>Connect Your Social Media</h2>
-                <p className="text-center text-muted mb-5">Choose a platform to link for post automation</p>
-                <div className={styles.cardGrid}>
-                    {platforms.map((p) => (
-                        <SocialCard
-                            key={p.name}
-                            platform={p.name}
-                            logo={p.logo}
-                            connected={p.connected}
-                            onClick={() =>
-                                p.name === "Facebook"
-                                    ? handleFacebookLogin()
-                                    : console.log(`Connect to ${p.name}`)
-                            }
-                        />
-                    ))}
-                </div>
-            </div>
+    if (!fbReady.current || !window.FB) {
+      showErrorToast('Facebook SDK not ready. Please try again.');
+      return;
+    }
+
+    window.FB.login((response) => {
+      if (response.authResponse) {
+        const userToken = response.authResponse.accessToken;
+        fetchAndSavePageToken(userToken);
+      } else {
+        showErrorToast('Facebook login cancelled');
+      }
+    }, { scope: 'pages_show_list,pages_read_engagement,pages_manage_posts' });
+  };
+
+  const fetchAndSavePageToken = (userToken) => {
+    window.FB.api('/me/accounts', async (response) => {
+      if (!response || response.error || !response.data?.length) {
+        showErrorToast('No Facebook Pages found. Please make sure you manage a Facebook Page.');
+        return;
+      }
+
+      // Use the first page
+      const page = response.data[0];
+      const pageAccessToken = page.access_token;
+      const pageId = page.id;
+      const pageName = page.name;
+
+      setLoading(true);
+      try {
+        await axios.post(`${BASE}/save-token`,
+          { accessToken: pageAccessToken, pageId, pageName },
+          { headers: getHeaders() }
+        );
+        setFbConnected(true);
+        setFbPageName(pageName);
+        showSuccessToast(`✅ Connected to "${pageName}"`);
+      } catch (err) {
+        showErrorToast(err.response?.data?.message || 'Failed to save token');
+      } finally {
+        setLoading(false);
+      }
+    });
+  };
+
+  const handleDisconnect = async () => {
+    try {
+      await axios.post(`${BASE}/disconnect`, {}, { headers: getHeaders() });
+      setFbConnected(false);
+      setFbPageName('');
+      showSuccessToast('Facebook disconnected');
+    } catch (err) {
+      showErrorToast('Failed to disconnect');
+    }
+  };
+
+  const platforms = [
+    { name: "Facebook", logo: "https://cdn-icons-png.flaticon.com/512/733/733547.png" },
+    { name: "Instagram", logo: "https://cdn-icons-png.flaticon.com/512/174/174855.png" },
+    { name: "Pinterest", logo: "https://cdn-icons-png.flaticon.com/512/145/145808.png" },
+    { name: "LinkedIn", logo: "https://cdn-icons-png.flaticon.com/512/174/174857.png" },
+    { name: "Twitter", logo: "https://cdn-icons-png.flaticon.com/512/733/733579.png" },
+    { name: "YouTube", logo: "https://cdn-icons-png.flaticon.com/512/1384/1384060.png" },
+  ];
+
+  return (
+    <div className={styles.wrapper}>
+      <div className="container py-5">
+        <h2 className={`text-center mb-2 ${styles.heading}`}>Connect Your Social Media</h2>
+        <p className="text-center text-muted mb-5">Link your accounts for post automation</p>
+
+        {fbConnected && fbPageName && (
+          <div className="alert alert-success d-flex align-items-center justify-content-between mb-4 rounded-3">
+            <span>✅ Connected to Facebook Page: <strong>{fbPageName}</strong></span>
+            <button className="btn btn-sm btn-outline-danger rounded-pill" onClick={handleDisconnect}>
+              Disconnect
+            </button>
+          </div>
+        )}
+
+        <div className={styles.cardGrid}>
+          {platforms.map((p) => (
+            <SocialCard
+              key={p.name}
+              platform={p.name}
+              logo={p.logo}
+              connected={p.name === 'Facebook' ? fbConnected : false}
+              onClick={() => {
+                if (p.name === 'Facebook') {
+                  fbConnected ? handleDisconnect() : handleFacebookLogin();
+                } else {
+                  showErrorToast(`${p.name} integration coming soon!`);
+                }
+              }}
+            />
+          ))}
         </div>
-    );
+
+        {loading && (
+          <div className="text-center mt-4">
+            <div className="spinner-border spinner-border-sm text-primary" />
+            <span className="ms-2 text-muted">Saving connection...</span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default ConnectSocial;

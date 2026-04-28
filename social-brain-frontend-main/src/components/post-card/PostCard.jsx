@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './PostCard.module.css';
 
-const PostCard = ({ post, onEdit, onUpload, number }) => {
+const PostCard = ({ post, onEdit, onUpload, number, uploading }) => {
   const [imgSrc, setImgSrc] = useState(null);
 
   useEffect(() => {
@@ -45,7 +45,9 @@ const PostCard = ({ post, onEdit, onUpload, number }) => {
         </div>
         <div className="mt-3">
           <button className={styles.editBtn} onClick={onEdit}>Edit</button>
-          <button className={styles.uploadBtn} onClick={onUpload}>Upload</button>
+          <button className={styles.uploadBtn} onClick={onUpload} disabled={uploading}>
+            {uploading ? <><i className="fas fa-spinner fa-spin me-1" />Publishing...</> : '🚀 Publish to Facebook'}
+          </button>
         </div>
       </div>
     </div>

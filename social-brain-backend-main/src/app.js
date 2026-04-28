@@ -10,6 +10,7 @@ const connectDB = require("./db");
 const authRoutes = require("./routes/authRoutes");
 const postRoutes = require('./routes/postRoutes');
 const activityRoutes = require('./routes/activityRoutes');
+const facebookRoutes = require('./routes/facebookRoutes');
 const authMiddleware = require('./middlewares/auth');
 const { generateIdeas, generatePostsWithMedia } = require('./controllers/aiGenerationController');
 const app = express();
@@ -30,6 +31,7 @@ app.post('/generate_posts_with_media', generatePostsWithMedia);
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', authMiddleware, postRoutes);
 app.use('/api/activity', activityRoutes);
+app.use('/api/facebook', facebookRoutes);
 
 
 // Call the connectDB function to connect MongoDB
