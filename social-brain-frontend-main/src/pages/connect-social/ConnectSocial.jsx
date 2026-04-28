@@ -33,21 +33,32 @@ const ConnectSocial = () => {
 
   // Load Facebook SDK
   useEffect(() => {
-    window.fbAsyncInit = function () {
-      window.FB.init({
-        appId: '659023470326286',
-        cookie: true,
-        xfbml: true,
-        version: 'v19.0',
-      });
-      fbReady.current = true;
+    const initFB = () => {
+      if (window.FB) {
+        window.FB.init({
+          appId: '2127638911365428',
+          cookie: true,
+          xfbml: true,
+          version: 'v19.0',
+        });
+        fbReady.current = true;
+      }
     };
 
-    if (!document.getElementById('facebook-jssdk')) {
-      const js = document.createElement('script');
-      js.id = 'facebook-jssdk';
-      js.src = "https://connect.facebook.net/en_US/sdk.js";
-      document.body.appendChild(js);
+    if (window.FB) {
+      // SDK already loaded
+      initFB();
+    } else {
+      window.fbAsyncInit = initFB;
+
+      if (!document.getElementById('facebook-jssdk')) {
+        const js = document.createElement('script');
+        js.id = 'facebook-jssdk';
+        js.src = 'https://connect.facebook.net/en_US/sdk.js';
+        js.async = true;
+        js.defer = true;
+        document.body.appendChild(js);
+      }
     }
   }, []);
 
@@ -57,15 +68,31 @@ const ConnectSocial = () => {
       return;
     }
 
+    // If SDK not ready yet, wait up to 5 seconds and retry
     if (!fbReady.current || !window.FB) {
-      showErrorToast('Facebook SDK not ready. Please try again.');
+      let attempts = 0;
+      const interval = setInterval(() => {
+        attempts++;
+        if (window.FB) {
+          window.FB.init({ appId: '2127638911365428', cookie: true, xfbml: true, version: 'v19.0' });
+          fbReady.current = true;
+          clearInterval(interval);
+          triggerFBLogin();
+        } else if (attempts >= 10) {
+          clearInterval(interval);
+          showErrorToast('Facebook SDK failed to load. Please refresh the page and try again.');
+        }
+      }, 500);
       return;
     }
 
+    triggerFBLogin();
+  };
+
+  const triggerFBLogin = () => {
     window.FB.login((response) => {
       if (response.authResponse) {
-        const userToken = response.authResponse.accessToken;
-        fetchAndSavePageToken(userToken);
+        fetchAndSavePageToken(response.authResponse.accessToken);
       } else {
         showErrorToast('Facebook login cancelled');
       }
