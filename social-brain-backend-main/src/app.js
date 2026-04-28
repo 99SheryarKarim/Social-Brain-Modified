@@ -88,6 +88,35 @@ app.patch('/api/library/:id/unschedule', authMiddleware, (req, res) => {
   );
 });
 
+// Dashboard stats
+app.get('/api/dashboard', authMiddleware, (req, res) => {
+  const db = require('../database/init');
+  const userId = req.user.id;
+
+  const stats = {};
+
+  db.get(`SELECT COUNT(*) as total FROM posts WHERE user_id = ?`, [userId], (err, row) => {
+    stats.totalPosts = row?.total || 0;
+
+    db.get(`SELECT COUNT(*) as total FROM posts WHERE user_id = ? AND scheduled_at IS NOT NULL AND posted_to_facebook = 0`, [userId], (err, row) => {
+      stats.scheduled = row?.total || 0;
+
+      db.get(`SELECT COUNT(*) as total FROM posts WHERE user_id = ? AND posted_to_facebook = 1`, [userId], (err, row) => {
+        stats.published = row?.total || 0;
+
+        db.get(`SELECT COUNT(*) as total FROM activity WHERE user_id = ?`, [userId], (err, row) => {
+          stats.totalActivities = row?.total || 0;
+
+          db.all(`SELECT * FROM activity WHERE user_id = ? ORDER BY created_at DESC LIMIT 5`, [userId], (err, rows) => {
+            stats.recentActivity = rows || [];
+            res.status(200).json(stats);
+          });
+        });
+      });
+    });
+  });
+});
+
 
 // Call the connectDB function to connect MongoDB
 connectDB();

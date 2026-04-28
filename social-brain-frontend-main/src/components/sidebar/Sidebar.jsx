@@ -1,118 +1,50 @@
 import { NavLink } from 'react-router-dom';
 import styles from './Sidebar.module.css';
 
+const navItems = [
+  { to: '/',              icon: 'fas fa-gauge-high',          label: 'Dashboard'    },
+  { to: '/post-genie',    icon: 'fas fa-magic-wand-sparkles', label: 'Post Genie'   },
+  { to: '/posts',         icon: 'fas fa-layer-group',         label: 'My Posts'     },
+  { to: '/recent',        icon: 'fas fa-clock',               label: 'Recent'       },
+  { to: '/connect-social',icon: 'fas fa-link',                label: 'Connect'      },
+  { to: '/settings',      icon: 'fas fa-cog',                 label: 'Settings'     },
+];
+
 const Sidebar = () => {
   return (
     <div
-      className={`d-flex flex-column text-white vh-100 py-3 px-2 sidebarWrapper ${styles.sidebarWrapper}`}
-      style={{
-        width: '16.5%',
-        position: 'fixed',
-        left: 0,
-        top: 0,
-      }}
+      className={`d-flex flex-column text-white vh-100 py-3 px-2 ${styles.sidebarWrapper}`}
+      style={{ width: '16.5%', position: 'fixed', left: 0, top: 0 }}
     >
-      <div className={styles.overlay}></div>
+      <div className={styles.overlay} />
 
-      <h3 className={`text-center py-3 mb-5 pb-5 ${styles.sidebarTitle}`}>
-        Social Brain
-      </h3>
+      {/* Brand */}
+      <div className={`text-center py-3 mb-4 ${styles.sidebarTitle}`}>
+        <div style={{ fontSize: 28, marginBottom: 4 }}>🧠</div>
+        <div className="fw-bold" style={{ fontSize: 16, letterSpacing: 1 }}>Social Brain</div>
+      </div>
 
-      <ul className="nav flex-column mb-auto">
-        <li className="nav-item">
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              `nav-link text-white d-flex align-items-center px-4 ${styles.navLink} ${isActive ? styles.active : ''}`
-            }
-          >
-            <i className={`fas fa-magic-wand-sparkles me-3 ${styles.navLinkIcon}`}></i>
-            Post Genie
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink
-            to="/quick-post"
-            className={({ isActive }) =>
-              `nav-link text-white d-flex align-items-center px-4 ${styles.navLink} ${isActive ? styles.active : ''}`
-            }
-          >
-            <i className={`fas fa-bolt me-3 ${styles.navLinkIcon}`}></i>
-            Quick Post
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink
-            to="/queue"
-            className={({ isActive }) =>
-              `nav-link text-white d-flex align-items-center px-4 ${styles.navLink} ${isActive ? styles.active : ''}`
-            }
-          >
-            <i className={`fas fa-list-check me-3 ${styles.navLinkIcon}`}></i>
-            Queue
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink
-            to="/notifications"
-            className={({ isActive }) =>
-              `nav-link text-white d-flex align-items-center px-4 ${styles.navLink} ${isActive ? styles.active : ''}`
-            }
-          >
-            <i className={`fas fa-chart-column me-3 ${styles.navLinkIcon}`}></i>
-            Analytics
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink
-            to="/recent"
-            className={({ isActive }) =>
-              `nav-link text-white d-flex align-items-center px-4 ${styles.navLink} ${isActive ? styles.active : ''}`
-            }
-          >
-            <i className={`fas fa-clock me-3 ${styles.navLinkIcon}`}></i>
-            Recent
-          </NavLink>
-        </li>
-        
-        <li className="nav-item">
-          <NavLink
-            to="/connect-social"
-            className={({ isActive }) =>
-              `nav-link text-white d-flex align-items-center px-4 ${styles.navLink} ${isActive ? styles.active : ''}`
-            }
-          >
-            <i className={`fas fa-link me-3 ${styles.navLinkIcon}`}></i>
-            Connect
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink
-            to="/billing"
-            className={({ isActive }) =>
-              `nav-link text-white d-flex align-items-center px-4 ${styles.navLink} ${isActive ? styles.active : ''}`
-            }
-          >
-            <i className={`fas fa-credit-card me-3 ${styles.navLinkIcon}`}></i>
-            Billing
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink
-            to="/settings"
-            className={({ isActive }) =>
-              `nav-link text-white d-flex align-items-center px-4 ${styles.navLink} ${isActive ? styles.active : ''}`
-            }
-          >
-            <i className={`fas fa-cog me-3 ${styles.navLinkIcon}`}></i>
-            Settings
-          </NavLink>
-        </li>
+      {/* Nav Links */}
+      <ul className="nav flex-column mb-auto gap-1">
+        {navItems.map(({ to, icon, label }) => (
+          <li key={to} className="nav-item">
+            <NavLink
+              to={to}
+              end={to === '/'}
+              className={({ isActive }) =>
+                `nav-link text-white d-flex align-items-center px-3 py-2 ${styles.navLink} ${isActive ? styles.active : ''}`
+              }
+            >
+              <i className={`${icon} me-3 ${styles.navLinkIcon}`} />
+              {label}
+            </NavLink>
+          </li>
+        ))}
       </ul>
 
-      <hr className="w-100 text-white" />
-      <div className="text-white text-center">
-        <small className="text-white">© 2025 SocialBrain</small>
+      <hr className="w-100 text-white opacity-25" />
+      <div className="text-center">
+        <small style={{ color: 'rgba(255,255,255,0.5)', fontSize: 11 }}>© 2025 Social Brain</small>
       </div>
     </div>
   );

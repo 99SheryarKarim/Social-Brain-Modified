@@ -2,16 +2,15 @@ import { HashRouter, Routes, Route, useSearchParams, useNavigate } from 'react-r
 import { useState, useEffect } from 'react';
 import Sidebar from '../components/sidebar/Sidebar';
 import Navbar from '../components/navbar/Navbar';
+import DashboardPage from '../pages/dashboard/DashboardPage';
 import PostGeniePage from '../pages/post-genie/PostGeniePage';
 import ConnectSocial from '../pages/connect-social/ConnectSocial';
 import PostsPage from '../pages/posts/PostsPage';
-import QuickPost from '../pages/quick-post/QuickPost';
 import AuthPage from '../pages/auth/AuthPage';
 import ProfilePage from '../pages/profile/ProfilePage';
 import RecentPage from '../pages/recent/RecentPage';
 import SettingsPage from '../pages/settings/SettingsPage';
 
-// Handles Google OAuth redirect — reads token from URL before deciding what to render
 function AuthHandler({ onAuthSuccess }) {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -59,13 +58,13 @@ function App() {
             <Navbar user={user} onLogout={handleLogout} />
             <div className="flex-grow-1 overflow-auto p-4" style={{ backgroundColor: '#f8f9fa' }}>
               <Routes>
-                <Route path="/" element={<PostGeniePage />} />
-                <Route path="/quick-post" element={<QuickPost />} />
+                <Route path="/"             element={<DashboardPage user={user} />} />
+                <Route path="/post-genie"   element={<PostGeniePage />} />
+                <Route path="/posts"        element={<PostsPage user={user} />} />
                 <Route path="/connect-social" element={<ConnectSocial />} />
-                <Route path="/posts" element={<PostsPage user={user} />} />
-                <Route path="/recent" element={<RecentPage user={user} />} />
-                <Route path="/settings" element={<SettingsPage user={user} />} />
-                <Route path="/profile" element={
+                <Route path="/recent"       element={<RecentPage user={user} />} />
+                <Route path="/settings"     element={<SettingsPage user={user} />} />
+                <Route path="/profile"      element={
                   user
                     ? <ProfilePage user={user} onLogout={handleLogout} />
                     : <AuthPage onAuthSuccess={handleAuthSuccess} />

@@ -17,9 +17,11 @@ const Navbar = ({ user, onLogout }) => {
         <motion.div className="d-flex align-items-center" variants={staggerContainerVariants} initial="hidden" animate="visible">
           <motion.i className="fas fa-brain fs-4 me-2 text-primary" variants={staggerItemVariants}
             whileHover={{ rotate: 360, transition: { duration: 0.6 } }} />
-          <motion.span className="fw-bold fs-4 text-dark" variants={staggerItemVariants}>
-            Social Brain
-          </motion.span>
+          <Link to="/" className="text-decoration-none">
+            <motion.span className="fw-bold fs-4 text-dark" variants={staggerItemVariants}>
+              Social Brain
+            </motion.span>
+          </Link>
         </motion.div>
 
         {/* Right side */}
