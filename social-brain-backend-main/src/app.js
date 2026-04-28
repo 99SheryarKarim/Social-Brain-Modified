@@ -33,6 +33,28 @@ app.use('/api/posts', authMiddleware, postRoutes);
 app.use('/api/activity', activityRoutes);
 app.use('/api/facebook', facebookRoutes);
 
+// Post library — fetch all saved posts for logged-in user
+app.get('/api/library', authMiddleware, async (req, res) => {
+  try {
+    const { Post } = require('./models/databaseModels');
+    const posts = await Post.findByUserId(req.user.id);
+    res.status(200).json(posts);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Delete a post from library
+app.delete('/api/library/:id', authMiddleware, async (req, res) => {
+  try {
+    const { Post } = require('./models/databaseModels');
+    await Post.delete(req.params.id);
+    res.status(200).json({ message: 'Post deleted' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 
 // Call the connectDB function to connect MongoDB
 connectDB();

@@ -1,42 +1,54 @@
-// src/features/socialPosts/socialPostsSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { generateSocialPostAPI } from "./postSliceAPI";
+import { generateSocialPostAPI, fetchLibraryAPI, deletePostAPI } from "./postSliceAPI";
 
-// Redux Thunk for generating social posts
 export const generateSocialPost = createAsyncThunk(
-  "socialPosts/generateSocialPost", // Action type
+  "socialPosts/generateSocialPost",
   async ({ input, selectedIdeas }, thunkAPI) => {
     try {
-      const result = await generateSocialPostAPI({
-        input,
-        selectedIdeas,
-      });
-      return result;
+      return await generateSocialPostAPI({ input, selectedIdeas });
     } catch (error) {
-      return thunkAPI.rejectWithValue({
-        success: false,
-        error: error.message,
-        data: null,
-      });
+      return thunkAPI.rejectWithValue({ error: error.message });
     }
   }
 );
 
-// Social posts slice
+export const fetchLibrary = createAsyncThunk(
+  "socialPosts/fetchLibrary",
+  async (_, thunkAPI) => {
+    try {
+      return await fetchLibraryAPI();
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
+export const deletePost = createAsyncThunk(
+  "socialPosts/deletePost",
+  async (postId, thunkAPI) => {
+    try {
+      await deletePostAPI(postId);
+      return postId;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
 const postsSlice = createSlice({
   name: "socialPosts",
   initialState: {
-    posts: [],
+    posts: [],        // newly generated posts (current session)
+    library: [],      // all saved posts from DB
     loading: false,
+    libraryLoading: false,
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(generateSocialPost.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
+      // Generate
+      .addCase(generateSocialPost.pending, (state) => { state.loading = true; state.error = null; })
       .addCase(generateSocialPost.fulfilled, (state, action) => {
         state.loading = false;
         state.posts = action.payload?.data || [];
@@ -44,6 +56,17 @@ const postsSlice = createSlice({
       .addCase(generateSocialPost.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.error || "Failed to generate posts";
+      })
+      // Fetch library
+      .addCase(fetchLibrary.pending, (state) => { state.libraryLoading = true; })
+      .addCase(fetchLibrary.fulfilled, (state, action) => {
+        state.libraryLoading = false;
+        state.library = action.payload || [];
+      })
+      .addCase(fetchLibrary.rejected, (state) => { state.libraryLoading = false; })
+      // Delete
+      .addCase(deletePost.fulfilled, (state, action) => {
+        state.library = state.library.filter(p => p.id !== action.payload);
       });
   },
 });

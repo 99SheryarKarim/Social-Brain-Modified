@@ -1,113 +1,104 @@
 const { extractKeywordsWithTracking, generatePostPromptsWithTracking, generatePostContentWithTracking } = require("../services/geminiService");
+const { Post } = require("../models/databaseModels");
+const jwt = require("jsonwebtoken");
 
-
-
-/**
- * Generate post ideas (prompts) from user input
- * POST /generate_ideas
- * Body: { prompt, num_posts, tone, num_words, generate_image }
- */
-exports.generateIdeas = async (req, res) => {
+// Helper to extract user ID from token if present (optional auth)
+const getUserIdFromRequest = (req) => {
   try {
-    const { prompt, num_posts = 3, tone = "casual", num_words = 100, generate_image = false } = req.body;
-
-    if (!prompt || prompt.trim().length === 0) {
-      return res.status(400).json({
-        error: "Prompt is required",
-      });
-    }
-
-    console.log(`🚀 Generating ${num_posts} ideas with tone "${tone}" for prompt: "${prompt}"`);
-
-    // Extract keywords from the prompt
-    const { keywords, isMock: keywordsMock } = await extractKeywordsWithTracking(prompt, 10);
-    console.log("Extracted keywords:", keywords);
-
-    // Generate post prompts based on keywords and tone
-    const { prompts: postPrompts, isMock: promptsMock } = await generatePostPromptsWithTracking(prompt, keywords, tone, num_posts);
-    console.log("Generated prompts:", postPrompts);
-
-    // Format response to match frontend expectations
-    const formattedPrompts = postPrompts.map((p) => ({
-      prompt: p,
-      hashtags: "",
-    }));
-
-    // Track if ANY of the data is mock
-    const isMockData = keywordsMock || promptsMock;
-
-    res.status(200).json({
-      post_prompts: formattedPrompts,
-      isMockData: isMockData,
-      dataSource: isMockData ? "mock" : "api",
-    });
-  } catch (error) {
-    console.error("Error generating ideas:", error);
-    res.status(500).json({
-      error: error.message || "Failed to generate ideas",
-    });
+    const token = req.header("Authorization")?.split(" ")[1];
+    if (!token) return null;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    return decoded?.id || null;
+  } catch {
+    return null;
   }
 };
 
-/**
- * Generate actual posts from selected ideas/prompts
- * POST /generate_posts_with_media
- * Body: { input, prompts }
- */
+exports.generateIdeas = async (req, res) => {
+  try {
+    const { prompt, num_posts = 3, tone = "casual", num_words = 100 } = req.body;
+
+    if (!prompt || prompt.trim().length === 0) {
+      return res.status(400).json({ error: "Prompt is required" });
+    }
+
+    const { keywords } = await extractKeywordsWithTracking(prompt, 10);
+    const { prompts: postPrompts, isMock: promptsMock } = await generatePostPromptsWithTracking(prompt, keywords, tone, num_posts);
+
+    const formattedPrompts = postPrompts.map((p) => ({ prompt: p, hashtags: "" }));
+
+    res.status(200).json({
+      post_prompts: formattedPrompts,
+      isMockData: promptsMock,
+      dataSource: promptsMock ? "mock" : "api",
+    });
+  } catch (error) {
+    console.error("Error generating ideas:", error);
+    res.status(500).json({ error: error.message || "Failed to generate ideas" });
+  }
+};
+
 exports.generatePostsWithMedia = async (req, res) => {
   try {
     const { input, prompts } = req.body;
 
     if (!prompts || !Array.isArray(prompts) || prompts.length === 0) {
-      return res.status(400).json({
-        error: "Prompts array is required",
-      });
+      return res.status(400).json({ error: "Prompts array is required" });
     }
 
-    console.log(`🚀 Generating posts from ${prompts.length} prompts...`);
+    const originalTopic = input?.prompt || "";
+    const tone = input?.tone || "casual";
+    const numWords = input?.num_words || 150;
+    const userId = getUserIdFromRequest(req);
 
-    // Generate post content for each prompt
     const posts = [];
     let hasMockData = false;
 
-    const originalTopic = input?.prompt || "";
-
     for (const prompt of prompts) {
       try {
-        const result = await generatePostContentWithTracking(prompt, input?.tone || "casual", input?.num_words || 150, originalTopic);
+        const result = await generatePostContentWithTracking(prompt, tone, numWords, originalTopic);
         if (result.isMock) hasMockData = true;
 
-        posts.push({
-          prompt: prompt,
+        const post = {
+          prompt,
           content: result.content,
           hashtags: result.hashtags,
           imagePrompt: result.imagePrompt,
-          originalTopic: originalTopic,
-          tone: input?.tone || 'casual',
-        });
+          originalTopic,
+          tone,
+        };
+
+        // Save to DB if user is logged in
+        if (userId) {
+          try {
+            const saved = await Post.create(
+              userId,
+              result.content,
+              tone,
+              result.hashtags || '',
+              result.imagePrompt || '',
+              originalTopic
+            );
+            post.id = saved.id; // attach DB id to post
+          } catch (dbErr) {
+            console.error("Failed to save post to DB:", dbErr.message);
+          }
+        }
+
+        posts.push(post);
       } catch (err) {
         console.error(`Error generating post for prompt "${prompt}":`, err);
-        // Continue with next prompt even if one fails
-        posts.push({
-          prompt: prompt,
-          content: "Failed to generate content",
-          hashtags: "",
-          imagePrompt: "",
-        });
+        posts.push({ prompt, content: "Failed to generate content", hashtags: "", imagePrompt: "" });
       }
     }
 
-    console.log(`✅ Generated ${posts.length} posts`);
-
     res.status(200).json({
-      posts: posts,
+      posts,
       isMockData: hasMockData,
       dataSource: hasMockData ? "mock" : "api",
     });
   } catch (error) {
     console.error("Error generating posts with media:", error);
-    res.status(500).json({
-      error: error.message || "Failed to generate posts",
-    });
+    res.status(500).json({ error: error.message || "Failed to generate posts" });
   }
 };

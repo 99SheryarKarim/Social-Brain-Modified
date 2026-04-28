@@ -61,7 +61,7 @@ function App() {
                 <Route path="/" element={<PostGeniePage />} />
                 <Route path="/quick-post" element={<QuickPost />} />
                 <Route path="/connect-social" element={<ConnectSocial />} />
-                <Route path="/posts" element={<PostsPage />} />
+                <Route path="/posts" element={<PostsPage user={user} />} />
                 <Route path="/recent" element={<RecentPage user={user} />} />
                 <Route path="/profile" element={
                   user

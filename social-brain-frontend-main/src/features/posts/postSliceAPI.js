@@ -1,30 +1,30 @@
-// src/api/socialPostsAPI.js
 import axios from "axios";
 
-// Function to generate social posts
 export const generateSocialPostAPI = async ({ input, selectedIdeas }) => {
+  const token = localStorage.getItem('token');
+  const headers = { "Content-Type": "application/json" };
+  if (token) headers.Authorization = `Bearer ${token}`;
 
-  console.log("Arguments Test:", { input, selectedIdeas });
-  try {
-    const res = await axios.post(
-      `http://localhost:3001/generate_posts_with_media`,
-      {
-        input: input,
-        prompts: selectedIdeas,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    console.log("Response from server INSIDE slicer API :", res.data.posts);
-    return { success: true, data: res.data.posts };
-  } catch (error) {
-    console.error("Error generating social post:", error);
-    console.error("Error generating social post:", error.message);
-    throw new Error(
-      "Failed to generate social post. Please check your connection and try again."
-    );
-  }
+  const res = await axios.post(
+    `http://localhost:3001/generate_posts_with_media`,
+    { input, prompts: selectedIdeas },
+    { headers }
+  );
+  return { success: true, data: res.data.posts };
+};
+
+export const fetchLibraryAPI = async () => {
+  const token = localStorage.getItem('token');
+  if (!token) return [];
+  const res = await axios.get('http://localhost:3001/api/library', {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  return res.data;
+};
+
+export const deletePostAPI = async (postId) => {
+  const token = localStorage.getItem('token');
+  await axios.delete(`http://localhost:3001/api/library/${postId}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
 };

@@ -113,13 +113,13 @@ const Post = {
   /**
    * Create a new post
    */
-  create(userId, content, tone, postedToFacebook = false, facebookPostId = null) {
+  create(userId, content, tone, hashtags = '', imagePrompt = '', originalTopic = '', postedToFacebook = false, facebookPostId = null) {
     return new Promise((resolve, reject) => {
       const sql = `
-        INSERT INTO posts (user_id, content, tone, posted_to_facebook, facebook_post_id)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO posts (user_id, content, tone, hashtags, image_prompt, original_topic, posted_to_facebook, facebook_post_id)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
       `;
-      db.run(sql, [userId, content, tone, postedToFacebook ? 1 : 0, facebookPostId], function(err) {
+      db.run(sql, [userId, content, tone, hashtags, imagePrompt, originalTopic, postedToFacebook ? 1 : 0, facebookPostId], function(err) {
         if (err) reject(new Error(`Failed to create post: ${err.message}`));
         else Post.findById(this.lastID).then(resolve).catch(reject);
       });
@@ -132,8 +132,8 @@ const Post = {
   findById(id) {
     return new Promise((resolve, reject) => {
       const sql = `
-        SELECT id, user_id, content, tone, posted_to_facebook, facebook_post_id, 
-               created_at, updated_at
+        SELECT id, user_id, content, tone, hashtags, image_prompt, original_topic,
+               posted_to_facebook, facebook_post_id, created_at, updated_at
         FROM posts WHERE id = ?
       `;
       db.get(sql, [id], (err, row) => {
@@ -149,11 +149,11 @@ const Post = {
   /**
    * Find all posts by user ID
    */
-  findByUserId(userId, limit = 50, offset = 0) {
+  findByUserId(userId, limit = 100, offset = 0) {
     return new Promise((resolve, reject) => {
       const sql = `
-        SELECT id, user_id, content, tone, posted_to_facebook, facebook_post_id, 
-               created_at, updated_at
+        SELECT id, user_id, content, tone, hashtags, image_prompt, original_topic,
+               posted_to_facebook, facebook_post_id, created_at, updated_at
         FROM posts 
         WHERE user_id = ? 
         ORDER BY created_at DESC
@@ -162,8 +162,7 @@ const Post = {
       db.all(sql, [userId, limit, offset], (err, rows) => {
         if (err) reject(new Error(`Failed to find posts: ${err.message}`));
         else {
-          const posts = rows || [];
-          resolve(posts.map((post) => ({
+          resolve((rows || []).map((post) => ({
             ...post,
             posted_to_facebook: Boolean(post.posted_to_facebook),
           })));
