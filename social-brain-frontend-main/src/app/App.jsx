@@ -14,16 +14,11 @@ import SettingsPage from '../pages/settings/SettingsPage';
 function AuthHandler({ onAuthSuccess }) {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-
   useEffect(() => {
     const token = searchParams.get('token');
     const email = searchParams.get('email');
-    if (token && email) {
-      onAuthSuccess({ token, email });
-      navigate('/profile', { replace: true });
-    }
+    if (token && email) { onAuthSuccess({ token, email }); navigate('/profile', { replace: true }); }
   }, []);
-
   return null;
 }
 
@@ -33,6 +28,7 @@ function App() {
     const email = localStorage.getItem('userEmail');
     return token && email ? { token, email } : null;
   });
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleAuthSuccess = (userData) => {
     localStorage.setItem('token', userData.token);
@@ -49,31 +45,52 @@ function App() {
   return (
     <HashRouter>
       <AuthHandler onAuthSuccess={handleAuthSuccess} />
-      <div className="container-fluid">
-        <div className="row vh-100">
-          <div className="col-md-3 col-lg-2 bg-light p-0">
-            <Sidebar />
-          </div>
-          <div className="col-md-9 col-lg-10 d-flex flex-column p-0">
-            <Navbar user={user} onLogout={handleLogout} />
-            <div className="flex-grow-1 overflow-auto" style={{ background: 'linear-gradient(135deg, #f0f4ff 0%, #e8eeff 50%, #ede9fe 100%)', minHeight: '100%' }}>
-              <Routes>
-                <Route path="/"             element={<DashboardPage user={user} />} />
-                <Route path="/post-genie"   element={<PostGeniePage />} />
-                <Route path="/posts"        element={<PostsPage user={user} />} />
-                <Route path="/connect-social" element={<ConnectSocial />} />
-                <Route path="/recent"       element={<RecentPage user={user} />} />
-                <Route path="/settings"     element={<SettingsPage user={user} />} />
-                <Route path="/profile"      element={
-                  user
-                    ? <ProfilePage user={user} onLogout={handleLogout} />
-                    : <AuthPage onAuthSuccess={handleAuthSuccess} />
-                } />
-              </Routes>
-            </div>
+
+      {/* Mobile overlay */}
+      {sidebarOpen && (
+        <div onClick={() => setSidebarOpen(false)} style={{
+          position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)',
+          zIndex: 200, display: 'block'
+        }} className="d-lg-none" />
+      )}
+
+      <div style={{ display: 'flex', minHeight: '100vh' }}>
+        {/* Sidebar */}
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+
+        {/* Main */}
+        <div style={{
+          flex: 1, display: 'flex', flexDirection: 'column',
+          marginLeft: 0, transition: 'margin-left 0.3s'
+        }} className="main-content">
+          <Navbar user={user} onLogout={handleLogout} onMenuClick={() => setSidebarOpen(o => !o)} />
+          <div style={{ flex: 1, overflow: 'auto', background: 'linear-gradient(135deg, #f0f4ff 0%, #e8eeff 50%, #ede9fe 100%)' }}>
+            <Routes>
+              <Route path="/"              element={<DashboardPage user={user} />} />
+              <Route path="/post-genie"    element={<PostGeniePage />} />
+              <Route path="/posts"         element={<PostsPage user={user} />} />
+              <Route path="/connect-social" element={<ConnectSocial />} />
+              <Route path="/recent"        element={<RecentPage user={user} />} />
+              <Route path="/settings"      element={<SettingsPage user={user} />} />
+              <Route path="/profile"       element={
+                user
+                  ? <ProfilePage user={user} onLogout={handleLogout} />
+                  : <AuthPage onAuthSuccess={handleAuthSuccess} />
+              } />
+            </Routes>
           </div>
         </div>
       </div>
+
+      <style>{`
+        @media (min-width: 992px) {
+          .main-content { margin-left: 220px !important; }
+          .sidebar-mobile-overlay { display: none !important; }
+        }
+        @media (max-width: 991px) {
+          .main-content { margin-left: 0 !important; }
+        }
+      `}</style>
     </HashRouter>
   );
 }

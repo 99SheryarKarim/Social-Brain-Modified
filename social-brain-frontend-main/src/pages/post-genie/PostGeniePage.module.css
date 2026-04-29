@@ -196,3 +196,8 @@ button:focus {
 .closeBtn:active {
     transform: scale(0.95);
 }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .notification { min-width: unset; width: calc(100vw - 32px); }
+}

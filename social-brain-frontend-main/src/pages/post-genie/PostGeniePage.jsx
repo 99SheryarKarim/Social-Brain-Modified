@@ -164,8 +164,8 @@ const PostGeniePage = () => {
             </div>
 
             <section className="tone-selector mb-5">
-                <div className="px-2 d-flex justify-content-between">
-                    <div className="d-flex flex-row gap-2">
+                <div className="px-2 d-flex flex-column flex-md-row justify-content-between gap-3">
+                    <div className="d-flex flex-wrap gap-2">
                         {tones.map((tone) => (
                             <button
                                 key={tone}
@@ -176,8 +176,7 @@ const PostGeniePage = () => {
                             </button>
                         ))}
                     </div>
-                    <div className="d-flex justify-content-center">
-                        <div className="body d-flex gap-2">
+                    <div className="d-flex gap-2 flex-shrink-0">
                             <div className="dropdown">
                                 <button
                                     className={`btn ${styles.toneBtn} px-3 py-2 dropdown-toggle rounded-pill`}
@@ -223,7 +222,6 @@ const PostGeniePage = () => {
                                     ))}
                                 </ul>
                             </div>
-                        </div>
                     </div>
                 </div>
             </section>

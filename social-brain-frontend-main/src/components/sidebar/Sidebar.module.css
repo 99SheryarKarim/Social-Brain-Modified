@@ -1,9 +1,19 @@
 .sidebarWrapper {
-  position: relative;
-  height: 100%;
+  position: fixed;
+  height: 100vh;
+  width: 220px;
   background: #0f172a;
   overflow: hidden;
   border-right: 1px solid rgba(255, 255, 255, 0.06);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 300;
+}
+
+@media (min-width: 992px) {
+  .sidebarWrapper {
+    transform: translateX(0) !important;
+  }
 }
 
 .overlay {
