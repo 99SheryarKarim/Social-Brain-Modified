@@ -128,7 +128,17 @@ exports.publishPost = async (req, res) => {
         );
       }
 
-      res.status(200).json({ success: true, facebookPostId: fbResponse.data.id });
+      // Store full pageId_postId format for engagement fetching later
+      const rawId = fbResponse.data.id;
+      const fullPostId = rawId.includes('_') ? rawId : `${pageId}_${rawId}`;
+
+      // Update posted_to_facebook flag in DB if post has an id
+      if (req.body.postDbId) {
+        db.run(`UPDATE posts SET posted_to_facebook = 1, facebook_post_id = ? WHERE id = ?`,
+          [fullPostId, req.body.postDbId]);
+      }
+
+      res.status(200).json({ success: true, facebookPostId: fullPostId });
     } catch (fbErr) {
       const fbError = fbErr.response?.data?.error;
       res.status(500).json({
@@ -136,5 +146,66 @@ exports.publishPost = async (req, res) => {
         code: fbError?.code,
       });
     }
+  });
+};
+
+// GET /api/facebook/engagement — fetch & sync engagement for all published posts
+exports.syncEngagement = async (req, res) => {
+  const userId = req.user?.id;
+  if (!userId) return res.status(401).json({ message: 'Unauthorized' });
+
+  db.get(`SELECT facebook_token FROM users WHERE id = ?`, [userId], async (err, row) => {
+    if (err) return res.status(500).json({ message: err.message });
+    if (!row?.facebook_token) return res.status(400).json({ message: 'No Facebook page connected' });
+
+    let tokenData;
+    try { tokenData = JSON.parse(row.facebook_token); }
+    catch { return res.status(400).json({ message: 'Invalid token. Please reconnect.' }); }
+
+    const { accessToken } = tokenData;
+
+    // Get all published posts with a facebook_post_id
+    db.all(
+      `SELECT id, facebook_post_id FROM posts WHERE user_id = ? AND posted_to_facebook = 1 AND facebook_post_id IS NOT NULL`,
+      [userId],
+      async (err, posts) => {
+        if (err) return res.status(500).json({ message: err.message });
+        if (!posts?.length) return res.status(200).json({ message: 'No published posts to sync', synced: 0 });
+
+        const results = [];
+        for (const post of posts) {
+          try {
+            // Construct full ID — Facebook needs pageId_postId format
+            const fullPostId = post.facebook_post_id.includes('_')
+              ? post.facebook_post_id
+              : `${pageId}_${post.facebook_post_id}`;
+
+            const fbRes = await axios.get(
+              `https://graph.facebook.com/v19.0/${fullPostId}`,
+              {
+                params: {
+                  fields: 'likes.summary(true),comments.summary(true),reactions.summary(true)',
+                  access_token: accessToken,
+                }
+              }
+            );
+            const data = fbRes.data;
+            const likes    = data.reactions?.summary?.total_count || data.likes?.summary?.total_count || 0;
+            const comments = data.comments?.summary?.total_count || 0;
+
+            // Also update the stored ID to full format
+            db.run(
+              `UPDATE posts SET likes = ?, comments = ?, facebook_post_id = ?, engagement_updated_at = CURRENT_TIMESTAMP WHERE id = ?`,
+              [likes, comments, fullPostId, post.id]
+            );
+            results.push({ id: post.id, likes, comments });
+            console.log(`✅ Synced post ${post.id}: ${likes} likes, ${comments} comments`);
+          } catch (fbErr) {
+            console.error(`❌ Failed to sync post ${post.id}:`, fbErr.response?.data?.error?.message || fbErr.message);
+          }
+        }
+        res.status(200).json({ synced: results.length, results });
+      }
+    );
   });
 };

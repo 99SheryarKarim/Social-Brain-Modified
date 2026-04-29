@@ -13,12 +13,26 @@ const PostsPage = ({ user }) => {
   const { posts, library, loading, libraryLoading } = useSelector((state) => state.posts);
   const [activeTab, setActiveTab] = useState('generated');
   const [publishing, setPublishing] = useState(null);
-  const [schedulingId, setSchedulingId] = useState(null); // which card shows the picker
-  const [scheduledTimes, setScheduledTimes] = useState({}); // local datetime input values
+  const [schedulingId, setSchedulingId] = useState(null);
+  const [scheduledTimes, setScheduledTimes] = useState({});
+  const [syncing, setSyncing] = useState(false);
 
   useEffect(() => {
     if (user) dispatch(fetchLibrary());
   }, [user]);
+
+  const handleSyncEngagement = async () => {
+    setSyncing(true);
+    try {
+      await axios.get(`${BASE}/sync-engagement`, { headers: getHeaders() });
+      dispatch(fetchLibrary());
+      showSuccessToast('📊 Engagement stats updated!');
+    } catch (err) {
+      showErrorToast(err.response?.data?.message || 'Failed to sync engagement');
+    } finally {
+      setSyncing(false);
+    }
+  };
 
   const handleUpload = async (post, index) => {
     if (!localStorage.getItem('token')) return showErrorToast('Please log in to publish posts');
@@ -29,6 +43,7 @@ const PostsPage = ({ user }) => {
         imageUrl: post.imageUrl || null,
         hashtags: post.hashtags || '',
         originalTopic: post.original_topic || post.originalTopic || '',
+        postDbId: post.id || null,
       }, { headers: getHeaders() });
       showSuccessToast('🚀 Post published to Facebook!');
       if (user) dispatch(fetchLibrary()); // refresh to show published badge
@@ -132,7 +147,17 @@ const PostsPage = ({ user }) => {
             </div>
           )}
           {user && !libraryLoading && library.length > 0 && (
-            <div className="row g-4">
+            <>
+              {/* Sync engagement button */}
+              <div className="d-flex justify-content-end mb-3">
+                <button className="btn btn-sm btn-outline-primary rounded-pill"
+                  onClick={handleSyncEngagement} disabled={syncing}>
+                  {syncing
+                    ? <><i className="fas fa-spinner fa-spin me-1" />Syncing...</>
+                    : <><i className="fas fa-rotate me-1" />Sync Engagement</>}
+                </button>
+              </div>
+              <div className="row g-4">
               {library.map((post) => (
                 <div key={post.id} className="col-md-6 col-lg-4">
                   <div className="card border-0 shadow-sm rounded-4 h-100">
@@ -213,6 +238,22 @@ const PostsPage = ({ user }) => {
                       {post.posted_to_facebook && (
                         <div className="mt-2">
                           <span className="text-success small"><i className="fas fa-check-circle me-1" />Published to Facebook</span>
+                          {(post.likes > 0 || post.comments > 0 || post.shares > 0) && (
+                            <div className="d-flex gap-3 mt-2">
+                              <span className="small text-muted">
+                                <i className="fas fa-thumbs-up me-1 text-primary" />{post.likes ?? 0} Likes
+                              </span>
+                              <span className="small text-muted">
+                                <i className="fas fa-comment me-1 text-info" />{post.comments ?? 0} Comments
+                              </span>
+                              <span className="small text-muted">
+                                <i className="fas fa-share me-1 text-success" />{post.shares ?? 0} Shares
+                              </span>
+                            </div>
+                          )}
+                          {!post.likes && !post.comments && !post.shares && (
+                            <p className="small text-muted mt-1 mb-0">Click "Sync Engagement" to fetch stats</p>
+                          )}
                         </div>
                       )}
                     </div>
@@ -220,6 +261,7 @@ const PostsPage = ({ user }) => {
                 </div>
               ))}
             </div>
+            </>
           )}
         </>
       )}

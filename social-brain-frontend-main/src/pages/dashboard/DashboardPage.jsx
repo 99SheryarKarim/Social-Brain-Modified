@@ -14,7 +14,10 @@ const metrics = (stats) => [
   { icon: 'fas fa-pen-nib',     label: 'Total Posts',   value: stats?.totalPosts ?? 0,      accent: '#6366f1', bg: '#eef2ff', sublabel: 'All generated posts'    },
   { icon: 'fas fa-clock',       label: 'Scheduled',     value: stats?.scheduled ?? 0,        accent: '#f59e0b', bg: '#fffbeb', sublabel: 'Pending auto-publish'   },
   { icon: 'fas fa-paper-plane', label: 'Published',     value: stats?.published ?? 0,        accent: '#10b981', bg: '#ecfdf5', sublabel: 'Posted to Facebook'     },
-  { icon: 'fas fa-chart-line',  label: 'Activities',    value: stats?.totalActivities ?? 0,  accent: '#0ea5e9', bg: '#f0f9ff', sublabel: 'Total actions logged'   },
+  { icon: 'fas fa-thumbs-up',   label: 'Total Likes',   value: stats?.totalLikes ?? 0,       accent: '#3b82f6', bg: '#eff6ff', sublabel: 'Across all posts'       },
+  { icon: 'fas fa-comment',     label: 'Comments',      value: stats?.totalComments ?? 0,    accent: '#8b5cf6', bg: '#f5f3ff', sublabel: 'Across all posts'       },
+  { icon: 'fas fa-share',       label: 'Shares',        value: stats?.totalShares ?? 0,      accent: '#0ea5e9', bg: '#f0f9ff', sublabel: 'Across all posts'       },
+  { icon: 'fas fa-chart-line',  label: 'Activities',    value: stats?.totalActivities ?? 0,  accent: '#f43f5e', bg: '#fff1f2', sublabel: 'Total actions logged'   },
 ];
 
 const quickActions = [

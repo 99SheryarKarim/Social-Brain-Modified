@@ -37,12 +37,7 @@ function initializeDatabase() {
           created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
           updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
-      `, (err) => {
-        if (err) {
-          console.error('Error creating users table:', err);
-          reject(err);
-        }
-      });
+      `, (err) => { if (err) { console.error('Error creating users table:', err); reject(err); } });
 
       // Posts table
       db.run(`
@@ -61,11 +56,26 @@ function initializeDatabase() {
           updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
         )
-      `, (err) => {
-        if (err) {
-          console.error('Error creating posts table:', err);
-          reject(err);
-        }
+      `, (err) => { if (err) { console.error('Error creating posts table:', err); reject(err); } });
+
+      // Migrate existing posts table — add missing columns if they don't exist
+      const migrations = [
+        `ALTER TABLE posts ADD COLUMN hashtags TEXT`,
+        `ALTER TABLE posts ADD COLUMN image_prompt TEXT`,
+        `ALTER TABLE posts ADD COLUMN original_topic TEXT`,
+        `ALTER TABLE posts ADD COLUMN scheduled_at DATETIME`,
+        `ALTER TABLE posts ADD COLUMN likes INTEGER DEFAULT 0`,
+        `ALTER TABLE posts ADD COLUMN comments INTEGER DEFAULT 0`,
+        `ALTER TABLE posts ADD COLUMN shares INTEGER DEFAULT 0`,
+        `ALTER TABLE posts ADD COLUMN reach INTEGER DEFAULT 0`,
+        `ALTER TABLE posts ADD COLUMN engagement_updated_at DATETIME`,
+      ];
+      migrations.forEach(sql => {
+        db.run(sql, (err) => {
+          if (err && !err.message.includes('duplicate column')) {
+            console.warn('Migration warning:', err.message);
+          }
+        });
       });
 
       // Activity table
