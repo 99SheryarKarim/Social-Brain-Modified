@@ -101,24 +101,30 @@ exports.publishPost = async (req, res) => {
     try {
       let fbResponse;
 
-      if (imageUrl) {
-        // Post with image URL
+      // Try to fetch a Pexels image using the post content as query
+      let resolvedImageUrl = imageUrl || null;
+      if (!resolvedImageUrl) {
+        try {
+          const topic = req.body.originalTopic || content.split(' ').slice(0, 4).join(' ');
+          const pexelsRes = await axios.get(
+            `https://api.pexels.com/v1/search?query=${encodeURIComponent(topic)}&per_page=1`,
+            { headers: { Authorization: process.env.PEXELS_API_KEY } }
+          );
+          resolvedImageUrl = pexelsRes.data?.photos?.[0]?.src?.landscape || null;
+        } catch {
+          resolvedImageUrl = null;
+        }
+      }
+
+      if (resolvedImageUrl) {
         fbResponse = await axios.post(
           `https://graph.facebook.com/v19.0/${pageId}/photos`,
-          {
-            url: imageUrl,
-            caption: fullMessage,
-            access_token: accessToken,
-          }
+          { url: resolvedImageUrl, caption: fullMessage, access_token: accessToken }
         );
       } else {
-        // Text only post
         fbResponse = await axios.post(
           `https://graph.facebook.com/v19.0/${pageId}/feed`,
-          {
-            message: fullMessage,
-            access_token: accessToken,
-          }
+          { message: fullMessage, access_token: accessToken }
         );
       }
 

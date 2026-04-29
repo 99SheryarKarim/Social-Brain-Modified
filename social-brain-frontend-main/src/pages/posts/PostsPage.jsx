@@ -28,6 +28,7 @@ const PostsPage = ({ user }) => {
         content: post.content,
         imageUrl: post.imageUrl || null,
         hashtags: post.hashtags || '',
+        originalTopic: post.original_topic || post.originalTopic || '',
       }, { headers: getHeaders() });
       showSuccessToast('🚀 Post published to Facebook!');
       if (user) dispatch(fetchLibrary()); // refresh to show published badge

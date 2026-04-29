@@ -75,7 +75,7 @@ ${brandSettings.target_audience ? `- Write specifically for ${brandSettings.targ
 ---CONTENT_END---
 
 ---HASHTAGS_START---
-[3-5 hashtags relevant to ${originalTopic}]
+[ONLY 3-5 hashtags, each starting with #, space-separated on ONE line. Example: #Gaming #Tips #PlayStation #Esports. NO other text, NO sentences, ONLY hashtags]
 ---HASHTAGS_END---
 
 ---IMAGE_PROMPT_START---
@@ -89,9 +89,17 @@ ${brandSettings.target_audience ? `- Write specifically for ${brandSettings.targ
   const hashtagMatch = text.match(/---HASHTAGS_START---\s*([\s\S]*?)\s*---HASHTAGS_END---/i);
   const imageMatch = text.match(/---IMAGE_PROMPT_START---\s*([\s\S]*?)\s*---IMAGE_PROMPT_END---/i);
 
+  // Extract only valid hashtags (words starting with #)
+  const rawHashtags = hashtagMatch ? hashtagMatch[1].trim() : '';
+  const cleanHashtags = rawHashtags
+    .split(/[\s,\n]+/)
+    .filter(w => w.startsWith('#') && w.length > 1)
+    .slice(0, 5)
+    .join(' ');
+
   return {
     content: contentMatch ? contentMatch[1].trim() : text.trim(),
-    hashtags: hashtagMatch ? hashtagMatch[1].trim() : `#${originalTopic.replace(/\s+/g, "")}`,
+    hashtags: cleanHashtags || `#${originalTopic.replace(/\s+/g, '')}`,
     imagePrompt: imageMatch ? imageMatch[1].trim() : originalTopic,
   };
 }
