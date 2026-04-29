@@ -209,3 +209,42 @@ exports.syncEngagement = async (req, res) => {
     );
   });
 };
+
+// GET /api/facebook/post-details/:fbPostId — fetch likers and comments for a post
+exports.getPostDetails = async (req, res) => {
+  const userId = req.user?.id;
+  if (!userId) return res.status(401).json({ message: 'Unauthorized' });
+
+  db.get(`SELECT facebook_token FROM users WHERE id = ?`, [userId], async (err, row) => {
+    if (err) return res.status(500).json({ message: err.message });
+    if (!row?.facebook_token) return res.status(400).json({ message: 'No Facebook page connected' });
+
+    let tokenData;
+    try { tokenData = JSON.parse(row.facebook_token); }
+    catch { return res.status(400).json({ message: 'Invalid token' }); }
+
+    const { accessToken, pageId } = tokenData;
+    const rawId = req.params.fbPostId;
+    const fullPostId = rawId.includes('_') ? rawId : `${pageId}_${rawId}`;
+
+    try {
+      const fbRes = await axios.get(
+        `https://graph.facebook.com/v19.0/${fullPostId}`,
+        {
+          params: {
+            fields: 'reactions.summary(true){name,pic_square},comments{message,from,created_time}',
+            access_token: accessToken,
+          }
+        }
+      );
+
+      const data = fbRes.data;
+      res.status(200).json({
+        reactions: data.reactions?.data || [],
+        comments:  data.comments?.data  || [],
+      });
+    } catch (fbErr) {
+      res.status(500).json({ message: fbErr.response?.data?.error?.message || fbErr.message });
+    }
+  });
+};

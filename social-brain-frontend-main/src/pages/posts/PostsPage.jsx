@@ -8,6 +8,106 @@ import PostCard from '../../components/post-card/PostCard';
 const BASE = 'http://localhost:3001/api/facebook';
 const getHeaders = () => ({ Authorization: `Bearer ${localStorage.getItem('token')}` });
 
+// Modal to show likers and comments
+const EngagementModal = ({ post, onClose }) => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [tab, setTab] = useState('reactions');
+
+  useEffect(() => {
+    axios.get(`${BASE}/post-details/${post.facebook_post_id}`, { headers: getHeaders() })
+      .then(res => setData(res.data))
+      .catch(err => setData({ error: err.response?.data?.message || 'Failed to load' }))
+      .finally(() => setLoading(false));
+  }, []);
+
+  return (
+    <div style={{
+      position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)',
+      zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16
+    }} onClick={onClose}>
+      <div style={{
+        background: '#fff', borderRadius: 16, width: '100%', maxWidth: 480,
+        maxHeight: '80vh', display: 'flex', flexDirection: 'column',
+        boxShadow: '0 20px 60px rgba(0,0,0,0.3)'
+      }} onClick={e => e.stopPropagation()}>
+
+        {/* Header */}
+        <div style={{ padding: '20px 24px 0', borderBottom: '1px solid #f1f5f9' }}>
+          <div className="d-flex justify-content-between align-items-center mb-3">
+            <h6 style={{ margin: 0, fontWeight: 700, color: '#0f172a' }}>Post Engagement</h6>
+            <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: 18, cursor: 'pointer', color: '#94a3b8' }}>✕</button>
+          </div>
+          <div className="d-flex gap-3">
+            <button onClick={() => setTab('reactions')} style={{
+              background: 'none', border: 'none', padding: '8px 0', cursor: 'pointer',
+              fontWeight: 600, fontSize: 13, color: tab === 'reactions' ? '#6366f1' : '#94a3b8',
+              borderBottom: tab === 'reactions' ? '2px solid #6366f1' : '2px solid transparent'
+            }}>
+              👍 Reactions {data && !data.error ? `(${data.reactions?.length || 0})` : ''}
+            </button>
+            <button onClick={() => setTab('comments')} style={{
+              background: 'none', border: 'none', padding: '8px 0', cursor: 'pointer',
+              fontWeight: 600, fontSize: 13, color: tab === 'comments' ? '#6366f1' : '#94a3b8',
+              borderBottom: tab === 'comments' ? '2px solid #6366f1' : '2px solid transparent'
+            }}>
+              💬 Comments {data && !data.error ? `(${data.comments?.length || 0})` : ''}
+            </button>
+          </div>
+        </div>
+
+        {/* Body */}
+        <div style={{ overflowY: 'auto', padding: '16px 24px', flexGrow: 1 }}>
+          {loading && <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: 13 }}>Loading...</p>}
+          {data?.error && <p style={{ textAlign: 'center', color: '#ef4444', fontSize: 13 }}>{data.error}</p>}
+
+          {/* Reactions */}
+          {!loading && !data?.error && tab === 'reactions' && (
+            data.reactions.length === 0
+              ? <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: 13, marginTop: 24 }}>No reactions yet</p>
+              : data.reactions.map((r, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: '1px solid #f8fafc' }}>
+                  <img src={r.pic_square || `https://ui-avatars.com/api/?name=${encodeURIComponent(r.name)}&size=36&background=6366f1&color=fff`}
+                    style={{ width: 36, height: 36, borderRadius: '50%', objectFit: 'cover' }}
+                    onError={e => { e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(r.name)}&size=36&background=6366f1&color=fff`; }}
+                    alt={r.name} />
+                  <span style={{ fontSize: 14, fontWeight: 500, color: '#1e293b' }}>{r.name}</span>
+                  <span style={{ marginLeft: 'auto', fontSize: 18 }}>👍</span>
+                </div>
+              ))
+          )}
+
+          {/* Comments */}
+          {!loading && !data?.error && tab === 'comments' && (
+            data.comments.length === 0
+              ? <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: 13, marginTop: 24 }}>No comments yet</p>
+              : data.comments.map((c, i) => (
+                <div key={i} style={{ padding: '12px 0', borderBottom: '1px solid #f8fafc' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+                    <div style={{
+                      width: 32, height: 32, borderRadius: '50%', background: 'linear-gradient(135deg,#6366f1,#8b5cf6)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      color: '#fff', fontWeight: 700, fontSize: 13, flexShrink: 0
+                    }}>
+                      {c.from?.name?.[0]?.toUpperCase() || '?'}
+                    </div>
+                    <div>
+                      <p style={{ margin: 0, fontWeight: 600, fontSize: 13, color: '#1e293b' }}>{c.from?.name || 'Unknown'}</p>
+                      <p style={{ margin: 0, fontSize: 11, color: '#94a3b8' }}>
+                        {new Date(c.created_time).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                      </p>
+                    </div>
+                  </div>
+                  <p style={{ margin: 0, fontSize: 13, color: '#374151', paddingLeft: 42 }}>{c.message}</p>
+                </div>
+              ))
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const PostsPage = ({ user }) => {
   const dispatch = useDispatch();
   const { posts, library, loading, libraryLoading } = useSelector((state) => state.posts);
@@ -16,6 +116,7 @@ const PostsPage = ({ user }) => {
   const [schedulingId, setSchedulingId] = useState(null);
   const [scheduledTimes, setScheduledTimes] = useState({});
   const [syncing, setSyncing] = useState(false);
+  const [engagementPost, setEngagementPost] = useState(null);
 
   useEffect(() => {
     if (user) dispatch(fetchLibrary());
@@ -93,6 +194,7 @@ const PostsPage = ({ user }) => {
 
   return (
     <div className="container py-5">
+      {engagementPost && <EngagementModal post={engagementPost} onClose={() => setEngagementPost(null)} />}
       <div className="mb-4 text-center">
         <h2 className="fw-bold">📚 My Posts</h2>
         <p className="text-muted">Your generated content library</p>
@@ -238,20 +340,19 @@ const PostsPage = ({ user }) => {
                       {post.posted_to_facebook && (
                         <div className="mt-2">
                           <span className="text-success small"><i className="fas fa-check-circle me-1" />Published to Facebook</span>
-                          {(post.likes > 0 || post.comments > 0 || post.shares > 0) && (
+                          {(post.likes > 0 || post.comments > 0) && (
                             <div className="d-flex gap-3 mt-2">
-                              <span className="small text-muted">
+                              <button onClick={() => setEngagementPost(post)} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+                                className="small text-muted">
                                 <i className="fas fa-thumbs-up me-1 text-primary" />{post.likes ?? 0} Likes
-                              </span>
-                              <span className="small text-muted">
+                              </button>
+                              <button onClick={() => { setEngagementPost(post); }} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+                                className="small text-muted">
                                 <i className="fas fa-comment me-1 text-info" />{post.comments ?? 0} Comments
-                              </span>
-                              <span className="small text-muted">
-                                <i className="fas fa-share me-1 text-success" />{post.shares ?? 0} Shares
-                              </span>
+                              </button>
                             </div>
                           )}
-                          {!post.likes && !post.comments && !post.shares && (
+                          {!post.likes && !post.comments && (
                             <p className="small text-muted mt-1 mb-0">Click "Sync Engagement" to fetch stats</p>
                           )}
                         </div>
