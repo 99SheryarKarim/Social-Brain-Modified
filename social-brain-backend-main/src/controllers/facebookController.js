@@ -162,7 +162,7 @@ exports.syncEngagement = async (req, res) => {
     try { tokenData = JSON.parse(row.facebook_token); }
     catch { return res.status(400).json({ message: 'Invalid token. Please reconnect.' }); }
 
-    const { accessToken } = tokenData;
+    const { accessToken, pageId } = tokenData;
 
     // Get all published posts with a facebook_post_id
     db.all(
