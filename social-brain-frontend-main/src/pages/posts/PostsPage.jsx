@@ -116,7 +116,6 @@ const PostsPage = ({ user }) => {
   const [schedulingId, setSchedulingId] = useState(null);
   const [scheduledTimes, setScheduledTimes] = useState({});
   const [syncing, setSyncing] = useState(false);
-  const [engagementPost, setEngagementPost] = useState(null);
 
   useEffect(() => {
     if (user) dispatch(fetchLibrary());
@@ -194,7 +193,6 @@ const PostsPage = ({ user }) => {
 
   return (
     <div className="container py-5">
-      {engagementPost && <EngagementModal post={engagementPost} onClose={() => setEngagementPost(null)} />}
       <div className="mb-4 text-center">
         <h2 className="fw-bold">📚 My Posts</h2>
         <p className="text-muted">Your generated content library</p>
@@ -339,25 +337,9 @@ const PostsPage = ({ user }) => {
 
                       {post.posted_to_facebook && (
                         <div className="mt-2">
-                          <span className="text-success small d-block mb-2">
+                          <span className="text-success small">
                             <i className="fas fa-check-circle me-1" />Published to Facebook
                           </span>
-                          <div className="d-flex gap-3">
-                            <button
-                              onClick={() => setEngagementPost(post)}
-                              style={{ background: '#eef2ff', border: 'none', borderRadius: 8, padding: '5px 12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5 }}
-                            >
-                              <i className="fas fa-thumbs-up" style={{ color: '#6366f1', fontSize: 12 }} />
-                              <span style={{ fontSize: 12, fontWeight: 600, color: '#6366f1' }}>{post.likes ?? 0} Likes</span>
-                            </button>
-                            <button
-                              onClick={() => setEngagementPost(post)}
-                              style={{ background: '#f0f9ff', border: 'none', borderRadius: 8, padding: '5px 12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5 }}
-                            >
-                              <i className="fas fa-comment" style={{ color: '#0ea5e9', fontSize: 12 }} />
-                              <span style={{ fontSize: 12, fontWeight: 600, color: '#0ea5e9' }}>{post.comments ?? 0} Comments</span>
-                            </button>
-                          </div>
                         </div>
                       )}
                     </div>
