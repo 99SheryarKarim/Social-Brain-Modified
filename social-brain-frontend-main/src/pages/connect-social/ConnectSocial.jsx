@@ -96,7 +96,7 @@ const ConnectSocial = () => {
       } else {
         showErrorToast('Facebook login cancelled');
       }
-    }, { scope: 'pages_show_list,pages_read_engagement,pages_manage_posts' });
+    }, { scope: 'pages_show_list,pages_read_engagement,pages_manage_posts,pages_read_user_content,read_insights' });
   };
 
   const fetchAndSavePageToken = (userToken) => {
