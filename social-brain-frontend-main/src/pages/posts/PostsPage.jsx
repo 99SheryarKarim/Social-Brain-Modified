@@ -33,7 +33,13 @@ const PostsPage = ({ user }) => {
       if (user) dispatch(fetchLibrary()); // refresh to show published badge
     } catch (err) {
       const msg = err.response?.data?.message || 'Failed to publish';
-      showErrorToast(msg.includes('No Facebook page') ? 'Please connect your Facebook page first in Connect Social' : msg);
+      if (msg.includes('No Facebook page')) {
+        showErrorToast('Please connect your Facebook page first in Connect Social');
+      } else if (msg.toLowerCase().includes('session') || msg.toLowerCase().includes('expired') || msg.toLowerCase().includes('token')) {
+        showErrorToast('Facebook session expired. Go to Connect page and reconnect your Facebook page.');
+      } else {
+        showErrorToast(msg);
+      }
     } finally {
       setPublishing(null);
     }

@@ -9,9 +9,28 @@ exports.saveToken = async (req, res) => {
   if (!userId) return res.status(401).json({ message: "Unauthorized" });
   if (!accessToken || !pageId) return res.status(400).json({ message: "accessToken and pageId are required" });
 
-  // Exchange user token for long-lived page token
   try {
-    const tokenData = JSON.stringify({ accessToken, pageId, pageName });
+    // Exchange short-lived user token for long-lived page token (valid ~60 days)
+    let longLivedToken = accessToken;
+    try {
+      const exchangeRes = await axios.get(
+        `https://graph.facebook.com/v19.0/oauth/access_token`,
+        {
+          params: {
+            grant_type: 'fb_exchange_token',
+            client_id: process.env.FACEBOOK_APP_ID,
+            client_secret: process.env.FACEBOOK_APP_SECRET,
+            fb_exchange_token: accessToken,
+          }
+        }
+      );
+      longLivedToken = exchangeRes.data.access_token;
+      console.log('✅ Exchanged for long-lived token');
+    } catch (exchangeErr) {
+      console.warn('⚠️ Could not exchange token, using original:', exchangeErr.response?.data?.error?.message);
+    }
+
+    const tokenData = JSON.stringify({ accessToken: longLivedToken, pageId, pageName });
     db.run(
       `UPDATE users SET facebook_token = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?`,
       [tokenData, userId],

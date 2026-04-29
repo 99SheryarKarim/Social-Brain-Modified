@@ -56,7 +56,7 @@ function App() {
           </div>
           <div className="col-md-9 col-lg-10 d-flex flex-column p-0">
             <Navbar user={user} onLogout={handleLogout} />
-            <div className="flex-grow-1 overflow-auto p-4" style={{ backgroundColor: '#f8f9fa' }}>
+            <div className="flex-grow-1 overflow-auto" style={{ background: 'linear-gradient(135deg, #f0f4ff 0%, #e8eeff 50%, #ede9fe 100%)', minHeight: '100%' }}>
               <Routes>
                 <Route path="/"             element={<DashboardPage user={user} />} />
                 <Route path="/post-genie"   element={<PostGeniePage />} />

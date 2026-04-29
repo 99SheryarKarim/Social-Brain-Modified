@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 const Navbar = ({ user, onLogout }) => {
   return (
     <nav style={{
-      background: '#fff',
-      borderBottom: '1px solid #f1f5f9',
+      background: 'rgba(255,255,255,0.85)',
+      backdropFilter: 'blur(12px)',
+      WebkitBackdropFilter: 'blur(12px)',
+      borderBottom: '1px solid rgba(99,102,241,0.1)',
       padding: '0 24px',
       height: 56,
       display: 'flex',

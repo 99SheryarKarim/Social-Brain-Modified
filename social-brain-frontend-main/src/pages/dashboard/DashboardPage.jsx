@@ -48,7 +48,7 @@ export default function DashboardPage({ user }) {
   }, [user]);
 
   return (
-    <div style={{ background: '#f8fafc', minHeight: '100vh', padding: '32px 28px', fontFamily: "'Inter', system-ui, sans-serif" }}>
+    <div style={{ background: 'linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 50%, #ede9fe 100%)', minHeight: '100vh', padding: '32px 28px', fontFamily: "'Inter', system-ui, sans-serif" }}>
 
       {/* ── Header ── */}
       <div className="d-flex align-items-start justify-content-between mb-4 flex-wrap gap-3">
@@ -139,9 +139,10 @@ export default function DashboardPage({ user }) {
             {metrics(stats).map((m) => (
               <div key={m.label} className="col-6 col-xl-3">
                 <div style={{
-                  background: '#fff', borderRadius: 16, padding: '24px',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)',
-                  border: '1px solid #f1f5f9', height: '100%',
+                  background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
+                  borderRadius: 16, padding: '24px',
+                  boxShadow: '0 1px 3px rgba(99,102,241,0.08), 0 1px 2px rgba(0,0,0,0.04)',
+                  border: '1px solid rgba(255,255,255,0.9)', height: '100%',
                   transition: 'box-shadow 0.2s, transform 0.2s'
                 }}
                   onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.08)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
@@ -172,8 +173,9 @@ export default function DashboardPage({ user }) {
             {/* Quick Actions */}
             <div className="col-lg-5">
               <div style={{
-                background: '#fff', borderRadius: 16, padding: '24px',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.06)', border: '1px solid #f1f5f9', height: '100%'
+                background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
+                borderRadius: 16, padding: '24px',
+                boxShadow: '0 1px 3px rgba(99,102,241,0.08)', border: '1px solid rgba(255,255,255,0.9)', height: '100%'
               }}>
                 <p style={{ fontSize: 11, fontWeight: 700, color: '#94a3b8', margin: '0 0 16px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                   Quick Actions
@@ -183,8 +185,8 @@ export default function DashboardPage({ user }) {
                     <div key={a.to} className="col-6">
                       <Link to={a.to} className="text-decoration-none">
                         <div style={{
-                          background: '#f8fafc', borderRadius: 12, padding: '16px',
-                          border: '1px solid #f1f5f9', transition: 'all 0.2s', cursor: 'pointer'
+                          background: 'rgba(255,255,255,0.6)', borderRadius: 12, padding: '16px',
+                          border: '1px solid rgba(255,255,255,0.8)', transition: 'all 0.2s', cursor: 'pointer'
                         }}
                           onMouseEnter={e => { e.currentTarget.style.background = a.bg; e.currentTarget.style.borderColor = a.accent + '30'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
                           onMouseLeave={e => { e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.borderColor = '#f1f5f9'; e.currentTarget.style.transform = 'translateY(0)'; }}
@@ -208,8 +210,9 @@ export default function DashboardPage({ user }) {
             {/* Activity Feed */}
             <div className="col-lg-7">
               <div style={{
-                background: '#fff', borderRadius: 16, padding: '24px',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.06)', border: '1px solid #f1f5f9', height: '100%'
+                background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
+                borderRadius: 16, padding: '24px',
+                boxShadow: '0 1px 3px rgba(99,102,241,0.08)', border: '1px solid rgba(255,255,255,0.9)', height: '100%'
               }}>
                 <div className="d-flex align-items-center justify-content-between mb-3">
                   <p style={{ fontSize: 11, fontWeight: 700, color: '#94a3b8', margin: 0, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
