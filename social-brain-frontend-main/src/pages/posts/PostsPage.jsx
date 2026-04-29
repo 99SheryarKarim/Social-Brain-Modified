@@ -339,22 +339,25 @@ const PostsPage = ({ user }) => {
 
                       {post.posted_to_facebook && (
                         <div className="mt-2">
-                          <span className="text-success small"><i className="fas fa-check-circle me-1" />Published to Facebook</span>
-                          {(post.likes > 0 || post.comments > 0) && (
-                            <div className="d-flex gap-3 mt-2">
-                              <button onClick={() => setEngagementPost(post)} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
-                                className="small text-muted">
-                                <i className="fas fa-thumbs-up me-1 text-primary" />{post.likes ?? 0} Likes
-                              </button>
-                              <button onClick={() => { setEngagementPost(post); }} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
-                                className="small text-muted">
-                                <i className="fas fa-comment me-1 text-info" />{post.comments ?? 0} Comments
-                              </button>
-                            </div>
-                          )}
-                          {!post.likes && !post.comments && (
-                            <p className="small text-muted mt-1 mb-0">Click "Sync Engagement" to fetch stats</p>
-                          )}
+                          <span className="text-success small d-block mb-2">
+                            <i className="fas fa-check-circle me-1" />Published to Facebook
+                          </span>
+                          <div className="d-flex gap-3">
+                            <button
+                              onClick={() => setEngagementPost(post)}
+                              style={{ background: '#eef2ff', border: 'none', borderRadius: 8, padding: '5px 12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5 }}
+                            >
+                              <i className="fas fa-thumbs-up" style={{ color: '#6366f1', fontSize: 12 }} />
+                              <span style={{ fontSize: 12, fontWeight: 600, color: '#6366f1' }}>{post.likes ?? 0} Likes</span>
+                            </button>
+                            <button
+                              onClick={() => setEngagementPost(post)}
+                              style={{ background: '#f0f9ff', border: 'none', borderRadius: 8, padding: '5px 12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5 }}
+                            >
+                              <i className="fas fa-comment" style={{ color: '#0ea5e9', fontSize: 12 }} />
+                              <span style={{ fontSize: 12, fontWeight: 600, color: '#0ea5e9' }}>{post.comments ?? 0} Comments</span>
+                            </button>
+                          </div>
                         </div>
                       )}
                     </div>
