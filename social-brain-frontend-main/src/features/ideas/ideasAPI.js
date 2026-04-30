@@ -35,6 +35,9 @@ export const fetchIdeasFromAPI = async (prompt, num_posts, tone, words) => {
       dataSource: dataSource,
     };
   } catch (error) {
+    if (error.response?.data?.upgrade) {
+      throw new Error('LIMIT_REACHED:' + error.response.data.message);
+    }
     console.log("Error fetching ideas:", error);
     throw new Error("Failed to fetch ideas");
   }

@@ -8,6 +8,7 @@ const navItems = [
   { to: '/recent',         icon: 'fas fa-clock-rotate-left',    label: 'Recent'      },
   { to: '/connect-social', icon: 'fas fa-plug',                 label: 'Connect'     },
   { to: '/settings',       icon: 'fas fa-sliders',              label: 'Settings'    },
+  { to: '/upgrade',        icon: 'fas fa-crown',                label: 'Upgrade',    highlight: true },
 ];
 
 const Sidebar = ({ open, onClose }) => {
@@ -49,16 +50,17 @@ const Sidebar = ({ open, onClose }) => {
           Menu
         </p>
         <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-          {navItems.map(({ to, icon, label }) => (
+          {navItems.map(({ to, icon, label, highlight }) => (
             <li key={to}>
               <NavLink
                 to={to}
                 end={to === '/'}
                 onClick={onClose}
-                className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}
+                className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''} ${highlight ? styles.highlight : ''}`}
               >
-                <i className={`${icon} ${styles.navLinkIcon}`} />
+                <i className={`${icon} ${styles.navLinkIcon}`} style={highlight ? { color: '#fbbf24' } : {}} />
                 {label}
+                {highlight && <span style={{ marginLeft: 'auto', fontSize: 9, background: '#fbbf24', color: '#000', borderRadius: 10, padding: '2px 6px', fontWeight: 700 }}>PRO</span>}
               </NavLink>
             </li>
           ))}

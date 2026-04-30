@@ -10,6 +10,7 @@ import AuthPage from '../pages/auth/AuthPage';
 import ProfilePage from '../pages/profile/ProfilePage';
 import RecentPage from '../pages/recent/RecentPage';
 import SettingsPage from '../pages/settings/SettingsPage';
+import UpgradePage from '../pages/upgrade/UpgradePage';
 
 function AuthHandler({ onAuthSuccess }) {
   const [searchParams] = useSearchParams();
@@ -29,6 +30,14 @@ function App() {
     return token && email ? { token, email } : null;
   });
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [userPlan, setUserPlan] = useState('free');
+
+  useEffect(() => {
+    if (!user) return;
+    fetch('http://localhost:3001/api/subscription/plan', {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    }).then(r => r.json()).then(d => setUserPlan(d.plan || 'free')).catch(() => {});
+  }, [user]);
 
   const handleAuthSuccess = (userData) => {
     localStorage.setItem('token', userData.token);
@@ -66,12 +75,17 @@ function App() {
           <Navbar user={user} onLogout={handleLogout} onMenuClick={() => setSidebarOpen(o => !o)} />
           <div style={{ flex: 1, overflow: 'auto', background: 'linear-gradient(135deg, #f0f4ff 0%, #e8eeff 50%, #ede9fe 100%)' }}>
             <Routes>
-              <Route path="/"              element={<DashboardPage user={user} />} />
+              <Route path="/"              element={
+                user && userPlan === 'free'
+                  ? <UpgradePage user={user} />
+                  : <DashboardPage user={user} />
+              } />
               <Route path="/post-genie"    element={<PostGeniePage />} />
               <Route path="/posts"         element={<PostsPage user={user} />} />
               <Route path="/connect-social" element={<ConnectSocial />} />
               <Route path="/recent"        element={<RecentPage user={user} />} />
               <Route path="/settings"      element={<SettingsPage user={user} />} />
+              <Route path="/upgrade"       element={<UpgradePage user={user} />} />
               <Route path="/profile"       element={
                 user
                   ? <ProfilePage user={user} onLogout={handleLogout} />

@@ -69,6 +69,9 @@ function initializeDatabase() {
         `ALTER TABLE posts ADD COLUMN shares INTEGER DEFAULT 0`,
         `ALTER TABLE posts ADD COLUMN reach INTEGER DEFAULT 0`,
         `ALTER TABLE posts ADD COLUMN engagement_updated_at DATETIME`,
+        `ALTER TABLE users ADD COLUMN plan TEXT DEFAULT 'free'`,
+        `ALTER TABLE users ADD COLUMN daily_usage INTEGER DEFAULT 0`,
+        `ALTER TABLE users ADD COLUMN usage_reset_at DATETIME DEFAULT CURRENT_TIMESTAMP`,
       ];
       migrations.forEach(sql => {
         db.run(sql, (err) => {

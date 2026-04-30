@@ -12,6 +12,8 @@ const postRoutes = require('./routes/postRoutes');
 const activityRoutes = require('./routes/activityRoutes');
 const facebookRoutes = require('./routes/facebookRoutes');
 const settingsRoutes = require('./routes/settingsRoutes');
+const subscriptionRoutes = require('./routes/subscriptionRoutes');
+const { checkUsageLimit } = require('./controllers/subscriptionController');
 const authMiddleware = require('./middlewares/auth');
 const { generateIdeas, generatePostsWithMedia } = require('./controllers/aiGenerationController');
 const app = express();
@@ -24,9 +26,9 @@ app.use(cors({
 app.use(express.json());
 app.use(passport.initialize());
 
-// AI Generation Routes (no authentication required)
-app.post('/generate_ideas', generateIdeas);
-app.post('/generate_posts_with_media', generatePostsWithMedia);
+// AI Generation Routes — with usage limit check
+app.post('/generate_ideas', checkUsageLimit, generateIdeas);
+app.post('/generate_posts_with_media', checkUsageLimit, generatePostsWithMedia);
 
 //  routes
 app.use('/api/auth', authRoutes);
@@ -34,6 +36,7 @@ app.use('/api/posts', authMiddleware, postRoutes);
 app.use('/api/activity', activityRoutes);
 app.use('/api/facebook', facebookRoutes);
 app.use('/api/settings', settingsRoutes);
+app.use('/api/subscription', subscriptionRoutes);
 
 // Post library — fetch all saved posts for logged-in user
 app.get('/api/library', authMiddleware, async (req, res) => {

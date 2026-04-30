@@ -99,8 +99,14 @@ const PostGeniePage = () => {
     // Get AI ideas
     const handleGenerateIdeas = () => {
         if (!prompt.trim()) return;
-        dispatch(fetchIdeas({ prompt, num: numPosts, tone: selectedTone, words: numWords }));
-        saveActivity('ideas_generated', `Generated ideas for "${prompt}"`, { prompt, tone: selectedTone, numPosts });
+        dispatch(fetchIdeas({ prompt, num: numPosts, tone: selectedTone, words: numWords }))
+          .then((result) => {
+            if (result.error?.message?.startsWith('LIMIT_REACHED:')) {
+              navigate('/upgrade');
+            } else {
+              saveActivity('ideas_generated', `Generated ideas for "${prompt}"`, { prompt, tone: selectedTone, numPosts });
+            }
+          });
     };
 
     console.log('Ideas from genei page:', ideas);
