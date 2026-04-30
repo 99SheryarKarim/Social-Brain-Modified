@@ -1,38 +1,39 @@
 import { Link } from 'react-router-dom';
 
-const Navbar = ({ user, onLogout, onMenuClick }) => {
+const Navbar = ({ user, onLogout, onMenuClick, isPremium }) => {
+  const username = user?.email?.split('@')[0] || '';
+
   return (
     <nav style={{
-      background: 'rgba(255,255,255,0.85)',
-      backdropFilter: 'blur(12px)',
-      WebkitBackdropFilter: 'blur(12px)',
-      borderBottom: '1px solid rgba(99,102,241,0.1)',
-      padding: '0 16px',
-      height: 56,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      flexShrink: 0,
-      position: 'sticky',
-      top: 0,
-      zIndex: 100
+      background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(12px)',
+      WebkitBackdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(99,102,241,0.1)',
+      padding: '0 16px', height: 56, display: 'flex', alignItems: 'center',
+      justifyContent: 'space-between', flexShrink: 0, position: 'sticky', top: 0, zIndex: 100
     }}>
       {/* Left */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        {/* Hamburger — mobile only */}
         <button onClick={onMenuClick} className="d-lg-none" style={{
           background: 'none', border: 'none', cursor: 'pointer',
-          padding: 4, color: '#64748b', fontSize: 18,
-          display: 'flex', alignItems: 'center'
+          padding: 4, color: '#64748b', fontSize: 18, display: 'flex', alignItems: 'center'
         }}>
           <i className="fas fa-bars" />
         </button>
-
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <i className="fas fa-brain" style={{ color: '#6366f1', fontSize: 16 }} />
           <span style={{ fontWeight: 700, fontSize: 15, color: '#0f172a', letterSpacing: '-0.3px' }}>
             Social Brain
           </span>
+          {/* Premium badge — visible throughout app */}
+          {isPremium && (
+            <span style={{
+              display: 'inline-flex', alignItems: 'center', gap: 4,
+              background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+              color: '#fff', borderRadius: 20, padding: '2px 10px',
+              fontSize: 10, fontWeight: 700, letterSpacing: '0.05em'
+            }}>
+              <i className="fas fa-crown" style={{ fontSize: 9 }} /> PREMIUM
+            </span>
+          )}
         </div>
       </div>
 
@@ -40,19 +41,25 @@ const Navbar = ({ user, onLogout, onMenuClick }) => {
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
         {user ? (
           <>
-            <span style={{ fontSize: 12, color: '#94a3b8' }} className="d-none d-md-inline">
-              {user.email}
+            {/* Username only — no email */}
+            <span style={{ fontSize: 13, color: '#64748b', fontWeight: 500 }} className="d-none d-md-inline">
+              {username}
             </span>
 
-            <Link to="/profile" style={{ textDecoration: 'none' }}>
+            <Link to="/profile" style={{ textDecoration: 'none', position: 'relative' }}>
               <div style={{
                 width: 34, height: 34, borderRadius: '50%',
-                background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                background: isPremium
+                  ? 'linear-gradient(135deg, #f59e0b, #d97706)'
+                  : 'linear-gradient(135deg, #6366f1, #8b5cf6)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 color: '#fff', fontWeight: 700, fontSize: 13,
-                boxShadow: '0 2px 8px rgba(99,102,241,0.3)', cursor: 'pointer'
+                boxShadow: isPremium ? '0 2px 8px rgba(245,158,11,0.4)' : '0 2px 8px rgba(99,102,241,0.3)',
+                cursor: 'pointer'
               }}>
-                {user.email[0].toUpperCase()}
+                {isPremium
+                  ? <i className="fas fa-crown" style={{ fontSize: 13 }} />
+                  : username[0]?.toUpperCase()}
               </div>
             </Link>
 
@@ -75,9 +82,7 @@ const Navbar = ({ user, onLogout, onMenuClick }) => {
             color: '#fff', borderRadius: 8, padding: '7px 14px',
             fontSize: 13, fontWeight: 600, textDecoration: 'none',
             boxShadow: '0 2px 8px rgba(99,102,241,0.3)'
-          }}>
-            Sign In
-          </Link>
+          }}>Sign In</Link>
         )}
       </div>
     </nav>

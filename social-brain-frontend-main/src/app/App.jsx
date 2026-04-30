@@ -30,14 +30,21 @@ function App() {
     return token && email ? { token, email } : null;
   });
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [userPlan, setUserPlan] = useState('free');
+  const [userPlan, setUserPlan] = useState(() => localStorage.getItem('userPlan') || 'free');
 
-  useEffect(() => {
-    if (!user) return;
+  const fetchPlan = () => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
     fetch('http://localhost:3001/api/subscription/plan', {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-    }).then(r => r.json()).then(d => setUserPlan(d.plan || 'free')).catch(() => {});
-  }, [user]);
+      headers: { Authorization: `Bearer ${token}` }
+    }).then(r => r.json()).then(d => {
+      const plan = d.plan || 'free';
+      setUserPlan(plan);
+      localStorage.setItem('userPlan', plan);
+    }).catch(() => {});
+  };
+
+  useEffect(() => { if (user) fetchPlan(); }, [user]);
 
   const handleAuthSuccess = (userData) => {
     localStorage.setItem('token', userData.token);
@@ -48,47 +55,40 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userEmail');
+    localStorage.removeItem('userPlan');
     setUser(null);
+    setUserPlan('free');
   };
+
+  const isPremium = userPlan === 'premium';
 
   return (
     <HashRouter>
       <AuthHandler onAuthSuccess={handleAuthSuccess} />
 
-      {/* Mobile overlay */}
       {sidebarOpen && (
         <div onClick={() => setSidebarOpen(false)} style={{
-          position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)',
-          zIndex: 200, display: 'block'
+          position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 200
         }} className="d-lg-none" />
       )}
 
       <div style={{ display: 'flex', minHeight: '100vh' }}>
-        {/* Sidebar */}
-        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} isPremium={isPremium} />
 
-        {/* Main */}
-        <div style={{
-          flex: 1, display: 'flex', flexDirection: 'column',
-          marginLeft: 0, transition: 'margin-left 0.3s'
-        }} className="main-content">
-          <Navbar user={user} onLogout={handleLogout} onMenuClick={() => setSidebarOpen(o => !o)} />
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }} className="main-content">
+          <Navbar user={user} onLogout={handleLogout} onMenuClick={() => setSidebarOpen(o => !o)} isPremium={isPremium} />
           <div style={{ flex: 1, overflow: 'auto', background: 'linear-gradient(135deg, #f0f4ff 0%, #e8eeff 50%, #ede9fe 100%)' }}>
             <Routes>
-              <Route path="/"              element={
-                user && userPlan === 'free'
-                  ? <UpgradePage user={user} />
-                  : <DashboardPage user={user} />
-              } />
+              <Route path="/"              element={<DashboardPage user={user} isPremium={isPremium} />} />
               <Route path="/post-genie"    element={<PostGeniePage />} />
               <Route path="/posts"         element={<PostsPage user={user} />} />
               <Route path="/connect-social" element={<ConnectSocial />} />
               <Route path="/recent"        element={<RecentPage user={user} />} />
               <Route path="/settings"      element={<SettingsPage user={user} />} />
-              <Route path="/upgrade"       element={<UpgradePage user={user} />} />
+              <Route path="/upgrade"       element={<UpgradePage user={user} isPremium={isPremium} onPlanChange={fetchPlan} />} />
               <Route path="/profile"       element={
                 user
-                  ? <ProfilePage user={user} onLogout={handleLogout} />
+                  ? <ProfilePage user={user} onLogout={handleLogout} isPremium={isPremium} />
                   : <AuthPage onAuthSuccess={handleAuthSuccess} />
               } />
             </Routes>
@@ -97,13 +97,8 @@ function App() {
       </div>
 
       <style>{`
-        @media (min-width: 992px) {
-          .main-content { margin-left: 220px !important; }
-          .sidebar-mobile-overlay { display: none !important; }
-        }
-        @media (max-width: 991px) {
-          .main-content { margin-left: 0 !important; }
-        }
+        @media (min-width: 992px) { .main-content { margin-left: 220px !important; } }
+        @media (max-width: 991px) { .main-content { margin-left: 0 !important; } }
       `}</style>
     </HashRouter>
   );
