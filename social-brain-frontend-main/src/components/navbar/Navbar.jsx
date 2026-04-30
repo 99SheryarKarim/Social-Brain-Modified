@@ -41,12 +41,8 @@ const Navbar = ({ user, onLogout, onMenuClick, isPremium }) => {
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
         {user ? (
           <>
-            {/* Username only — no email */}
-            <span style={{ fontSize: 13, color: '#64748b', fontWeight: 500 }} className="d-none d-md-inline">
-              {username}
-            </span>
-
-            <Link to="/profile" style={{ textDecoration: 'none', position: 'relative' }}>
+            {/* Avatar only — no text in navbar */}
+            <Link to="/profile" style={{ textDecoration: 'none' }}>
               <div style={{
                 width: 34, height: 34, borderRadius: '50%',
                 background: isPremium

@@ -30,7 +30,7 @@ function App() {
     return token && email ? { token, email } : null;
   });
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [userPlan, setUserPlan] = useState(() => localStorage.getItem('userPlan') || 'free');
+  const [userPlan, setUserPlan] = useState('free'); // always start fresh, fetch from server
 
   const fetchPlan = () => {
     const token = localStorage.getItem('token');
@@ -49,6 +49,7 @@ function App() {
   const handleAuthSuccess = (userData) => {
     localStorage.setItem('token', userData.token);
     localStorage.setItem('userEmail', userData.email);
+    localStorage.removeItem('userPlan'); // clear stale plan
     setUser(userData);
   };
 
