@@ -71,7 +71,7 @@ function initializeDatabase() {
         `ALTER TABLE posts ADD COLUMN engagement_updated_at DATETIME`,
         `ALTER TABLE users ADD COLUMN plan TEXT DEFAULT 'free'`,
         `ALTER TABLE users ADD COLUMN daily_usage INTEGER DEFAULT 0`,
-        `ALTER TABLE users ADD COLUMN usage_reset_at DATETIME DEFAULT CURRENT_TIMESTAMP`,
+        `ALTER TABLE users ADD COLUMN usage_reset_at TEXT`,
         `ALTER TABLE users ADD COLUMN stripe_customer_id TEXT`,
         `ALTER TABLE users ADD COLUMN stripe_subscription_id TEXT`,
       ];

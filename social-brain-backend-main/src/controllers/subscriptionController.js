@@ -2,6 +2,11 @@ const db = require('../../database/init');
 
 const FREE_LIMIT = 10;
 
+const getHoursSinceReset = (resetAt) => {
+  if (!resetAt) return 999; // treat as expired — reset usage
+  return (new Date() - new Date(resetAt)) / (1000 * 60 * 60);
+};
+
 // Get user plan and usage
 exports.getPlan = (req, res) => {
   const userId = req.user?.id;
@@ -10,24 +15,18 @@ exports.getPlan = (req, res) => {
   db.get(`SELECT plan, daily_usage, usage_reset_at FROM users WHERE id = ?`, [userId], (err, row) => {
     if (err) return res.status(500).json({ message: err.message });
 
-    const now = new Date();
-    const resetAt = new Date(row?.usage_reset_at || now);
-    const hoursSinceReset = (now - resetAt) / (1000 * 60 * 60);
+    const plan = row?.plan || 'free';
+    const hoursSinceReset = getHoursSinceReset(row?.usage_reset_at);
 
-    // Reset usage if 24 hours have passed
     if (hoursSinceReset >= 24) {
-      db.run(`UPDATE users SET daily_usage = 0, usage_reset_at = CURRENT_TIMESTAMP WHERE id = ?`, [userId]);
+      db.run(`UPDATE users SET daily_usage = 0, usage_reset_at = datetime('now') WHERE id = ?`, [userId]);
       return res.status(200).json({
-        plan: row?.plan || 'free',
-        daily_usage: 0,
-        limit: FREE_LIMIT,
-        remaining: FREE_LIMIT,
+        plan, daily_usage: 0, limit: FREE_LIMIT, remaining: FREE_LIMIT,
         reset_at: new Date().toISOString(),
       });
     }
 
     const usage = row?.daily_usage || 0;
-    const plan = row?.plan || 'free';
     res.status(200).json({
       plan,
       daily_usage: usage,
@@ -38,16 +37,15 @@ exports.getPlan = (req, res) => {
   });
 };
 
-// Upgrade to premium — only via Stripe payment, this endpoint is disabled
+// Upgrade — disabled, use Stripe
 exports.upgradePlan = (req, res) => {
   res.status(403).json({ message: 'Please use the payment flow to upgrade.' });
 };
 
-// Downgrade back to free (for testing)
+// Downgrade (for testing)
 exports.downgradePlan = (req, res) => {
   const userId = req.user?.id;
   if (!userId) return res.status(401).json({ message: 'Unauthorized' });
-
   db.run(`UPDATE users SET plan = 'free', daily_usage = 0 WHERE id = ?`, [userId], (err) => {
     if (err) return res.status(500).json({ message: err.message });
     res.status(200).json({ message: 'Downgraded to Free', plan: 'free' });
@@ -57,7 +55,7 @@ exports.downgradePlan = (req, res) => {
 // Middleware — check usage limit before AI generation
 exports.checkUsageLimit = (req, res, next) => {
   const token = req.header('Authorization')?.split(' ')[1];
-  if (!token) return next(); // guest — let through, handled elsewhere
+  if (!token) return next();
 
   const jwt = require('jsonwebtoken');
   let userId;
@@ -72,17 +70,13 @@ exports.checkUsageLimit = (req, res, next) => {
     if (err || !row) return next();
 
     const plan = row.plan || 'free';
-    if (plan === 'premium') return next(); // premium — no limit
+    if (plan === 'premium') return next();
 
-    const now = new Date();
-    const resetAt = new Date(row.usage_reset_at || now);
-    const hoursSinceReset = (now - resetAt) / (1000 * 60 * 60);
-
+    const hoursSinceReset = getHoursSinceReset(row.usage_reset_at);
     let usage = row.daily_usage || 0;
 
-    // Reset if 24h passed
     if (hoursSinceReset >= 24) {
-      db.run(`UPDATE users SET daily_usage = 0, usage_reset_at = CURRENT_TIMESTAMP WHERE id = ?`, [userId]);
+      db.run(`UPDATE users SET daily_usage = 0, usage_reset_at = datetime('now') WHERE id = ?`, [userId]);
       usage = 0;
     }
 
@@ -90,13 +84,10 @@ exports.checkUsageLimit = (req, res, next) => {
       return res.status(429).json({
         error: 'Daily limit reached',
         message: `Free plan allows ${FREE_LIMIT} generations per 24 hours. Upgrade to Premium for unlimited access.`,
-        limit: FREE_LIMIT,
-        usage,
-        upgrade: true,
+        limit: FREE_LIMIT, usage, upgrade: true,
       });
     }
 
-    // Increment usage
     db.run(`UPDATE users SET daily_usage = daily_usage + 1 WHERE id = ?`, [userId]);
     next();
   });
