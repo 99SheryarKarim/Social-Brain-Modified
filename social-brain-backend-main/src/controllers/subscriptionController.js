@@ -38,15 +38,9 @@ exports.getPlan = (req, res) => {
   });
 };
 
-// Upgrade to premium (manual — for FYP demo, owner can upgrade any user)
+// Upgrade to premium — only via Stripe payment, this endpoint is disabled
 exports.upgradePlan = (req, res) => {
-  const userId = req.user?.id;
-  if (!userId) return res.status(401).json({ message: 'Unauthorized' });
-
-  db.run(`UPDATE users SET plan = 'premium' WHERE id = ?`, [userId], (err) => {
-    if (err) return res.status(500).json({ message: err.message });
-    res.status(200).json({ message: 'Upgraded to Premium!', plan: 'premium' });
-  });
+  res.status(403).json({ message: 'Please use the payment flow to upgrade.' });
 };
 
 // Downgrade back to free (for testing)

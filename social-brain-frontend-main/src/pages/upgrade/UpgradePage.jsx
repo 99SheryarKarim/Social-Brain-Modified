@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { showSuccessToast, showErrorToast } from '../../utils/toast';
 
-const BASE = 'http://localhost:3001/api/subscription';
+const BASE = 'http://localhost:3001/api';
 const getHeaders = () => ({ Authorization: `Bearer ${localStorage.getItem('token')}` });
 
 const features = [
@@ -36,24 +36,37 @@ export default function UpgradePage({ user }) {
   const navigate = useNavigate();
   const [plan, setPlan] = useState(null);
   const [upgrading, setUpgrading] = useState(false);
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     if (!user) return;
-    axios.get(`${BASE}/plan`, { headers: getHeaders() })
+    axios.get(`${BASE}/subscription/plan`, { headers: getHeaders() })
       .then(res => setPlan(res.data))
       .catch(console.error);
+
+    // Check if returning from successful payment
+    if (searchParams.get('payment') === 'success') {
+      showSuccessToast('🎉 Payment successful! Premium unlocked.');
+      // Refresh plan after short delay for webhook to process
+      setTimeout(() => {
+        axios.get(`${BASE}/subscription/plan`, { headers: getHeaders() })
+          .then(res => setPlan(res.data)).catch(() => {});
+      }, 3000);
+    }
+    if (searchParams.get('payment') === 'cancelled') {
+      showErrorToast('Payment cancelled.');
+    }
   }, [user]);
 
   const handleUpgrade = async () => {
     if (!user) { navigate('/profile'); return; }
     setUpgrading(true);
     try {
-      await axios.post(`${BASE}/upgrade`, {}, { headers: getHeaders() });
-      setPlan(p => ({ ...p, plan: 'premium' }));
-      showSuccessToast('🎉 Welcome to Premium! All features unlocked.');
+      const res = await axios.post(`${BASE}/payment/create-checkout`, {}, { headers: getHeaders() });
+      // Redirect to Stripe checkout
+      window.location.href = res.data.url;
     } catch (err) {
-      showErrorToast(err.response?.data?.message || 'Upgrade failed');
-    } finally {
+      showErrorToast(err.response?.data?.message || 'Failed to start checkout');
       setUpgrading(false);
     }
   };

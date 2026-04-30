@@ -12,6 +12,8 @@ const postRoutes = require('./routes/postRoutes');
 const activityRoutes = require('./routes/activityRoutes');
 const facebookRoutes = require('./routes/facebookRoutes');
 const settingsRoutes = require('./routes/settingsRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
+const { handleWebhook } = require('./controllers/paymentController');
 const subscriptionRoutes = require('./routes/subscriptionRoutes');
 const { checkUsageLimit } = require('./controllers/subscriptionController');
 const authMiddleware = require('./middlewares/auth');
@@ -23,6 +25,9 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
+// Stripe webhook — must use raw body BEFORE express.json()
+app.post('/api/payment/webhook', express.raw({ type: 'application/json' }), handleWebhook);
+
 app.use(express.json());
 app.use(passport.initialize());
 
@@ -37,6 +42,7 @@ app.use('/api/activity', activityRoutes);
 app.use('/api/facebook', facebookRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/subscription', subscriptionRoutes);
+app.use('/api/payment', paymentRoutes);
 
 // Post library — fetch all saved posts for logged-in user
 app.get('/api/library', authMiddleware, async (req, res) => {
