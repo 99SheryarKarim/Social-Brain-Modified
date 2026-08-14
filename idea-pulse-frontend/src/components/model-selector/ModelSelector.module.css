@@ -1,0 +1,288 @@
+.modelSelector {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 12px;
+  border: 2px solid #e5e7eb;
+  transition: all 0.3s ease;
+}
+
+.modelSelector:hover {
+  border-color: #4285f4;
+  box-shadow: 0 4px 12px rgba(66, 133, 244, 0.1);
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.labelText {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge {
+  font-size: 20px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.selectorContainer {
+  position: relative;
+}
+
+.selectorButton {
+  width: 100%;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1f2937;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.selectorButton:hover:not(:disabled) {
+  border-color: #4285f4;
+  background-color: #f9fafb;
+}
+
+.selectorButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #f3f4f6;
+}
+
+.selectorButton.open {
+  border-color: #4285f4;
+  background-color: #f0f4ff;
+}
+
+.modelName {
+  flex: 1;
+  text-align: left;
+  font-weight: 600;
+}
+
+.providerBadge {
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.arrow {
+  font-size: 12px;
+  color: #6b7280;
+  transition: transform 0.3s ease;
+}
+
+.selectorButton.open .arrow {
+  transform: rotate(180deg);
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  max-height: 400px;
+  overflow-y: auto;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modelOption {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f3f4f6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modelOption:last-child {
+  border-bottom: none;
+}
+
+.modelOption:hover {
+  background-color: #f9fafb;
+}
+
+.modelOption.selected {
+  background-color: #eff6ff;
+  border-left: 4px solid #4285f4;
+  padding-left: 12px;
+}
+
+.modelOptionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modelOptionHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.modelIcon {
+  font-size: 18px;
+}
+
+.modelOptionName {
+  flex: 1;
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 14px;
+}
+
+.modelOptionProvider {
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  color: white;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.modelOptionDesc {
+  margin: 0;
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+.modelStats {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.stat {
+  font-size: 11px;
+  color: #4b5563;
+  background: #f3f4f6;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.infoText {
+  margin: 0;
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.features {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.feature {
+  font-size: 12px;
+  color: #0ea5e9;
+  background: #ecf0ff;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+/* Scrollbar styling for dropdown */
+.dropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dropdown::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.dropdown::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.dropdown::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .modelSelector {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .selectorButton {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .label {
+    font-size: 12px;
+  }
+
+  .dropdown {
+    max-height: 300px;
+  }
+
+  .modelOptionHeader {
+    flex-wrap: wrap;
+  }
+
+  .modelOptionName {
+    flex-basis: 100%;
+  }
+}

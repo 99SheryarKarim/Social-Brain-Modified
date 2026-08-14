@@ -1,0 +1,125 @@
+/* ── Shared white page shell for all routes ── */
+.app-page {
+  min-height: 100vh;
+  background: #ffffff;
+  padding: 32px 28px;
+}
+
+.app-page-narrow {
+  min-height: 100vh;
+  background: #ffffff;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+
+.app-page-medium {
+  min-height: 100vh;
+  background: #ffffff;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+
+.app-page-settings {
+  min-height: 100vh;
+  background: #ffffff;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+
+/* Force white main content area — overrides dark mode */
+.main-content > div:last-child {
+  background: #ffffff !important;
+}
+
+body {
+  background: #ffffff !important;
+}
+
+/* ── Bootstrap light-theme overrides ── */
+.btn-dark {
+  background-color: #46a29f !important;
+  border-color: #46a29f !important;
+  color: #ffffff !important;
+}
+
+.btn-dark:hover,
+.btn-dark:focus,
+.btn-dark:active {
+  background-color: #3b8c86 !important;
+  border-color: #3b8c86 !important;
+  color: #ffffff !important;
+}
+
+.btn-primary {
+  background-color: #46a29f !important;
+  border-color: #46a29f !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #3b8c86 !important;
+  border-color: #3b8c86 !important;
+}
+
+.btn-outline-primary {
+  color: #46a29f !important;
+  border-color: #46a29f !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: #46a29f !important;
+  border-color: #46a29f !important;
+  color: #ffffff !important;
+}
+
+.text-primary {
+  color: #46a29f !important;
+}
+
+.bg-primary {
+  background-color: #46a29f !important;
+}
+
+.badge.bg-primary {
+  background-color: #46a29f !important;
+}
+
+.spinner-border.text-primary {
+  color: #46a29f !important;
+}
+
+.card {
+  background: #ffffff !important;
+  border-color: #e5e7eb !important;
+}
+
+.form-control {
+  background: #ffffff !important;
+  border-color: #e5e7eb !important;
+  color: #1e293b !important;
+}
+
+.form-control:focus {
+  border-color: #46a29f !important;
+  box-shadow: 0 0 0 0.2rem rgba(70, 162, 159, 0.15) !important;
+}
+
+.dropdown-menu {
+  background: #ffffff !important;
+  border-color: #e5e7eb !important;
+}
+
+.dropdown-item:hover {
+  background: #f8f9fa !important;
+}
+
+.text-dark {
+  color: #1e293b !important;
+}
+
+.bg-light {
+  background-color: #f8f9fa !important;
+}

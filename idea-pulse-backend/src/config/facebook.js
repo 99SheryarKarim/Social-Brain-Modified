@@ -1,0 +1,4 @@
+module.exports = {
+  PAGE_ID: "YOUR_PAGE_ID",
+  PAGE_ACCESS_TOKEN: "YOUR_PAGE_ACCESS_TOKEN",
+};

@@ -1,0 +1,39 @@
+/* Idea Pulse — Light White Theme */
+:root {
+  --primary: #46a29f;
+  --primary-dark: #3b8c86;
+  --primary-light: #5bb8b4;
+  --primary-soft: #e8f6f5;
+  --primary-muted: #c5e8e6;
+
+  --bg-page: #ffffff;
+  --bg-card: #ffffff;
+  --bg-sidebar: #ffffff;
+  --bg-input: #ffffff;
+  --bg-hover: #f1f5f9;
+
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+
+  --border: #e5e7eb;
+  --border-light: #f1f5f9;
+
+  --nav-bg: rgba(255, 255, 255, 0.92);
+  --sidebar-bg: #ffffff;
+
+  --accent-gradient: linear-gradient(135deg, #46a29f 0%, #3b8c86 100%);
+  --page-gradient: #f8f9fa;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+  --background-color: var(--bg-page);
+  --text-color: var(--text-primary);
+}
+
+html:not(.dark) body {
+  background: var(--bg-page);
+  color: var(--text-primary);
+}

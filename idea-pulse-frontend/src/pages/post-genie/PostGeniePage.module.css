@@ -1,0 +1,334 @@
+/* PostGeniePage.module.css */
+
+.textarea {
+    border-radius: 2rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding-right: 102px;
+    font-size: 1rem;
+    resize: none;
+    overflow: hidden;
+    width: 100%;
+
+}
+
+.generateBtn {
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #46a29f, #3b8c86) !important;
+    border: none !important;
+    color: #fff !important;
+    box-shadow: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.generateBtn:hover,
+.generateBtn:focus,
+.voiceBtn:hover,
+.voiceBtn:focus,
+.newChatBtn:hover,
+.newChatBtn:focus {
+    transform: translateY(-50%);
+    box-shadow: none;
+}
+
+.voiceBtn {
+    top: 50%;
+    right: 54px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8fafc;
+    border: 1px solid #dbeafe;
+    color: #46a29f;
+    box-shadow: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.voiceBtnListening {
+    background: #fee2e2;
+    border-color: #fda4af;
+    color: #dc2626;
+}
+
+.voiceHint {
+    margin: 8px 0 0;
+    font-size: 0.9rem;
+    color: #64748b;
+    min-height: 1.2rem;
+}
+
+.composerWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modelBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.modelSelectorGroup {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.modelLabel {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+.modelSelect {
+    border: 1px solid #dbeafe;
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    background: #fff;
+    color: #0f172a;
+    min-width: 180px;
+}
+
+.newChatBtn {
+    border: 1px solid #dbeafe;
+    background: #fff;
+    color: #0f172a;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    box-shadow: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.modelStatusRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.modelStatusBadge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: #e8f6f5;
+    color: #0f766e;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+@media (max-width: 576px) {
+    .modelBar,
+    .modelStatusRow {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .modelSelect {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .newChatBtn {
+        width: 100%;
+    }
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    /* Darker text */
+}
+
+
+
+button {
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    padding: 0.6rem 1.2rem;
+    font-weight: bold;
+}
+
+button:focus {
+    outline: none;
+}
+
+
+
+/* Tone selector */
+
+/* Optional: Customize the outline color */
+
+.selected {
+    border:2px solid teal!important;
+    background-color: #e5f8f7 !important;
+}
+
+.toneBtn {
+    border:2px solid transparent;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.toneBtn:hover {
+    border:2px solid teal;
+    background-color: #e5f8f7 !important;
+}
+
+/* ============== NOTIFICATION STYLES ============== */
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutDown {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 currentColor;
+    }
+    50% {
+        box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.notification {
+    position: relative;
+    min-width: 360px;
+    padding: 1.5rem;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    animation: slideInUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+}
+
+.notification::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, currentColor, transparent);
+}
+
+.notificationSuccess {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.notificationMock {
+    background: linear-gradient(135deg, #46a29f 0%, #3b8c86 100%);
+    color: white;
+}
+
+.notification.show {
+    animation: slideInUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+              pulse 2s infinite;
+}
+
+.notificationContent {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.notificationIcon {
+    font-size: 2rem;
+    flex-shrink: 0;
+    animation: slideInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+
+.notificationText {
+    flex: 1;
+}
+
+.notificationTitle {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.notificationSubtitle {
+    margin: 0.4rem 0 0 0;
+    font-size: 0.95rem;
+    opacity: 0.95;
+    font-weight: 500;
+}
+
+.closeBtn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.closeBtn:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+}
+
+.closeBtn:active {
+    transform: scale(0.95);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .notification { min-width: unset; width: calc(100vw - 32px); }
+}

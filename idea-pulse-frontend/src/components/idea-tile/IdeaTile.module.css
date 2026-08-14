@@ -1,0 +1,140 @@
+.tile {
+    border: 2px solid transparent;
+    border-radius: 1rem;
+    padding: 1.25rem 1.5rem;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    position: relative;
+}
+
+.tile:hover {
+    box-shadow: 0 4px 16px rgba(0, 128, 128, 0.15);
+}
+
+.selected {
+    border-color: teal;
+    background-color: #f0fbfa;
+}
+
+.labelText {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #333;
+    padding-left: 2rem;
+}
+
+/* Left-corner Badge */
+.badge {
+    position: absolute;
+    top: 12px;
+    left: 0;
+    background-color: #46a29f;
+    color: white;
+    padding: 4px 11px 4px 6px;
+    font-weight: 600;
+    font-size: 14px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Modal */
+
+.modalContentStyle{    
+    border-radius: 1rem;
+    padding: 0.5rem;
+    background-color: #ffffff;
+    border: none!important;
+}
+
+
+.modelInput {
+    border-radius: 2rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px 15px;
+    font-size: 1rem;
+    resize: none;
+    width: 100%;
+
+}
+
+.recommendationBtn {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(135deg, #10b981, #14b8a6);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.recommendationBtn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 16px rgba(20, 184, 166, 0.4);
+}
+
+.sendBtn {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(135deg, #6366f1, #ec4899);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.sendBtn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 16px rgba(236, 72, 153, 0.4);
+}
+
+.recommendationPanel {
+    margin-top: 0.75rem;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 0.9rem;
+    padding: 0.85rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    color: #14532d;
+}
+
+.recommendationRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.reasonBox {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding-top: 0.25rem;
+    border-top: 1px solid rgba(22, 101, 52, 0.15);
+    line-height: 1.5;
+}
+
+.recommendationLabel {
+    font-weight: 600;
+    color: #166534;
+}
+
