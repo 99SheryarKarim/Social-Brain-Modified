@@ -1,33 +1,63 @@
-/* Idea Pulse — Light White Theme */
+/* Idea Pulse — Premium SaaS Light Theme */
 :root {
-  --primary: #46a29f;
-  --primary-dark: #3b8c86;
-  --primary-light: #5bb8b4;
-  --primary-soft: #e8f6f5;
-  --primary-muted: #c5e8e6;
+  /* Primary Brand Color - Teal (use consistently) */
+  --primary: #06b6d4;
+  --primary-dark: #0891b2;
+  --primary-light: #22d3ee;
+  --primary-soft: #ecf8fb;
+  --primary-muted: #cffafe;
 
+  /* Neutral/Gray Scale */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+
+  /* Background Colors */
   --bg-page: #ffffff;
   --bg-card: #ffffff;
-  --bg-sidebar: #ffffff;
-  --bg-input: #ffffff;
-  --bg-hover: #f1f5f9;
+  --bg-sidebar: #fafbfc;
+  --bg-input: #f9fafb;
+  --bg-hover: #f3f4f6;
+  --bg-subtle: #f9fafb;
 
-  --text-primary: #1e293b;
-  --text-secondary: #64748b;
-  --text-muted: #94a3b8;
+  /* Text Colors */
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-muted: #6b7280;
+  --text-light: #9ca3af;
 
+  /* Borders */
   --border: #e5e7eb;
-  --border-light: #f1f5f9;
+  --border-light: #f3f4f6;
+  --border-subtle: #f9fafb;
 
-  --nav-bg: rgba(255, 255, 255, 0.92);
-  --sidebar-bg: #ffffff;
+  /* Navigation */
+  --nav-bg: rgba(255, 255, 255, 0.95);
+  --sidebar-bg: #fafbfc;
 
-  --accent-gradient: linear-gradient(135deg, #46a29f 0%, #3b8c86 100%);
-  --page-gradient: #f8f9fa;
+  /* Gradients */
+  --accent-gradient: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+  --page-gradient: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
 
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+  /* Shadows - More depth for premium feel */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.15);
+  --shadow-elevated: 0 20px 48px rgba(0, 0, 0, 0.18);
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
 
   --background-color: var(--bg-page);
   --text-color: var(--text-primary);
@@ -36,4 +66,27 @@
 html:not(.dark) body {
   background: var(--bg-page);
   color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* Global Typography Improvements */
+h1 { font-weight: 700; letter-spacing: -0.02em; }
+h2 { font-weight: 600; letter-spacing: -0.01em; }
+h3 { font-weight: 600; letter-spacing: -0.01em; }
+h4 { font-weight: 600; }
+h5 { font-weight: 600; }
+h6 { font-weight: 600; }
+
+/* Better link styling */
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+a:hover { color: var(--primary-dark); text-decoration: none; }
+
+/* Smooth scrolling */
+html { scroll-behavior: smooth; }
+
