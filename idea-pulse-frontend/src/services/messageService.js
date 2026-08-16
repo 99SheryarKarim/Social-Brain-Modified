@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE = 'http://localhost:3001/api/messages';
+const BASE = 'http://localhost:1000/api/messages';
 
 const getHeaders = () => ({
   Authorization: `Bearer ${localStorage.getItem('token')}`,

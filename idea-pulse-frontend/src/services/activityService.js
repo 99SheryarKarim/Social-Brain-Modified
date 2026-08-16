@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE = 'http://localhost:3001/api/activity';
+const BASE = 'http://localhost:1000/api/activity';
 
 const getHeaders = () => ({
   Authorization: `Bearer ${localStorage.getItem('token')}`,

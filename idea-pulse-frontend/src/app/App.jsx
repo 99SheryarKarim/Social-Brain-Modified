@@ -7,7 +7,6 @@ import DashboardPage from '../pages/dashboard/DashboardPage';
 import PostGeniePage from '../pages/post-genie/PostGeniePage';
 import ConnectSocial from '../pages/connect-social/ConnectSocial';
 import PostsPage from '../pages/posts/PostsPage';
-import CalendarPage from '../pages/calendar/CalendarPage';
 import AuthPage from '../pages/auth/AuthPage';
 import ProfilePage from '../pages/profile/ProfilePage';
 import RecentPage from '../pages/recent/RecentPage';
@@ -50,7 +49,7 @@ function App() {
   const fetchPlan = () => {
     const token = localStorage.getItem('token');
     if (!token) return;
-    fetch('http://localhost:3001/api/subscription/plan', {
+    fetch('http://localhost:1000/api/subscription/plan', {
       headers: { Authorization: `Bearer ${token}` }
     }).then(r => r.json()).then(d => {
       const plan = d.plan || 'free';
@@ -109,7 +108,6 @@ function App() {
               <Route path="/"              element={<DashboardPage user={user} isPremium={isPremium} />} />
               <Route path="/post-genie"    element={<PostGeniePage user={user} />} />
               <Route path="/posts"         element={<PostsPage user={user} />} />
-              <Route path="/calendar"      element={<CalendarPage user={user} />} />
               <Route path="/connect-social" element={<ConnectSocial />} />
               <Route path="/recent"        element={<RecentPage user={user} />} />
               <Route path="/settings"      element={<SettingsPage user={user} onLogout={handleLogout} onUsernameChange={handleUsernameChange} />} />

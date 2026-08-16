@@ -7,7 +7,7 @@ export const fetchIdeasFromAPI = async (prompt, num_posts, tone, words, model = 
 
   try {
     const res = await axios.post(
-      "http://localhost:3001/generate_ideas",
+      "http://localhost:1000/generate_ideas",
       {
         prompt: prompt,
         num_posts: num_posts,

@@ -52,7 +52,6 @@
 | User Authentication | Email/password with OTP verification + Google OAuth |
 | Activity Tracking | Logs user actions and displays activity timeline |
 | Streak System | Tracks daily usage streaks (client-side localStorage) |
-| Smart Calendar | Visual calendar for scheduled and published content |
 
 ### Target Users
 
@@ -474,14 +473,7 @@ Idea Pulse code/
 - View engagement metrics (Premium)
 - Sync engagement from Facebook
 
-### 7.4 Smart Calendar
-
-- Visual calendar view of scheduled and published posts
-- Create posts directly from calendar
-- Day cells show post cards
-- Sidebar with upcoming scheduled posts
-
-### 7.5 Facebook Integration
+### 7.4 Facebook Integration
 
 **Permissions Requested:**
 - `pages_show_list`

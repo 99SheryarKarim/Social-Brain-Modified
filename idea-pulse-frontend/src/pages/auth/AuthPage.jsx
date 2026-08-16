@@ -3,7 +3,7 @@ import axios from 'axios';
 import { showSuccessToast, showErrorToast } from '../../utils/toast';
 import './AuthPage.css';
 
-const BASE = 'http://localhost:3001/api/auth';
+const BASE = 'http://localhost:1000/api/auth';
 
 export default function AuthPage({ onAuthSuccess }) {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -158,7 +158,7 @@ export default function AuthPage({ onAuthSuccess }) {
 
           <div className="auth-divider"><span>or</span></div>
 
-          <button className="google-button" onClick={() => window.location.href = 'http://localhost:3001/api/auth/google'}>
+          <button className="google-button" onClick={() => window.location.href = 'http://localhost:1000/api/auth/google'}>
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" width="20" />
             Continue with Google
           </button>

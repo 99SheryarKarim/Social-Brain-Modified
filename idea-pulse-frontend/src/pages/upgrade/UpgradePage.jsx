@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { showSuccessToast, showErrorToast } from '../../utils/toast';
 
-const BASE = 'http://localhost:3001/api';
+const BASE = 'http://localhost:1000/api';
 const getHeaders = () => ({ Authorization: `Bearer ${localStorage.getItem('token')}` });
 
 const features = [

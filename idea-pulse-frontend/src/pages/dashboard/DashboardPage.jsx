@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const getHeaders = () => ({ Authorization: `Bearer ${localStorage.getItem('token')}` });
-const FB_BASE = 'http://localhost:3001/api/facebook';
+const FB_BASE = 'http://localhost:1000/api/facebook';
 
 const activityConfig = {
   ideas_generated: { label: 'Ideas Generated', color: '#46a29f', bg: '#e8f6f5' },
@@ -50,7 +50,7 @@ const EngagementModal = ({ type, onClose }) => {
 
   useEffect(() => {
     // Fetch all published posts then aggregate their engagement details
-    axios.get('http://localhost:3001/api/library', { headers: getHeaders() })
+    axios.get('http://localhost:1000/api/library', { headers: getHeaders() })
       .then(async (res) => {
         const published = res.data.filter(p => p.posted_to_facebook && p.facebook_post_id);
         const allReactions = [];
@@ -256,7 +256,7 @@ export default function DashboardPage({ user }) {
     if (!user) { setLoading(false); return; }
     setLoading(true);
     setFetchError(null);
-    axios.get('http://localhost:3001/api/dashboard', { headers: getHeaders() })
+    axios.get('http://localhost:1000/api/dashboard', { headers: getHeaders() })
       .then(res => setStats(res.data))
       .catch(() => setFetchError('Failed to load dashboard. Is the backend running?'))
       .finally(() => setLoading(false));

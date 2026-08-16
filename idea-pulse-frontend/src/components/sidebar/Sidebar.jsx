@@ -5,7 +5,6 @@ const navItems = [
   { to: '/',               icon: 'fas fa-gauge-high',           label: 'Dashboard'   },
   { to: '/post-genie',     icon: 'fas fa-wand-magic-sparkles',  label: 'Idea Pulse'  },
   { to: '/posts',          icon: 'fas fa-layer-group',          label: 'My Posts'    },
-  { to: '/calendar',       icon: 'fas fa-calendar-days',        label: 'Calendar'    },
   { to: '/recent',         icon: 'fas fa-clock-rotate-left',    label: 'Recent'      },
   { to: '/friends',       icon: 'fas fa-user-group',           label: 'Friends'       },
   { to: '/add-friends',   icon: 'fas fa-user-plus',            label: 'Add Friends'   },

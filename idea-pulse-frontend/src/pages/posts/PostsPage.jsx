@@ -5,7 +5,7 @@ import { fetchLibrary, deletePost, schedulePost, unschedulePost } from '../../fe
 import { showSuccessToast, showErrorToast } from '../../utils/toast';
 import PostCard from '../../components/post-card/PostCard';
 
-const BASE = 'http://localhost:3001/api/facebook';
+const BASE = 'http://localhost:1000/api/facebook';
 const getHeaders = () => ({ Authorization: `Bearer ${localStorage.getItem('token')}` });
 
 // Modal to show likers and comments

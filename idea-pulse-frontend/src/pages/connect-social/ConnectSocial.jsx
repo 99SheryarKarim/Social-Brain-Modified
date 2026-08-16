@@ -4,7 +4,7 @@ import { showSuccessToast, showErrorToast } from "../../utils/toast";
 import SocialCard from "../../components/social-card/SocialCard";
 import styles from './ConnectSocial.module.css';
 
-const BASE = 'http://localhost:3001/api/facebook';
+const BASE = 'http://localhost:1000/api/facebook';
 
 const getHeaders = () => ({
   Authorization: `Bearer ${localStorage.getItem('token')}`,

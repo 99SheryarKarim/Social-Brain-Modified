@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { showSuccessToast, showErrorToast } from '../../utils/toast';
 
-const BASE = 'http://localhost:3001/api/settings';
+const BASE = 'http://localhost:1000/api/settings';
 const getHeaders = () => ({ Authorization: `Bearer ${localStorage.getItem('token')}` });
 
 const Section = ({ icon, title, subtitle, accent = '#46a29f', children }) => (

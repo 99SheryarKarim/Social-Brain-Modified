@@ -10,7 +10,7 @@ const ProfilePage = ({ user, onLogout, isPremium }) => {
   const [plan, setPlan] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:3001/api/subscription/plan', { headers: getHeaders() })
+    axios.get('http://localhost:1000/api/subscription/plan', { headers: getHeaders() })
       .then(res => setPlan(res.data))
       .catch(console.error);
   }, []);
@@ -116,7 +116,7 @@ const ProfilePage = ({ user, onLogout, isPremium }) => {
               </div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', background: '#f8fafc', borderRadius: 10 }}>
-              <i className="fas fa-calendar" style={{ color: '#46a29f', fontSize: 14, width: 16 }} />
+              <i className="fas fa-chart-line" style={{ color: '#46a29f', fontSize: 14, width: 16 }} />
               <div>
                 <p style={{ margin: 0, fontSize: 11, color: '#94a3b8' }}>Member Since</p>
                 <p style={{ margin: 0, fontSize: 14, fontWeight: 500, color: '#1e293b' }}>{joinDate}</p>

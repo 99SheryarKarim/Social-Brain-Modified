@@ -6,7 +6,7 @@ export const generateSocialPostAPI = async ({ input, selectedIdeas }) => {
   if (token) headers.Authorization = `Bearer ${token}`;
 
   const res = await axios.post(
-    `http://localhost:3001/generate_posts_with_media`,
+    `http://localhost:1000/generate_posts_with_media`,
     { input, prompts: selectedIdeas },
     { headers }
   );
@@ -16,7 +16,7 @@ export const generateSocialPostAPI = async ({ input, selectedIdeas }) => {
 export const fetchLibraryAPI = async () => {
   const token = localStorage.getItem('token');
   if (!token) return [];
-  const res = await axios.get('http://localhost:3001/api/library', {
+  const res = await axios.get('http://localhost:1000/api/library', {
     headers: { Authorization: `Bearer ${token}` }
   });
   return res.data;
@@ -24,14 +24,14 @@ export const fetchLibraryAPI = async () => {
 
 export const deletePostAPI = async (postId) => {
   const token = localStorage.getItem('token');
-  await axios.delete(`http://localhost:3001/api/library/${postId}`, {
+  await axios.delete(`http://localhost:1000/api/library/${postId}`, {
     headers: { Authorization: `Bearer ${token}` }
   });
 };
 
 export const schedulePostAPI = async (postId, scheduledAt) => {
   const token = localStorage.getItem('token');
-  const res = await axios.patch(`http://localhost:3001/api/library/${postId}/schedule`,
+  const res = await axios.patch(`http://localhost:1000/api/library/${postId}/schedule`,
     { scheduled_at: scheduledAt },
     { headers: { Authorization: `Bearer ${token}` } }
   );
@@ -40,7 +40,7 @@ export const schedulePostAPI = async (postId, scheduledAt) => {
 
 export const unschedulePostAPI = async (postId) => {
   const token = localStorage.getItem('token');
-  const res = await axios.patch(`http://localhost:3001/api/library/${postId}/unschedule`, {},
+  const res = await axios.patch(`http://localhost:1000/api/library/${postId}/unschedule`, {},
     { headers: { Authorization: `Bearer ${token}` } }
   );
   return res.data;
