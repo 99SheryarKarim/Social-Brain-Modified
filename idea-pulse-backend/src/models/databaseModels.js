@@ -165,7 +165,7 @@ const Post = {
     return new Promise((resolve, reject) => {
       const sql = `
         SELECT id, user_id, content, tone, hashtags, image_prompt, original_topic,
-               posted_to_facebook, facebook_post_id, scheduled_at, created_at, updated_at
+               posted_to_facebook, facebook_post_id, recommended_time_basis, posted_at, scheduled_at, created_at, updated_at
         FROM posts WHERE id = ?
       `;
       db.get(sql, [id], (err, row) => {
@@ -185,7 +185,7 @@ const Post = {
     return new Promise((resolve, reject) => {
       const sql = `
         SELECT id, user_id, content, tone, hashtags, image_prompt, original_topic,
-               posted_to_facebook, facebook_post_id, scheduled_at, created_at, updated_at
+               posted_to_facebook, facebook_post_id, recommended_time_basis, posted_at, scheduled_at, created_at, updated_at
         FROM posts 
         WHERE user_id = ? 
         ORDER BY created_at DESC

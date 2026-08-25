@@ -136,7 +136,7 @@ exports.publishPost = async (req, res) => {
 
       // Update posted_to_facebook flag in DB if post has an id
       if (req.body.postDbId) {
-        db.run(`UPDATE posts SET posted_to_facebook = 1, facebook_post_id = ? WHERE id = ?`,
+        db.run(`UPDATE posts SET posted_to_facebook = 1, facebook_post_id = ?, posted_at = CURRENT_TIMESTAMP WHERE id = ?`,
           [fullPostId, req.body.postDbId]);
       }
 

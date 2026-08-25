@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { fetchLibrary, deletePost, schedulePost, unschedulePost } from '../../features/posts/postsSlice';
+import { getRecommendedTimeAPI } from '../../features/posts/postSliceAPI';
 import { showSuccessToast, showErrorToast } from '../../utils/toast';
 import PostCard from '../../components/post-card/PostCard';
 
@@ -115,6 +116,7 @@ const PostsPage = ({ user }) => {
   const [publishing, setPublishing] = useState(null);
   const [schedulingId, setSchedulingId] = useState(null);
   const [scheduledTimes, setScheduledTimes] = useState({});
+  const [recommendations, setRecommendations] = useState({});
   const [syncing, setSyncing] = useState(false);
 
   useEffect(() => {
@@ -171,13 +173,36 @@ const PostsPage = ({ user }) => {
     if (!scheduledAt) return showErrorToast('Please pick a date and time');
     if (new Date(scheduledAt) <= new Date()) return showErrorToast('Please pick a future date and time');
 
-    const result = await dispatch(schedulePost({ postId, scheduledAt }));
+    const result = await dispatch(schedulePost({ postId, scheduledAt, recommendedTimeBasis: recommendations[postId]?.basis }));
     if (result.type.endsWith('fulfilled')) {
       showSuccessToast(`⏰ Post scheduled for ${new Date(scheduledAt).toLocaleString()}`);
       setSchedulingId(null);
     } else {
       showErrorToast('Failed to schedule post');
     }
+  };
+
+  const openScheduler = async (post) => {
+    setSchedulingId(schedulingId === post.id ? null : post.id);
+    if (schedulingId === post.id || recommendations[post.id]) return;
+    try {
+      const recommendation = await getRecommendedTimeAPI(post.platform || 'facebook');
+      setRecommendations((current) => ({ ...current, [post.id]: recommendation }));
+    } catch {
+      setRecommendations((current) => ({ ...current, [post.id]: null }));
+    }
+  };
+
+  const acceptRecommendation = (postId) => {
+    const recommendation = recommendations[postId];
+    if (!recommendation?.recommendedTime) return;
+    const match = recommendation.recommendedTime.match(/^(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday) at (\d{2}):00$/);
+    if (!match) return;
+    const day = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].indexOf(match[1]);
+    const date = new Date();
+    date.setHours(Number(match[2]), 0, 0, 0);
+    date.setDate(date.getDate() + ((day - date.getDay() + 7) % 7 || 7));
+    setScheduledTimes((current) => ({ ...current, [postId]: date.toISOString().slice(0, 16) }));
   };
 
   const handleUnschedule = async (postId) => {
@@ -288,6 +313,12 @@ const PostsPage = ({ user }) => {
                       {schedulingId === post.id && (
                         <div className="mb-2 p-2 bg-light rounded-3">
                           <label className="form-label small fw-semibold mb-1">Pick date & time:</label>
+                          {recommendations[post.id] && (
+                            <div className="d-flex align-items-center justify-content-between gap-2 mb-2">
+                              <span className="badge rounded-pill bg-info text-dark">Recommended: {recommendations[post.id].recommendedTime}</span>
+                              <button type="button" className="btn btn-sm btn-outline-info" onClick={() => acceptRecommendation(post.id)}>Use time</button>
+                            </div>
+                          )}
                           <input type="datetime-local" className="form-control form-control-sm mb-2"
                             min={minDateTime}
                             value={scheduledTimes[post.id] || ''}
@@ -323,7 +354,7 @@ const PostsPage = ({ user }) => {
                             </button>
                           ) : (
                             <button className="btn btn-sm btn-outline-warning rounded-pill"
-                              onClick={() => setSchedulingId(schedulingId === post.id ? null : post.id)}
+                              onClick={() => openScheduler(post)}
                               title="Schedule post">
                               <i className="fas fa-clock" />
                             </button>

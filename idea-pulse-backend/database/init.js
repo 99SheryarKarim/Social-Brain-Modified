@@ -51,6 +51,8 @@ function initializeDatabase() {
           original_topic TEXT,
           posted_to_facebook INTEGER DEFAULT 0,
           facebook_post_id TEXT,
+          recommended_time_basis TEXT,
+          posted_at DATETIME,
           scheduled_at DATETIME,
           created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
           updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -70,6 +72,8 @@ function initializeDatabase() {
         `ALTER TABLE posts ADD COLUMN reach INTEGER DEFAULT 0`,
         `ALTER TABLE posts ADD COLUMN engagement_updated_at DATETIME`,
         `ALTER TABLE posts ADD COLUMN platform TEXT DEFAULT 'facebook'`,
+        `ALTER TABLE posts ADD COLUMN recommended_time_basis TEXT`,
+        `ALTER TABLE posts ADD COLUMN posted_at DATETIME`,
         `ALTER TABLE users ADD COLUMN plan TEXT DEFAULT 'free'`,
         `ALTER TABLE users ADD COLUMN daily_usage INTEGER DEFAULT 0`,
         `ALTER TABLE users ADD COLUMN usage_reset_at TEXT`,
@@ -84,6 +88,15 @@ function initializeDatabase() {
           }
         });
       });
+
+      db.run(`CREATE TABLE IF NOT EXISTS trends (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        topic TEXT NOT NULL,
+        niche TEXT NOT NULL,
+        source TEXT NOT NULL,
+        popularity_score REAL DEFAULT 0,
+        fetched_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )`, (err) => { if (err) console.error('Error creating trends table:', err); });
 
       // Activity table
       db.run(`

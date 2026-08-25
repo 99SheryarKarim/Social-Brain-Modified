@@ -12,6 +12,7 @@ import { generateSocialPost } from '../../features/posts/postsSlice';
 import { fetchIdeas, updateIdea, clearIdeas } from '../../features/ideas/ideasSlice';
 import { saveActivity } from '../../services/activityService';
 import SendIdeaModal from '../../components/send-idea-modal/SendIdeaModal';
+import { fetchTrendMatch } from '../../features/ideas/ideasAPI';
 
 const PostGeniePage = ({ user }) => {
     const navigate = useNavigate();
@@ -20,7 +21,7 @@ const PostGeniePage = ({ user }) => {
     const dispatch = useDispatch();
     const recognitionRef = useRef(null);
 
-    const { items: ideas, recommendations, loading, error, isMockData, dataSource } = useSelector((state) => state.ideas);
+    const { items: ideas, recommendations, loading, error, isMockData, dataSource, matchedTrend } = useSelector((state) => state.ideas);
     const [selectedModel, setSelectedModel] = useState(() => {
         if (typeof window !== 'undefined') {
             return localStorage.getItem('ideaPulseModel') || 'gemini-2.5-flash';
@@ -30,6 +31,17 @@ const PostGeniePage = ({ user }) => {
     const lastNotificationRef = useRef(null);
     const [isListening, setIsListening] = useState(false);
     const [voiceStatus, setVoiceStatus] = useState('Tap the mic to speak');
+    const [useTrends, setUseTrends] = useState(false);
+    const [trendPreview, setTrendPreview] = useState(null);
+
+    useEffect(() => {
+        if (!useTrends || !prompt.trim()) {
+            setTrendPreview(null);
+            return undefined;
+        }
+        fetchTrendMatch(prompt.trim()).then(setTrendPreview).catch(() => setTrendPreview(null));
+        return undefined;
+    }, [useTrends, prompt]);
 
     // Show notification when ideas are generated
     useEffect(() => {
@@ -236,7 +248,7 @@ const PostGeniePage = ({ user }) => {
         const currentPrompt = (overridePrompt || '').trim();
         if (!currentPrompt) return;
         setPrompt(currentPrompt);
-        dispatch(fetchIdeas({ prompt: currentPrompt, num: numPosts, tone: selectedTone, words: numWords, model: selectedModel }))
+        dispatch(fetchIdeas({ prompt: currentPrompt, num: numPosts, tone: selectedTone, words: numWords, model: selectedModel, useTrends }))
           .then((result) => {
             if (result.error?.message?.startsWith('LIMIT_REACHED:')) {
               navigate('/upgrade');
@@ -387,6 +399,16 @@ const PostGeniePage = ({ user }) => {
                     </span>
                     <span className={styles.voiceHint}>{voiceStatus}</span>
                 </div>
+                <label className="form-check form-switch mt-3 mb-0">
+                    <input className="form-check-input" type="checkbox" checked={useTrends} onChange={(event) => setUseTrends(event.target.checked)} />
+                    <span className="form-check-label">Use trending topics</span>
+                </label>
+                {useTrends && (matchedTrend || trendPreview) && (
+                    <div className="alert alert-info mt-3 mb-0 py-2">
+                        <strong>Matched trend:</strong> {(matchedTrend || trendPreview).trend.topic} ({Math.round((matchedTrend || trendPreview).relevanceScore * 100)}% relevant)<br />
+                        <small>{(matchedTrend || trendPreview).reason}</small>
+                    </div>
+                )}
             </div>
 
             <section className="tone-selector mb-5">

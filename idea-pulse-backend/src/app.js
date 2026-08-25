@@ -1,5 +1,10 @@
 // Load environment variables FIRST before any other requires
 require("dotenv").config();
+const validateEnv = require("./config/envValidator");
+const { logOptionalEnvStatus } = require("./config/envValidator");
+
+validateEnv();
+logOptionalEnvStatus();
 
 const express = require("express");
 const cors = require("cors");
@@ -22,6 +27,8 @@ const { generateIdeas, generatePostsWithMedia } = require('./controllers/aiGener
 const friendRoutes = require('./controllers/friendController');
 const notificationRoutes = require('./routes/notificationRoutes');
 const messageRoutes = require('./routes/messageRoutes');
+const trendRoutes = require('./routes/trendRoutes');
+const { getRecommendedTime } = require('./controllers/trendController');
 const app = express();
 app.use(cors({
   origin: ["http://localhost:5173", "http://localhost:5174", "http://localhost:3000"], // Vite default ports
@@ -51,6 +58,8 @@ app.use('/api/payment', paymentRoutes);
 app.use('/api/friends', authMiddleware, friendRoutes);
 app.use('/api/notifications', authMiddleware, notificationRoutes);
 app.use('/api/messages', authMiddleware, messageRoutes);
+app.use('/api/trends', trendRoutes);
+app.get('/api/recommended-time', authMiddleware, getRecommendedTime);
 
 // Post library — fetch all saved posts for logged-in user
 app.get('/api/library', authMiddleware, async (req, res) => {
@@ -82,8 +91,8 @@ app.patch('/api/library/:id/schedule', authMiddleware, (req, res) => {
 
   const db = require('../database/init');
   db.run(
-    `UPDATE posts SET scheduled_at = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ? AND user_id = ?`,
-    [new Date(scheduled_at).toISOString(), req.params.id, userId],
+    `UPDATE posts SET scheduled_at = ?, recommended_time_basis = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ? AND user_id = ?`,
+    [new Date(scheduled_at).toISOString(), req.body.recommended_time_basis || null, req.params.id, userId],
     function (err) {
       if (err) return res.status(500).json({ message: err.message });
       if (this.changes === 0) return res.status(404).json({ message: 'Post not found' });

@@ -1,8 +1,16 @@
 // src/api/ideasAPI.js
 import axios from "axios";
 
+export const fetchTrendMatch = async (niche) => {
+  const token = localStorage.getItem('token');
+  const res = await axios.get(`http://localhost:1000/api/trends?niche=${encodeURIComponent(niche || 'General')}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data.matchedTrend || null;
+};
+
 // Function to fetch ideas from FastAPI backend
-export const fetchIdeasFromAPI = async (prompt, num_posts, tone, words, model = "gemini-2.5-flash") => {
+export const fetchIdeasFromAPI = async (prompt, num_posts, tone, words, model = "gemini-2.5-flash", useTrends = false) => {
   console.log("Fetching ideas with:", { prompt, num_posts, tone, words, model });
 
   try {
@@ -15,6 +23,7 @@ export const fetchIdeasFromAPI = async (prompt, num_posts, tone, words, model = 
         num_words: words,
         generate_image: false,
         model: model,
+        useTrends,
       },
       {
         headers: {
@@ -35,6 +44,7 @@ export const fetchIdeasFromAPI = async (prompt, num_posts, tone, words, model = 
       recommendations: postPrompts.map((p) => (p && typeof p === "object" ? p.recommendation : null)),
       isMockData: isMockData,
       dataSource: dataSource,
+      matchedTrend: res.data.matchedTrend || null,
     };
   } catch (error) {
     if (error.response?.data?.upgrade) {

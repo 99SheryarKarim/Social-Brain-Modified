@@ -3,7 +3,7 @@ import { fetchIdeasFromAPI } from "./ideasAPI"; // Import the API function
 
 export const fetchIdeas = createAsyncThunk(
   "ideas/fetchIdeas",
-  async ({ prompt, num, tone, words, model }, thunkAPI) => {
+  async ({ prompt, num, tone, words, model, useTrends }, thunkAPI) => {
     console.log(
       "Fetching ideas with prompt:",
       prompt,
@@ -13,7 +13,7 @@ export const fetchIdeas = createAsyncThunk(
       tone
     );
     try {
-      const result = await fetchIdeasFromAPI(prompt, num, tone, words, model);
+      const result = await fetchIdeasFromAPI(prompt, num, tone, words, model, useTrends);
       return result; // Return { ideas, recommendations, isMockData, dataSource }
     } catch (error) {
       console.log("Error fetching ideas:", error);
@@ -31,6 +31,7 @@ const ideasSlice = createSlice({
     error: null,
     isMockData: false,
     dataSource: "api",
+    matchedTrend: null,
   },
   reducers: {
     updateIdea: (state, action) => {
@@ -46,6 +47,7 @@ const ideasSlice = createSlice({
       state.error = null;
       state.isMockData = false;
       state.dataSource = "api";
+      state.matchedTrend = null;
     },
   },
   extraReducers: (builder) => {
@@ -61,6 +63,7 @@ const ideasSlice = createSlice({
         state.recommendations = action.payload.recommendations || [];
         state.isMockData = action.payload.isMockData || false;
         state.dataSource = action.payload.dataSource || "api";
+        state.matchedTrend = action.payload.matchedTrend || null;
       })
       .addCase(fetchIdeas.rejected, (state, action) => {
         state.loading = false;

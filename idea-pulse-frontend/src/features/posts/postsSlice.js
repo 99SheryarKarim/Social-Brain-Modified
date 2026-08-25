@@ -37,9 +37,9 @@ export const deletePost = createAsyncThunk(
 
 export const schedulePost = createAsyncThunk(
   "socialPosts/schedulePost",
-  async ({ postId, scheduledAt }, thunkAPI) => {
+  async ({ postId, scheduledAt, recommendedTimeBasis }, thunkAPI) => {
     try {
-      await schedulePostAPI(postId, scheduledAt);
+      await schedulePostAPI(postId, scheduledAt, recommendedTimeBasis);
       return { postId, scheduledAt };
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.message });

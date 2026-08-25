@@ -29,12 +29,20 @@ export const deletePostAPI = async (postId) => {
   });
 };
 
-export const schedulePostAPI = async (postId, scheduledAt) => {
+export const schedulePostAPI = async (postId, scheduledAt, recommendedTimeBasis = null) => {
   const token = localStorage.getItem('token');
   const res = await axios.patch(`http://localhost:1000/api/library/${postId}/schedule`,
-    { scheduled_at: scheduledAt },
+    { scheduled_at: scheduledAt, recommended_time_basis: recommendedTimeBasis },
     { headers: { Authorization: `Bearer ${token}` } }
   );
+  return res.data;
+};
+
+export const getRecommendedTimeAPI = async (platform = 'facebook') => {
+  const token = localStorage.getItem('token');
+  const res = await axios.get(`http://localhost:1000/api/recommended-time?platform=${encodeURIComponent(platform)}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
   return res.data;
 };
 

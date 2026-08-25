@@ -8,6 +8,7 @@ const { Post } = require("../models/databaseModels");
 const jwt = require("jsonwebtoken");
 const db = require("../../database/init");
 const { logActivity } = require("../utils/activityLogger");
+const { fetchTrends, matchTrendToNiche } = require('../services/trendService');
 
 const getUserIdFromRequest = (req) => {
   try {
@@ -32,14 +33,21 @@ const getBrandSettings = (userId) => {
 
 exports.generateIdeas = async (req, res) => {
   try {
-    const { prompt, num_posts = 3, tone = "casual", model = "gemini-2.5-flash" } = req.body;
+    const { prompt, num_posts = 3, tone = "casual", model = "gemini-2.5-flash", useTrends = false } = req.body;
     if (!prompt || prompt.trim().length === 0) return res.status(400).json({ error: "Prompt is required" });
 
     const userId = getUserIdFromRequest(req);
     const brandSettings = await getBrandSettings(userId);
+    let matchedTrend = null;
+    let generationTopic = prompt;
+    if (useTrends) {
+      const trends = await fetchTrends(brandSettings.target_audience || prompt);
+      matchedTrend = matchTrendToNiche(trends, brandSettings.target_audience || prompt);
+      if (matchedTrend?.trend?.topic) generationTopic = `${prompt} (Current relevant trend: ${matchedTrend.trend.topic})`;
+    }
 
     const { keywords } = await extractKeywordsWithTracking(prompt, 10);
-    const { prompts: postPrompts, isMock, provider } = await generatePostPromptsWithFallback(prompt, tone, num_posts, brandSettings, model);
+    const { prompts: postPrompts, isMock, provider } = await generatePostPromptsWithFallback(generationTopic, tone, num_posts, brandSettings, model);
 
     const recommendations = await Promise.all(
       postPrompts.map((idea) => generateIdeaRecommendationWithFallback(
@@ -70,6 +78,7 @@ exports.generateIdeas = async (req, res) => {
       isMockData: isMock,
       dataSource: isMock ? "mock" : (provider || "api"),
       model: model,
+      matchedTrend,
     });
   } catch (error) {
     console.error("Error generating ideas:", error);
