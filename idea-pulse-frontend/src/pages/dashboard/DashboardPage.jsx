@@ -108,7 +108,8 @@ const EngagementModal = ({ type, onClose }) => {
                 color: tab === t ? '#46a29f' : '#94a3b8',
                 boxShadow: tab === t ? '0 1px 4px rgba(0,0,0,0.08)' : 'none'
               }}>
-                {t === 'reactions' ? '👍' : '💬'} {t.charAt(0).toUpperCase() + t.slice(1)}
+                <i className={t === 'reactions' ? 'far fa-thumbs-up me-1' : 'far fa-comment me-1'} />
+                {t.charAt(0).toUpperCase() + t.slice(1)}
                 {data && !data.error && (
                   <span style={{
                     marginLeft: 6, fontSize: 11, background: tab === t ? '#e8f6f5' : '#f1f5f9',
@@ -146,7 +147,7 @@ const EngagementModal = ({ type, onClose }) => {
           {/* Reactions List */}
           {!loading && !data?.error && tab === 'reactions' && (
             data.reactions.length === 0
-              ? <EmptyState icon="👍" text="No reactions yet" sub="Share your posts to get likes!" />
+              ? <EmptyState icon={<i className="far fa-thumbs-up" style={{ fontSize: 32, color: '#cbd5e1' }} />} text="No reactions yet" sub="Share your posts to get likes!" />
               : data.reactions.map((r, i) => (
                 <div key={i} style={{
                   display: 'flex', alignItems: 'center', gap: 12,
@@ -164,7 +165,7 @@ const EngagementModal = ({ type, onClose }) => {
                     <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: '#1e293b' }}>{r.name}</p>
                     <p style={{ margin: 0, fontSize: 11, color: '#94a3b8' }}>Liked: {r.postTopic}</p>
                   </div>
-                  <span style={{ fontSize: 20 }}>👍</span>
+                  <span style={{ marginLeft: 'auto', fontSize: 16 }}><i className="fas fa-thumbs-up text-primary" /></span>
                 </div>
               ))
           )}
@@ -172,7 +173,7 @@ const EngagementModal = ({ type, onClose }) => {
           {/* Comments List */}
           {!loading && !data?.error && tab === 'comments' && (
             data.comments.length === 0
-              ? <EmptyState icon="💬" text="No comments yet" sub="Engage your audience to get comments!" />
+              ? <EmptyState icon={<i className="far fa-comments" style={{ fontSize: 32, color: '#cbd5e1' }} />} text="No comments yet" sub="Engage your audience to get comments!" />
               : data.comments.map((c, i) => (
                 <div key={i} style={{
                   padding: '14px 0', borderBottom: i < data.comments.length - 1 ? '1px solid #f8fafc' : 'none'
@@ -210,7 +211,7 @@ const EngagementModal = ({ type, onClose }) => {
 
 const EmptyState = ({ icon, text, sub }) => (
   <div style={{ textAlign: 'center', padding: '40px 0' }}>
-    <div style={{ fontSize: 36, marginBottom: 12 }}>{icon}</div>
+    <div style={{ marginBottom: 12 }}>{icon}</div>
     <p style={{ margin: 0, fontWeight: 600, color: '#64748b', fontSize: 14 }}>{text}</p>
     <p style={{ margin: '4px 0 0', fontSize: 12, color: '#94a3b8' }}>{sub}</p>
   </div>
@@ -273,7 +274,7 @@ export default function DashboardPage({ user }) {
       <div className="d-flex align-items-start justify-content-between mb-4 flex-wrap gap-3">
         <div>
           <h1 style={{ fontSize: 24, fontWeight: 700, color: '#1e293b', margin: 0, letterSpacing: '-0.5px' }}>
-            {user ? `${greeting()}, ${user.email.split('@')[0]} 👋` : 'Dashboard'}
+            {user ? `${greeting()}, ${user.email.split('@')[0]}` : 'Dashboard'}
           </h1>
           <p style={{ margin: '4px 0 0', fontSize: 14, color: '#64748b' }}>
             {user ? "Here's your content overview for today." : 'Your AI-powered social media command center.'}

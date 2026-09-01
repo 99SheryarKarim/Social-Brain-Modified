@@ -8,10 +8,10 @@ import {
 import { showSuccessToast, showErrorToast } from '../../utils/toast';
 
 const typeIcons = {
-  friend_request: { icon: '👥', color: '#46a29f', bg: '#e8f6f5' },
-  friend_accepted: { icon: '🎉', color: '#10b981', bg: '#ecfdf5' },
-  idea_received: { icon: '💡', color: '#f59e0b', bg: '#fffbeb' },
-  default: { icon: '🔔', color: '#64748b', bg: '#f1f5f9' },
+  friend_request: { icon: 'fas fa-user-plus', color: '#46a29f', bg: '#e8f6f5' },
+  friend_accepted: { icon: 'fas fa-user-check', color: '#10b981', bg: '#ecfdf5' },
+  idea_received: { icon: 'fas fa-lightbulb', color: '#f59e0b', bg: '#fffbeb' },
+  default: { icon: 'fas fa-bell', color: '#64748b', bg: '#f1f5f9' },
 };
 
 const formatTime = (d) => {
@@ -77,7 +77,7 @@ export default function NotificationsPage({ user, onRead }) {
       <div style={{ maxWidth: 640, margin: '0 auto' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
           <div>
-            <h1 style={{ margin: 0, fontWeight: 800, color: '#1e293b', fontSize: 24 }}>🔔 Notifications</h1>
+            <h1 style={{ margin: 0, fontWeight: 800, color: '#1e293b', fontSize: 24 }}>Notifications</h1>
             {unread > 0 && (
               <p style={{ margin: '4px 0 0', color: '#46a29f', fontSize: 13, fontWeight: 600 }}>
                 {unread} unread
@@ -98,7 +98,9 @@ export default function NotificationsPage({ user, onRead }) {
           <p style={{ textAlign: 'center', color: '#94a3b8', padding: 40 }}>Loading...</p>
         ) : notifications.length === 0 ? (
           <div style={{ textAlign: 'center', padding: 60, background: '#fff', borderRadius: 16, border: '1px solid #e5e7eb' }}>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>🔔</div>
+            <div style={{ fontSize: 40, marginBottom: 16, color: '#cbd5e1' }}>
+              <i className="far fa-bell" />
+            </div>
             <h3 style={{ color: '#1e293b' }}>No notifications yet</h3>
             <p style={{ color: '#64748b' }}>Friend requests, accepted friends, and received ideas will appear here.</p>
           </div>
@@ -121,9 +123,9 @@ export default function NotificationsPage({ user, onRead }) {
                   <div style={{
                     width: 40, height: 40, borderRadius: 10, flexShrink: 0,
                     background: cfg.bg, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: 18,
+                    fontSize: 16, color: cfg.color
                   }}>
-                    {cfg.icon}
+                    <i className={cfg.icon} />
                   </div>
                   <div style={{ flex: 1 }}>
                     <p style={{ margin: 0, fontSize: 14, color: '#1e293b', fontWeight: n.is_read ? 400 : 600, lineHeight: 1.4 }}>

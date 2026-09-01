@@ -20,6 +20,9 @@ const requiredEnv = [
 ];
 
 const optionalEnv = [
+  'YOUTUBE_CLIENT_ID',
+  'YOUTUBE_CLIENT_SECRET',
+  'YOUTUBE_CALLBACK_URL',
   'HUGGINGFACE_API_KEY',
   'TOGETHER_API_KEY',
   'PEXELS_API_KEY',

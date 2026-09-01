@@ -2,6 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const { sendOTP, verifyOTPAndSignup, signin, authMiddleware } = require("../controllers/authController");
 const passport = require("../config/googleAuth");
+const youtubeController = require('../controllers/youtubeController');
 
 const router = express.Router();
 
@@ -12,6 +13,9 @@ router.post("/signin", signin);
 router.get("/protected", authMiddleware, (req, res) => {
   res.status(200).json({ message: "You have access", user: req.user });
 });
+
+router.get('/youtube', authMiddleware, youtubeController.getAuthorizationUrl);
+router.get('/youtube/callback', youtubeController.handleCallback);
 
 // Google OAuth routes
 router.get("/google", passport.authenticate("google", { scope: ["profile", "email"], session: false }));

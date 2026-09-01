@@ -109,6 +109,7 @@ function App() {
               <Route path="/post-genie"    element={<PostGeniePage user={user} />} />
               <Route path="/posts"         element={<PostsPage user={user} />} />
               <Route path="/connect-social" element={<ConnectSocial />} />
+              <Route path="/connect" element={<ConnectSocial />} />
               <Route path="/recent"        element={<RecentPage user={user} />} />
               <Route path="/settings"      element={<SettingsPage user={user} onLogout={handleLogout} onUsernameChange={handleUsernameChange} />} />
               <Route path="/upgrade"       element={<UpgradePage user={user} isPremium={isPremium} onPlanChange={fetchPlan} />} />

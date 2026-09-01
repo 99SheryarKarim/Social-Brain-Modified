@@ -196,6 +196,8 @@ body {
 
 /* Ensure readable line height */
 p, span, label { line-height: 1.6; }
+
+.form-control {
   border-color: #e5e7eb !important;
   color: #1e293b !important;
 }

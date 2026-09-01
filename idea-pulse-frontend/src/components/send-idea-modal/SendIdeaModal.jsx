@@ -35,7 +35,7 @@ export default function SendIdeaModal({ isOpen, onClose, ideaText, onSent }) {
     setSendingId(friend.id);
     try {
       const result = await sendIdea(friend.id, ideaText);
-      showSuccessToast(`Idea sent to ${displayName(friend)}! 🔥 Streak: ${result.streak} days`);
+      showSuccessToast(`Idea sent to ${displayName(friend)}! Streak: ${result.streak} days`);
       onSent?.(result, friend);
       onClose();
     } catch (err) {
@@ -51,7 +51,10 @@ export default function SendIdeaModal({ isOpen, onClose, ideaText, onSent }) {
         <div className={styles.header}>
           <div className={styles.headerGlow} />
           <button className={styles.closeBtn} onClick={onClose} aria-label="Close">✕</button>
-          <h2 className={styles.headerTitle}>💡 Send to Friend</h2>
+          <h2 className={styles.headerTitle}>
+            <i className="fa-regular fa-paper-plane me-2" style={{ color: '#46a29f' }} />
+            Send to Friend
+          </h2>
           <p className={styles.headerSub}>Share this idea and grow your streak!</p>
         </div>
 
@@ -64,7 +67,9 @@ export default function SendIdeaModal({ isOpen, onClose, ideaText, onSent }) {
             <p className={styles.loading}>Loading friends...</p>
           ) : friends.length === 0 ? (
             <div className={styles.emptyState}>
-              <div style={{ fontSize: 40, marginBottom: 12 }}>👥</div>
+              <div style={{ fontSize: 36, marginBottom: 12, color: '#cbd5e1' }}>
+                <i className="fas fa-user-group" />
+              </div>
               <p>No friends yet. Add friends first!</p>
               <Link to="/add-friends" onClick={onClose}>Go to Add Friends →</Link>
             </div>

@@ -46,7 +46,7 @@ const PostCard = ({ post, onEdit, onUpload, number, uploading }) => {
         <div className="mt-3">
           <button className={styles.editBtn} onClick={onEdit}>Edit</button>
           <button className={styles.uploadBtn} onClick={onUpload} disabled={uploading}>
-            {uploading ? <><i className="fas fa-spinner fa-spin me-1" />Publishing...</> : '🚀 Publish to Facebook'}
+            {uploading ? <><i className="fas fa-spinner fa-spin me-1" />Publishing...</> : <><i className="fab fa-facebook me-1" /> Publish to Facebook</>}
           </button>
         </div>
       </div>

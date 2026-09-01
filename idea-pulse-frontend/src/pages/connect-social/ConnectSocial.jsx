@@ -14,6 +14,8 @@ const ConnectSocial = () => {
   const fbReady = useRef(false);
   const [fbConnected, setFbConnected] = useState(false);
   const [fbPageName, setFbPageName] = useState('');
+  const [youtubeConnected, setYoutubeConnected] = useState(false);
+  const [youtubeChannelName, setYoutubeChannelName] = useState('');
   const [loading, setLoading] = useState(false);
 
   // Check connection status on load
@@ -29,6 +31,19 @@ const ConnectSocial = () => {
         }
       })
       .catch(console.error);
+
+    axios.get('http://localhost:1000/api/youtube/status', { headers: getHeaders() })
+      .then(res => {
+        setYoutubeConnected(Boolean(res.data.connected));
+        setYoutubeChannelName(res.data.channelName || '');
+      })
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    const result = new URLSearchParams(window.location.hash.split('?')[1] || '').get('status');
+    if (result === 'youtube_success') showSuccessToast('YouTube connected');
+    if (result === 'youtube_failed') showErrorToast('YouTube connection failed');
   }, []);
 
   // Load Facebook SDK
@@ -92,14 +107,14 @@ const ConnectSocial = () => {
   const triggerFBLogin = () => {
     window.FB.login((response) => {
       if (response.authResponse) {
-        fetchAndSavePageToken(response.authResponse.accessToken);
+        fetchAndSavePageToken();
       } else {
         showErrorToast('Facebook login cancelled');
       }
     }, { scope: 'pages_show_list,pages_read_engagement,pages_manage_posts,pages_read_user_content,read_insights' });
   };
 
-  const fetchAndSavePageToken = (userToken) => {
+  const fetchAndSavePageToken = () => {
     window.FB.api('/me/accounts', async (response) => {
       if (!response || response.error || !response.data?.length) {
         showErrorToast('No Facebook Pages found. Please make sure you manage a Facebook Page.');
@@ -120,7 +135,7 @@ const ConnectSocial = () => {
         );
         setFbConnected(true);
         setFbPageName(pageName);
-        showSuccessToast(`✅ Connected to "${pageName}"`);
+        showSuccessToast(`Connected to "${pageName}"`);
       } catch (err) {
         showErrorToast(err.response?.data?.message || 'Failed to save token');
       } finally {
@@ -135,9 +150,28 @@ const ConnectSocial = () => {
       setFbConnected(false);
       setFbPageName('');
       showSuccessToast('Facebook disconnected');
-    } catch (err) {
+    } catch {
       showErrorToast('Failed to disconnect');
     }
+  };
+
+  const handleYouTubeConnect = async () => {
+    if (!localStorage.getItem('token')) return showErrorToast('Please log in to Idea Pulse first');
+    try {
+      const response = await axios.get('http://localhost:1000/api/auth/youtube', { headers: getHeaders() });
+      window.location.href = response.data.authUrl;
+    } catch (error) {
+      showErrorToast(error.response?.data?.message || 'Unable to start YouTube connection');
+    }
+  };
+
+  const handleYouTubeDisconnect = async () => {
+    try {
+      await axios.post('http://localhost:1000/api/youtube/disconnect', {}, { headers: getHeaders() });
+      setYoutubeConnected(false);
+      setYoutubeChannelName('');
+      showSuccessToast('YouTube disconnected');
+    } catch { showErrorToast('Failed to disconnect YouTube'); }
   };
 
   const platforms = [
@@ -157,8 +191,17 @@ const ConnectSocial = () => {
 
         {fbConnected && fbPageName && (
           <div className="alert alert-success d-flex align-items-center justify-content-between mb-4 rounded-3">
-            <span>✅ Connected to Facebook Page: <strong>{fbPageName}</strong></span>
+            <span><i className="fas fa-circle-check text-success me-2" /> Connected to Facebook Page: <strong>{fbPageName}</strong></span>
             <button className="btn btn-sm btn-outline-danger rounded-pill" onClick={handleDisconnect}>
+              Disconnect
+            </button>
+          </div>
+        )}
+
+        {youtubeConnected && (
+          <div className="alert alert-success d-flex align-items-center justify-content-between mb-4 rounded-3">
+            <span><i className="fas fa-circle-check text-success me-2" /> Connected to YouTube{youtubeChannelName && <> channel: <strong>{youtubeChannelName}</strong></>}</span>
+            <button className="btn btn-sm btn-outline-danger rounded-pill" onClick={handleYouTubeDisconnect}>
               Disconnect
             </button>
           </div>
@@ -170,10 +213,12 @@ const ConnectSocial = () => {
               key={p.name}
               platform={p.name}
               logo={p.logo}
-              connected={p.name === 'Facebook' ? fbConnected : false}
+              connected={p.name === 'Facebook' ? fbConnected : p.name === 'YouTube' ? youtubeConnected : false}
               onClick={() => {
                 if (p.name === 'Facebook') {
                   fbConnected ? handleDisconnect() : handleFacebookLogin();
+                } else if (p.name === 'YouTube') {
+                  youtubeConnected ? handleYouTubeDisconnect() : handleYouTubeConnect();
                 } else {
                   showErrorToast(`${p.name} integration coming soon!`);
                 }

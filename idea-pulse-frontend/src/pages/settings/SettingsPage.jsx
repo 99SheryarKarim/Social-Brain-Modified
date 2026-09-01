@@ -82,7 +82,7 @@ export default function SettingsPage({ user, onLogout, onUsernameChange }) {
     setIsDark(false);
     localStorage.setItem('theme', 'light');
     document.documentElement.classList.remove('dark');
-    showSuccessToast('☀️ Light mode enabled');
+    showSuccessToast('Light mode enabled');
   };
 
   useEffect(() => {
@@ -356,7 +356,7 @@ export default function SettingsPage({ user, onLogout, onUsernameChange }) {
           </div>
           <div style={{ padding: '20px 24px' }}>
             <div style={{ background: '#fff1f2', borderRadius: 10, padding: '12px 16px', marginBottom: 20, border: '1px solid #fecaca' }}>
-              <p style={{ margin: 0, fontSize: 13, color: '#991b1b', fontWeight: 500 }}>⚠️ Warning: Deleting your account will permanently remove:</p>
+              <p style={{ margin: 0, fontSize: 13, color: '#991b1b', fontWeight: 500 }}><i className="fas fa-triangle-exclamation me-1" /> Warning: Deleting your account will permanently remove:</p>
               <ul style={{ margin: '8px 0 0', paddingLeft: 20, fontSize: 13, color: '#b91c1c' }}>
                 <li>All your generated posts and archive</li>
                 <li>Your activity history</li>

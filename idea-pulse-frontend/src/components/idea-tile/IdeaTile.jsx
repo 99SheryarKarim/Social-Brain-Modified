@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { addIdea, removeIdea, updateIdea } from '../../features/SelectedIdeas/selectedIdeasSlice'; // ✅ Make sure this path is correct
+import { addIdea, removeIdea, updateIdea } from '../../features/SelectedIdeas/selectedIdeasSlice';
 import styles from './IdeaTile.module.css';
 import PrimaryButton from '../primary-button/PrimaryButton';
 

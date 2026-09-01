@@ -122,7 +122,7 @@ export default function AddFriendsPage({ user }) {
   return (
     <div className="app-page">
       <div className={styles.container}>
-        <h1 className={styles.header}>👥 Add Friends</h1>
+        <h1 className={styles.header}>Add Friends</h1>
         <p style={{ textAlign: 'center', color: '#64748b', marginTop: -20, marginBottom: 24 }}>
           Browse all users on Idea Pulse and connect with them
         </p>

@@ -43,7 +43,7 @@ export default function AuthPage({ onAuthSuccess }) {
     setLoading(true);
     try {
       const res = await axios.post(`${BASE}/verify-otp`, { email, password, otp });
-      showSuccessToast('🎉 Account created! Welcome email sent.');
+      showSuccessToast('Account created! Welcome email sent.');
       onAuthSuccess({ token: res.data.token, email: res.data.email });
     } catch (err) {
       showErrorToast(err.response?.data?.message || 'Invalid OTP');
@@ -60,7 +60,7 @@ export default function AuthPage({ onAuthSuccess }) {
     setLoading(true);
     try {
       const res = await axios.post(`${BASE}/signin`, { email, password });
-      showSuccessToast('👋 Welcome back!');
+      showSuccessToast('Welcome back!');
       onAuthSuccess({ token: res.data.token, email: res.data.email });
     } catch (err) {
       showErrorToast(err.response?.data?.message || 'Invalid email or password');
@@ -73,7 +73,7 @@ export default function AuthPage({ onAuthSuccess }) {
     <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
-          <h1>⚡ Idea Pulse</h1>
+          <h1>Idea Pulse</h1>
           <p>AI-Powered Social Media Post Generator</p>
         </div>
 
@@ -132,7 +132,7 @@ export default function AuthPage({ onAuthSuccess }) {
           {isSignUp && step === 2 && (
             <form onSubmit={handleVerifyOTP} className="auth-form">
               <div className="otp-info">
-                <p>📧 We sent a 6-digit code to</p>
+                <p><i className="fa-regular fa-envelope me-2" />We sent a 6-digit code to</p>
                 <strong>{email}</strong>
               </div>
               <div className="form-group">
@@ -174,9 +174,9 @@ export default function AuthPage({ onAuthSuccess }) {
         </div>
 
         <div className="auth-features">
-          <div className="feature">✨ AI-Powered Posts</div>
-          <div className="feature">🎯 Smart Tone Selection</div>
-          <div className="feature">📱 Social Media Ready</div>
+          <div className="feature"><i className="fas fa-wand-magic-sparkles me-2" />AI-Powered Posts</div>
+          <div className="feature"><i className="fas fa-sliders me-2" />Smart Tone Selection</div>
+          <div className="feature"><i className="fas fa-share-nodes me-2" />Social Media Ready</div>
         </div>
       </div>
     </div>

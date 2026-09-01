@@ -34,6 +34,12 @@ function initializeDatabase() {
           email TEXT UNIQUE NOT NULL,
           password_hash TEXT NOT NULL,
           facebook_token TEXT,
+          youtube_token TEXT,
+          youtube_access_token TEXT,
+          youtube_refresh_token TEXT,
+          youtube_channel_id TEXT,
+          youtube_channel_title TEXT,
+          youtube_connected_at DATETIME,
           created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
           updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
@@ -80,6 +86,12 @@ function initializeDatabase() {
         `ALTER TABLE users ADD COLUMN stripe_customer_id TEXT`,
         `ALTER TABLE users ADD COLUMN stripe_subscription_id TEXT`,
         `ALTER TABLE users ADD COLUMN username TEXT`,
+        `ALTER TABLE users ADD COLUMN youtube_token TEXT`,
+        `ALTER TABLE users ADD COLUMN youtube_access_token TEXT`,
+        `ALTER TABLE users ADD COLUMN youtube_refresh_token TEXT`,
+        `ALTER TABLE users ADD COLUMN youtube_channel_id TEXT`,
+        `ALTER TABLE users ADD COLUMN youtube_channel_title TEXT`,
+        `ALTER TABLE users ADD COLUMN youtube_connected_at DATETIME`,
       ];
       migrations.forEach(sql => {
         db.run(sql, (err) => {

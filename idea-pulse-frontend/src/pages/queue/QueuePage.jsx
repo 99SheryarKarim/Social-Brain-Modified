@@ -21,7 +21,7 @@ const Queue = () => {
 
   return (
     <div className="container py-4">
-      <h4 className="mb-3">🎯 Select a Tone</h4>
+      <h4 className="mb-3">Select a Tone</h4>
 
       <div className="d-flex flex-row gap-2">
         {tones.map((tone) => (
@@ -38,7 +38,7 @@ const Queue = () => {
       </div>
 
       <div className="mt-4">
-        <h6>✅ Selected Tone:</h6>
+        <h6>Selected Tone:</h6>
         <p className="text-muted">{selectedTone || 'None selected'}</p>
       </div>
     </div>

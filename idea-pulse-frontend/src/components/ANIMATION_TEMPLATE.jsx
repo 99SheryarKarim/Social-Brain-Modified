@@ -45,7 +45,7 @@ const ExampleAnimatedComponent = () => {
     setError(null);
     
     // Show loading toast
-    const toastId = showLoadingToast('⏳ Fetching data...');
+    const toastId = showLoadingToast('Fetching data...');
     setLoading(true);
 
     try {
@@ -57,13 +57,13 @@ const ExampleAnimatedComponent = () => {
       
       // On success
       dismissToast(toastId);
-      showSuccessToast('✅ Data loaded successfully!');
+      showSuccessToast('Data loaded successfully!');
       setData({ id: 1, title: 'Example Data' });
       
     } catch (err) {
       dismissToast(toastId);
       setError(err.message);
-      showErrorToast(`❌ Error: ${err.message}`);
+      showErrorToast(`Error: ${err.message}`);
     } finally {
       setLoading(false);
     }
@@ -87,7 +87,7 @@ const ExampleAnimatedComponent = () => {
           className="display-5 fw-bold text-dark mb-2"
           variants={staggerItemVariants}
         >
-          🎯 Animated Component Example
+          Animated Component Example
         </motion.h1>
         <motion.p 
           className="lead text-muted"
@@ -204,7 +204,7 @@ const ExampleAnimatedComponent = () => {
           className="btn btn-outline-primary rounded-lg"
           onClick={() => {
             setData(null);
-            showSuccessToast('✅ Data cleared!');
+            showSuccessToast('Data cleared!');
           }}
           variants={staggerItemVariants}
           whileHover="hover"

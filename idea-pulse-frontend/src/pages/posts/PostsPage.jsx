@@ -45,14 +45,14 @@ const EngagementModal = ({ post, onClose }) => {
               fontWeight: 600, fontSize: 13, color: tab === 'reactions' ? '#46a29f' : '#94a3b8',
               borderBottom: tab === 'reactions' ? '2px solid #46a29f' : '2px solid transparent'
             }}>
-              👍 Reactions {data && !data.error ? `(${data.reactions?.length || 0})` : ''}
+              <i className="far fa-thumbs-up me-1" /> Reactions {data && !data.error ? `(${data.reactions?.length || 0})` : ''}
             </button>
             <button onClick={() => setTab('comments')} style={{
               background: 'none', border: 'none', padding: '8px 0', cursor: 'pointer',
               fontWeight: 600, fontSize: 13, color: tab === 'comments' ? '#46a29f' : '#94a3b8',
               borderBottom: tab === 'comments' ? '2px solid #46a29f' : '2px solid transparent'
             }}>
-              💬 Comments {data && !data.error ? `(${data.comments?.length || 0})` : ''}
+              <i className="far fa-comment me-1" /> Comments {data && !data.error ? `(${data.comments?.length || 0})` : ''}
             </button>
           </div>
         </div>
@@ -73,7 +73,7 @@ const EngagementModal = ({ post, onClose }) => {
                     onError={e => { e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(r.name)}&size=36&background=46a29f&color=fff`; }}
                     alt={r.name} />
                   <span style={{ fontSize: 14, fontWeight: 500, color: '#1e293b' }}>{r.name}</span>
-                  <span style={{ marginLeft: 'auto', fontSize: 18 }}>👍</span>
+                  <span style={{ marginLeft: 'auto', fontSize: 16 }}><i className="fas fa-thumbs-up text-primary" /></span>
                 </div>
               ))
           )}
@@ -128,7 +128,7 @@ const PostsPage = ({ user }) => {
     try {
       await axios.get(`${BASE}/sync-engagement`, { headers: getHeaders() });
       dispatch(fetchLibrary());
-      showSuccessToast('📊 Engagement stats updated!');
+      showSuccessToast('Engagement stats updated!');
     } catch (err) {
       showErrorToast(err.response?.data?.message || 'Failed to sync engagement');
     } finally {
@@ -147,7 +147,7 @@ const PostsPage = ({ user }) => {
         originalTopic: post.original_topic || post.originalTopic || '',
         postDbId: post.id || null,
       }, { headers: getHeaders() });
-      showSuccessToast('🚀 Post published to Facebook!');
+      showSuccessToast('Post published to Facebook!');
       if (user) dispatch(fetchLibrary()); // refresh to show published badge
     } catch (err) {
       const msg = err.response?.data?.message || 'Failed to publish';
@@ -175,7 +175,7 @@ const PostsPage = ({ user }) => {
 
     const result = await dispatch(schedulePost({ postId, scheduledAt, recommendedTimeBasis: recommendations[postId]?.basis }));
     if (result.type.endsWith('fulfilled')) {
-      showSuccessToast(`⏰ Post scheduled for ${new Date(scheduledAt).toLocaleString()}`);
+      showSuccessToast(`Post scheduled for ${new Date(scheduledAt).toLocaleString()}`);
       setSchedulingId(null);
     } else {
       showErrorToast('Failed to schedule post');
@@ -220,7 +220,7 @@ const PostsPage = ({ user }) => {
     <div className="app-page">
     <div className="container py-5">
       <div className="mb-4 text-center">
-        <h2 className="fw-bold">📚 My Posts</h2>
+        <h2 className="fw-bold">My Posts</h2>
         <p className="text-muted">Your generated content library</p>
       </div>
 
@@ -228,18 +228,18 @@ const PostsPage = ({ user }) => {
       <div className="d-flex gap-2 mb-4 justify-content-center">
         <button className={`btn rounded-pill px-4 ${activeTab === 'generated' ? 'btn-primary' : 'btn-outline-secondary'}`}
           onClick={() => setActiveTab('generated')}>
-          ✨ Just Generated {posts.length > 0 && <span className="badge bg-primary ms-1">{posts.length}</span>}
+          Just Generated {posts.length > 0 && <span className="badge bg-primary ms-1">{posts.length}</span>}
         </button>
         <button className={`btn rounded-pill px-4 ${activeTab === 'library' ? 'btn-primary' : 'btn-outline-secondary'}`}
           onClick={() => setActiveTab('library')}>
-          🗂️ Archive {library.length > 0 && <span className="badge bg-secondary ms-1">{library.length}</span>}
+          Archive {library.length > 0 && <span className="badge bg-secondary ms-1">{library.length}</span>}
         </button>
       </div>
 
       {/* Generated Posts Tab */}
       {activeTab === 'generated' && (
         <>
-          {loading && <p className="text-center text-muted">⏳ Generating posts...</p>}
+          {loading && <p className="text-center text-muted"><i className="fas fa-spinner fa-spin me-2" />Generating posts...</p>}
           {posts.length === 0 && !loading && (
             <div className="text-center py-5">
               <i className="fas fa-magic-wand-sparkles fs-1 text-muted mb-3" />
@@ -265,7 +265,7 @@ const PostsPage = ({ user }) => {
               <p className="text-muted">Please log in to view your post archive</p>
             </div>
           )}
-          {user && libraryLoading && <p className="text-center text-muted">⏳ Loading archive...</p>}
+          {user && libraryLoading && <p className="text-center text-muted"><i className="fas fa-spinner fa-spin me-2" />Loading archive...</p>}
           {user && !libraryLoading && library.length === 0 && (
             <div className="text-center py-5">
               <i className="fas fa-inbox fs-1 text-muted mb-3" />
@@ -297,7 +297,7 @@ const PostsPage = ({ user }) => {
                         {post.posted_to_facebook && <span className="badge rounded-pill bg-success">✓ Published</span>}
                         {post.scheduled_at && !post.posted_to_facebook && (
                           <span className="badge rounded-pill bg-warning text-dark">
-                            ⏰ {formatScheduled(post.scheduled_at)}
+                            <i className="far fa-clock me-1" /> {formatScheduled(post.scheduled_at)}
                           </span>
                         )}
                       </div>
@@ -344,7 +344,7 @@ const PostsPage = ({ user }) => {
                             disabled={publishing === `lib-${post.id}`}>
                             {publishing === `lib-${post.id}`
                               ? <><i className="fas fa-spinner fa-spin me-1" />Publishing...</>
-                              : '🚀 Publish Now'}
+                              : <><i className="fas fa-paper-plane me-1" /> Publish Now</>}
                           </button>
 
                           {post.scheduled_at ? (

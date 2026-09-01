@@ -5,33 +5,41 @@ const { User } = require("../models/databaseModels");
 
 const { sendOTPEmail, sendWelcomeEmail } = require('../services/emailService');
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.GOOGLE_CALLBACK_URL,
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      try {
-        const email = profile.emails[0].value;
+const googleClientId = process.env.GOOGLE_CLIENT_ID;
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
+const googleCallbackUrl = process.env.GOOGLE_CALLBACK_URL;
 
-        let user = await User.findByEmail(email);
-        const isNewUser = !user;
+if (googleClientId && googleClientSecret && googleCallbackUrl) {
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: googleClientId,
+        clientSecret: googleClientSecret,
+        callbackURL: googleCallbackUrl,
+      },
+      async (accessToken, refreshToken, profile, done) => {
+        try {
+          const email = profile.emails[0].value;
 
-        if (!user) {
-          const randomPassword = Math.random().toString(36).slice(-10);
-          user = await User.create(email, randomPassword);
-          // Send welcome email to new Google users
-          sendWelcomeEmail(email).catch(console.error);
+          let user = await User.findByEmail(email);
+          const isNewUser = !user;
+
+          if (!user) {
+            const randomPassword = Math.random().toString(36).slice(-10);
+            user = await User.create(email, randomPassword);
+            // Send welcome email to new Google users
+            sendWelcomeEmail(email).catch(console.error);
+          }
+
+          return done(null, user);
+        } catch (err) {
+          return done(err, null);
         }
-
-        return done(null, user);
-      } catch (err) {
-        return done(err, null);
       }
-    }
-  )
-);
+    )
+  );
+} else {
+  console.warn("Google OAuth env vars are missing; skipping Passport Google strategy initialization.");
+}
 
 module.exports = passport;

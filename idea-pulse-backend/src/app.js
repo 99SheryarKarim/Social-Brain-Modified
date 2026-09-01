@@ -29,6 +29,7 @@ const notificationRoutes = require('./routes/notificationRoutes');
 const messageRoutes = require('./routes/messageRoutes');
 const trendRoutes = require('./routes/trendRoutes');
 const { getRecommendedTime } = require('./controllers/trendController');
+const youtubeRoutes = require('./routes/youtubeRoutes');
 const app = express();
 app.use(cors({
   origin: ["http://localhost:5173", "http://localhost:5174", "http://localhost:3000"], // Vite default ports
@@ -59,6 +60,7 @@ app.use('/api/friends', authMiddleware, friendRoutes);
 app.use('/api/notifications', authMiddleware, notificationRoutes);
 app.use('/api/messages', authMiddleware, messageRoutes);
 app.use('/api/trends', trendRoutes);
+app.use('/api/youtube', youtubeRoutes);
 app.get('/api/recommended-time', authMiddleware, getRecommendedTime);
 
 // Post library — fetch all saved posts for logged-in user

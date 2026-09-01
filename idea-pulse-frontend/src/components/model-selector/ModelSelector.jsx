@@ -13,7 +13,7 @@ const ModelSelector = ({ selectedModel, onModelChange, disabled = false }) => {
       provider: 'gemini',
       responseTime: 'very-fast',
       quality: 'excellent',
-      icon: '🚀',
+      iconClass: 'fas fa-bolt',
     },
     {
       id: 'mistralai/Mistral-7B-Instruct-v0.1',
@@ -22,7 +22,7 @@ const ModelSelector = ({ selectedModel, onModelChange, disabled = false }) => {
       provider: 'huggingface',
       responseTime: 'medium',
       quality: 'very-good',
-      icon: '⚡',
+      iconClass: 'fas fa-microchip',
     },
     {
       id: 'meta-llama/Llama-2-7b-chat',
@@ -31,7 +31,7 @@ const ModelSelector = ({ selectedModel, onModelChange, disabled = false }) => {
       provider: 'huggingface',
       responseTime: 'medium',
       quality: 'very-good',
-      icon: '🦙',
+      iconClass: 'fas fa-layer-group',
     },
     {
       id: 'togethercomputer/llama-2-70b-chat',
@@ -40,7 +40,7 @@ const ModelSelector = ({ selectedModel, onModelChange, disabled = false }) => {
       provider: 'together',
       responseTime: 'fast',
       quality: 'excellent',
-      icon: '🔥',
+      iconClass: 'fas fa-fire',
     },
     {
       id: 'mistralai/Mistral-7B-Instruct-v0.2',
@@ -49,7 +49,7 @@ const ModelSelector = ({ selectedModel, onModelChange, disabled = false }) => {
       provider: 'together',
       responseTime: 'very-fast',
       quality: 'very-good',
-      icon: '⚡',
+      iconClass: 'fas fa-bolt',
     },
     {
       id: 'NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO',
@@ -58,7 +58,7 @@ const ModelSelector = ({ selectedModel, onModelChange, disabled = false }) => {
       provider: 'together',
       responseTime: 'fast',
       quality: 'excellent',
-      icon: '🧠',
+      iconClass: 'fas fa-brain',
     },
     {
       id: 'ollama-mistral',
@@ -67,7 +67,7 @@ const ModelSelector = ({ selectedModel, onModelChange, disabled = false }) => {
       provider: 'ollama',
       responseTime: 'medium',
       quality: 'very-good',
-      icon: '💻',
+      iconClass: 'fas fa-laptop-code',
     },
     {
       id: 'ollama-llama2',
@@ -76,7 +76,7 @@ const ModelSelector = ({ selectedModel, onModelChange, disabled = false }) => {
       provider: 'ollama',
       responseTime: 'medium',
       quality: 'very-good',
-      icon: '🦙',
+      iconClass: 'fas fa-server',
     },
     {
       id: 'ollama-neural-chat',
@@ -85,7 +85,7 @@ const ModelSelector = ({ selectedModel, onModelChange, disabled = false }) => {
       provider: 'ollama',
       responseTime: 'fast',
       quality: 'good',
-      icon: '💬',
+      iconClass: 'fas fa-comments',
     },
   ];
 
@@ -104,8 +104,12 @@ const ModelSelector = ({ selectedModel, onModelChange, disabled = false }) => {
   return (
     <div className={styles.modelSelector}>
       <div className={styles.label}>
-        <span className={styles.labelText}>🤖 AI Model</span>
-        <div className={styles.badge}>{currentModel?.icon || '🤖'}</div>
+        <span className={styles.labelText}>
+          <i className="fas fa-sliders" style={{ color: '#46a29f' }} /> AI Model
+        </span>
+        <div className={styles.badge}>
+          <i className={currentModel?.iconClass || 'fas fa-microchip'} />
+        </div>
       </div>
 
       <div className={styles.selectorContainer}>
@@ -135,7 +139,9 @@ const ModelSelector = ({ selectedModel, onModelChange, disabled = false }) => {
               >
                 <div className={styles.modelOptionContent}>
                   <div className={styles.modelOptionHeader}>
-                    <span className={styles.modelIcon}>{model.icon}</span>
+                    <span className={styles.modelIcon}>
+                      <i className={model.iconClass} style={{ color: getProviderBadgeColor(model.provider) }} />
+                    </span>
                     <span className={styles.modelOptionName}>{model.name}</span>
                     <span
                       className={styles.modelOptionProvider}
@@ -147,10 +153,10 @@ const ModelSelector = ({ selectedModel, onModelChange, disabled = false }) => {
                   <p className={styles.modelOptionDesc}>{model.description}</p>
                   <div className={styles.modelStats}>
                     <span className={styles.stat} title="Response time">
-                      ⏱️ {model.responseTime.replace('-', ' ')}
+                      <i className="far fa-clock me-1" /> {model.responseTime.replace('-', ' ')}
                     </span>
                     <span className={styles.stat} title="Output quality">
-                      ⭐ {model.quality}
+                      <i className="fas fa-star text-warning me-1" /> {model.quality}
                     </span>
                   </div>
                 </div>
@@ -164,8 +170,12 @@ const ModelSelector = ({ selectedModel, onModelChange, disabled = false }) => {
         <div className={styles.info}>
           <p className={styles.infoText}>{currentModel.description}</p>
           <div className={styles.features}>
-            <span className={styles.feature}>⏱️ {currentModel.responseTime.replace('-', ' ')}</span>
-            <span className={styles.feature}>⭐ {currentModel.quality} quality</span>
+            <span className={styles.feature}>
+              <i className="far fa-clock me-1" /> {currentModel.responseTime.replace('-', ' ')}
+            </span>
+            <span className={styles.feature}>
+              <i className="fas fa-star text-warning me-1" /> {currentModel.quality} quality
+            </span>
           </div>
         </div>
       )}

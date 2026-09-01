@@ -54,7 +54,6 @@ export const showInfoToast = (message, options = {}) => {
   toast(message, {
     duration: 3000,
     position: "top-right",
-    icon: "ℹ️",
     style: {
       background: "#3b82f6",
       color: "#fff",
@@ -77,7 +76,6 @@ export const showWarningToast = (message, options = {}) => {
   toast(message, {
     duration: 3500,
     position: "top-right",
-    icon: "⚠️",
     style: {
       background: "#f59e0b",
       color: "#fff",

@@ -18,7 +18,7 @@ const QuickPost = () => {
 
     const [selectedTone, setSelectedTone] = useState('');
     const [numWords, setNumWords] = useState(50);
-    const [isUploading, setIsUploading] = useState(false); // 🔹 New state
+    const [isUploading, setIsUploading] = useState(false);
 
     const handlePromptChange = (e) => {
         setPrompt(e.target.value);
@@ -69,7 +69,7 @@ const QuickPost = () => {
                 return;
             }
 
-            setIsUploading(true); // 🔹 Start loading
+            setIsUploading(true); // Start loading
 
             if (imageFiles.length > 0) {
                 await uploadPhotoToFacebookPage(imageFiles[0], postText);
@@ -77,12 +77,12 @@ const QuickPost = () => {
                 alert("No image selected. Text-only post requires a separate implementation.");
             }
 
-            alert("✅ Post uploaded to Facebook!");
+            alert("Post uploaded to Facebook!");
         } catch (err) {
-            console.error("❌ Failed to upload post:", err.message);
+            console.error("Failed to upload post:", err.message);
             alert("Something went wrong. Check the console for details.");
         } finally {
-            setIsUploading(false); // 🔹 Stop loading
+            setIsUploading(false); // Start loading
         }
     };
 
@@ -91,7 +91,7 @@ const QuickPost = () => {
     return (
         <div className="container py-5">
             <div className="text-center mb-4">
-                <h2 className="fw-bold text-dark">✨ Create a Custom Post</h2>
+                <h2 className="fw-bold text-dark">Create a Custom Post</h2>
                 <p className="text-muted">Generate, edit, and upload a single post</p>
             </div>
 

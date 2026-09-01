@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 import styles from './PostGeniePage.module.css';
@@ -16,7 +16,12 @@ import { fetchTrendMatch } from '../../features/ideas/ideasAPI';
 
 const PostGeniePage = ({ user }) => {
     const navigate = useNavigate();
-    const [prompt, setPrompt] = useState('');
+    const location = useLocation();
+    const [prompt, setPrompt] = useState(() => {
+        const initial = location.state?.prompt || (typeof window !== 'undefined' ? localStorage.getItem('pendingPrompt') : '');
+        if (typeof window !== 'undefined') localStorage.removeItem('pendingPrompt');
+        return initial || '';
+    });
     const textareaRef = useRef(null);
     const dispatch = useDispatch();
     const recognitionRef = useRef(null);
@@ -61,7 +66,7 @@ const PostGeniePage = ({ user }) => {
                                 ✕
                             </button>
                             <div className={styles.notificationContent}>
-                                <div className={styles.notificationIcon}>⚡</div>
+                                <div className={styles.notificationIcon}><i className="fas fa-bolt" /></div>
                                 <div className={styles.notificationText}>
                                     <p className={styles.notificationTitle}>Demo Data</p>
                                     <p className={styles.notificationSubtitle}>
@@ -82,7 +87,7 @@ const PostGeniePage = ({ user }) => {
                                 ✕
                             </button>
                             <div className={styles.notificationContent}>
-                                <div className={styles.notificationIcon}>✨</div>
+                                <div className={styles.notificationIcon}><i className="fas fa-wand-magic-sparkles" /></div>
                                 <div className={styles.notificationText}>
                                     <p className={styles.notificationTitle}>Ideas Generated!</p>
                                     <p className={styles.notificationSubtitle}>
@@ -350,7 +355,7 @@ const PostGeniePage = ({ user }) => {
         <div className="app-page">
         <div className="container py-5">
             <div className="text-center mb-5">
-                <h1 className="fw-bold display-6 text-dark">✨ Idea Pulse</h1>
+                <h1 className="fw-bold display-6 text-dark">Idea Pulse</h1>
                 <p className="text-muted fs-5">Create a month’s worth of content in seconds!</p>
             </div>
 
@@ -475,7 +480,7 @@ const PostGeniePage = ({ user }) => {
             </section>
 
             <div>
-                <h4 className="mb-4">✨ Generated Ideas</h4>
+                <h4 className="mb-4">Generated Ideas</h4>
                 {loading && (
                     <div className="text-center py-4 d-flex justify-content-center align-items-center">
                         <div className="spinner-grow spinner-grow-sm" style={{ color: '#46a29f' }} role="status"></div>
