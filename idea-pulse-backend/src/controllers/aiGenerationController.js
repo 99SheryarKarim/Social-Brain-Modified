@@ -9,6 +9,7 @@ const jwt = require("jsonwebtoken");
 const db = require("../../database/init");
 const { logActivity } = require("../utils/activityLogger");
 const { fetchTrends, matchTrendToNiche } = require('../services/trendService');
+const { checkSafetyGuardrail } = require('../utils/safetyGuardrail');
 
 const getUserIdFromRequest = (req) => {
   try {
@@ -35,6 +36,25 @@ exports.generateIdeas = async (req, res) => {
   try {
     const { prompt, num_posts = 3, tone = "casual", model = "gemini-2.5-flash", useTrends = false } = req.body;
     if (!prompt || prompt.trim().length === 0) return res.status(400).json({ error: "Prompt is required" });
+
+    // Local Ethical & Safety Guardrail Check (Zero AI Model Quota Wasted)
+    const guardrail = checkSafetyGuardrail(prompt);
+    if (!guardrail.isSafe) {
+      return res.status(200).json({
+        post_prompts: [{
+          prompt: guardrail.message,
+          hashtags: "",
+          recommendation: {
+            platform: "Notice",
+            time: "Immediate",
+            reason: "Content safety refusal"
+          }
+        }],
+        isMockData: true,
+        dataSource: "safety_guardrail",
+        model: model
+      });
+    }
 
     const userId = getUserIdFromRequest(req);
     const brandSettings = await getBrandSettings(userId);
@@ -105,6 +125,19 @@ exports.generatePostsWithMedia = async (req, res) => {
 
     for (const prompt of prompts) {
       try {
+        const guardrail = checkSafetyGuardrail(prompt) || checkSafetyGuardrail(originalTopic);
+        if (!guardrail.isSafe) {
+          posts.push({
+            prompt,
+            content: guardrail.message,
+            hashtags: "",
+            imagePrompt: "Safety notice",
+            originalTopic,
+            tone,
+          });
+          continue;
+        }
+
         const result = await generatePostContentWithFallback(prompt, tone, numWords, originalTopic, brandSettings, model);
         if (result.isMock) hasMockData = true;
         if (result.provider) usedProvider = result.provider;

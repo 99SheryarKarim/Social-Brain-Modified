@@ -1,5 +1,6 @@
 const { generateCompletePost, generatePostContent } = require("../services/geminiService");
 const { Post, User } = require("../models/databaseModels");
+const { checkSafetyGuardrail } = require("../utils/safetyGuardrail");
 
 /**
  * Generate a new post based on topic and tone
@@ -23,6 +24,25 @@ exports.generatePost = async (req, res) => {
       return res.status(400).json({
         success: false,
         error: "Tone is required",
+      });
+    }
+
+    // Safety & Ethical Guardrail Check
+    const guardrail = checkSafetyGuardrail(topic);
+    if (!guardrail.isSafe) {
+      return res.status(200).json({
+        success: true,
+        message: "Request refused due to safety policy",
+        data: {
+          postId: null,
+          content: guardrail.message,
+          hashtags: "",
+          imagePrompt: "Safety Notice",
+          topic,
+          tone,
+          keywords: [topic],
+          createdAt: new Date().toISOString(),
+        },
       });
     }
 
