@@ -233,13 +233,11 @@ async function generatePostPromptsWithTracking(userTopic, _keywords, tone, numPo
     const prompts = await generatePostPrompts(userTopic, tone, numPosts, brandSettings, selectedModel);
     return { prompts, isMock: false, provider: "gemini" };
   } catch (error) {
-    if (error.message.includes("429") || error.message.includes("quota")) {
-      const mock = Array.from({ length: numPosts }, (_, i) =>
-        `Post idea ${i + 1} about ${userTopic}`
-      );
-      return { prompts: mock, isMock: true, provider: "gemini" };
-    }
-    throw error;
+    console.warn("Gemini API error, using mock data fallback:", error.message);
+    const mock = Array.from({ length: numPosts }, (_, i) =>
+      `Post idea ${i + 1} about ${userTopic}`
+    );
+    return { prompts: mock, isMock: true, provider: "gemini" };
   }
 }
 
@@ -248,16 +246,14 @@ async function generatePostContentWithTracking(idea, tone, numWords = 150, origi
     const result = await generatePostContent(idea, tone, numWords, originalTopic || idea, brandSettings, selectedModel);
     return { ...result, isMock: false, provider: "gemini" };
   } catch (error) {
-    if (error.message.includes("429") || error.message.includes("quota")) {
-      return {
-        content: `A ${tone} post about ${originalTopic || idea}.`,
-        hashtags: `#${(originalTopic || idea).replace(/\s+/g, "")}`,
-        imagePrompt: `Image about ${originalTopic || idea}`,
-        isMock: true,
-        provider: "gemini",
-      };
-    }
-    throw error;
+    console.warn("Gemini content generation error, using mock fallback:", error.message);
+    return {
+      content: `A ${tone} post about ${originalTopic || idea}.`,
+      hashtags: `#${(originalTopic || idea).replace(/\s+/g, "")}`,
+      imagePrompt: `Image about ${originalTopic || idea}`,
+      isMock: true,
+      provider: "gemini",
+    };
   }
 }
 

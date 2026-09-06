@@ -6,7 +6,8 @@
 const axios = require("axios");
 
 const HF_API_KEY = process.env.HUGGINGFACE_API_KEY;
-const HF_API_URL = "https://api-inference.huggingface.co/models";
+const HF_API_URL = "https://router.huggingface.co/models";
+const HF_API_URL_FALLBACK = "https://api-inference.huggingface.co/models";
 
 // Rate limiting to avoid hitting quota
 let lastRequestTime = 0;
@@ -33,36 +34,36 @@ async function callHuggingFaceAPI(modelId, prompt, options = {}) {
 
   await waitForRateLimit();
 
-  try {
-    const response = await axios.post(
-      `${HF_API_URL}/${modelId}`,
-      {
-        inputs: prompt,
-        parameters: {
-          max_length: options.maxLength || 512,
-          temperature: options.temperature || 0.7,
-          top_p: options.topP || 0.95,
-          ...options.parameters,
-        },
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${HF_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        timeout: 30000,
-      }
-    );
+  const payload = {
+    inputs: prompt,
+    parameters: {
+      max_length: options.maxLength || 512,
+      temperature: options.temperature || 0.7,
+      top_p: options.topP || 0.95,
+      ...options.parameters,
+    },
+  };
+  const headers = {
+    Authorization: `Bearer ${HF_API_KEY}`,
+    "Content-Type": "application/json",
+  };
 
+  try {
+    const response = await axios.post(`${HF_API_URL}/${modelId}`, payload, { headers, timeout: 10000 });
     return response.data;
   } catch (error) {
-    if (error.response?.status === 429) {
-      throw new Error("Hugging Face API rate limit exceeded. Try again later.");
+    try {
+      const fallbackRes = await axios.post(`${HF_API_URL_FALLBACK}/${modelId}`, payload, { headers, timeout: 10000 });
+      return fallbackRes.data;
+    } catch {
+      if (error.response?.status === 429) {
+        throw new Error("Hugging Face API rate limit exceeded. Try again later.");
+      }
+      if (error.response?.status === 503) {
+        throw new Error("Hugging Face model is loading. Please try again in a moment.");
+      }
+      throw error;
     }
-    if (error.response?.status === 503) {
-      throw new Error("Hugging Face model is loading. Please try again in a moment.");
-    }
-    throw error;
   }
 }
 

@@ -392,27 +392,37 @@ const LibraryImage = ({ post }) => {
   const [imgSrc, setImgSrc] = useState(null);
 
   useEffect(() => {
-    const query = post.original_topic || post.image_prompt || 'social media';
-    const searchQuery = post.tone ? `${query} ${post.tone}` : query;
+    let query = post.image_prompt || post.imagePrompt || '';
+
+    if (!query) {
+      const rawText = post.original_topic || post.originalTopic || post.content || '';
+      const stopWords = new Set(['ideas', 'idea', 'post', 'posts', 'for', 'the', 'a', 'an', 'and', 'or', 'in', 'on', 'at', 'to', 'with', 'beginners', 'beginner', 'casual', 'professional', 'creative', 'friendly', 'witty', 'how', 'what', 'why', 'top', 'best', 'guide', 'tips', 'tricks', 'about']);
+      const words = rawText.replace(/[^\w\s]/gi, ' ').split(/\s+/).filter(w => w.length > 2 && !stopWords.has(w.toLowerCase()));
+      query = words.length > 0 ? words.slice(0, 3).join(' ') : 'social media';
+    }
+
+    const aiFallbackUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(query)}?width=400&height=200&nologo=true`;
     const apiKey = import.meta.env.VITE_PEXELS_API_KEY;
 
-    fetch(`https://api.pexels.com/v1/search?query=${encodeURIComponent(searchQuery)}&per_page=1`, {
-      headers: { Authorization: apiKey }
-    })
-      .then(r => r.json())
-      .then(data => {
-        setImgSrc(data.photos?.length > 0
-          ? data.photos[0].src.landscape
-          : `https://picsum.photos/seed/${encodeURIComponent(query)}/400/200`);
+    if (apiKey) {
+      fetch(`https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=1`, {
+        headers: { Authorization: apiKey }
       })
-      .catch(() => setImgSrc('https://picsum.photos/400/200'));
-  }, [post.original_topic, post.image_prompt, post.tone]);
+        .then(r => r.json())
+        .then(data => {
+          setImgSrc(data.photos?.length > 0 ? data.photos[0].src.landscape : aiFallbackUrl);
+        })
+        .catch(() => setImgSrc(aiFallbackUrl));
+    } else {
+      setImgSrc(aiFallbackUrl);
+    }
+  }, [post.original_topic, post.image_prompt, post.imagePrompt, post.tone]);
 
   return (
-    <img src={imgSrc || 'https://picsum.photos/400/200'} alt={post.original_topic || 'post'}
+    <img src={imgSrc || `https://image.pollinations.ai/prompt/${encodeURIComponent(post.original_topic || 'social media')}?width=400&height=200&nologo=true`} alt={post.original_topic || 'post'}
       className="card-img-top rounded-top-4"
       style={{ height: 180, objectFit: 'cover' }}
-      onError={() => setImgSrc('https://picsum.photos/400/200')} />
+      onError={() => setImgSrc(`https://image.pollinations.ai/prompt/${encodeURIComponent(post.original_topic || 'social media')}?width=400&height=200&nologo=true`)} />
   );
 };
 

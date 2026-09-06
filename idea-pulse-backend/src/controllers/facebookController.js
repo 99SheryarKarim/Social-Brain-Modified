@@ -107,14 +107,28 @@ exports.publishPost = async (req, res) => {
       let resolvedImageUrl = imageUrl || null;
       if (!resolvedImageUrl) {
         try {
-          const topic = req.body.originalTopic || content.split(' ').slice(0, 4).join(' ');
-          const pexelsRes = await axios.get(
-            `https://api.pexels.com/v1/search?query=${encodeURIComponent(topic)}&per_page=1`,
-            { headers: { Authorization: process.env.PEXELS_API_KEY } }
-          );
-          resolvedImageUrl = pexelsRes.data?.photos?.[0]?.src?.landscape || null;
+          let query = req.body.imagePrompt || req.body.image_prompt || '';
+          if (!query) {
+            const rawText = req.body.originalTopic || content || '';
+            const stopWords = new Set(['ideas', 'idea', 'post', 'posts', 'for', 'the', 'a', 'an', 'and', 'or', 'in', 'on', 'at', 'to', 'with', 'beginners', 'beginner', 'casual', 'professional', 'creative', 'friendly', 'witty', 'how', 'what', 'why', 'top', 'best', 'guide', 'tips', 'tricks', 'about']);
+            const words = rawText.replace(/[^\w\s]/gi, ' ').split(/\s+/).filter(w => w.length > 2 && !stopWords.has(w.toLowerCase()));
+            query = words.length > 0 ? words.slice(0, 3).join(' ') : 'social media';
+          }
+
+          if (process.env.PEXELS_API_KEY) {
+            const pexelsRes = await axios.get(
+              `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=1`,
+              { headers: { Authorization: process.env.PEXELS_API_KEY } }
+            );
+            resolvedImageUrl = pexelsRes.data?.photos?.[0]?.src?.landscape || null;
+          }
+
+          if (!resolvedImageUrl) {
+            resolvedImageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(query)}?width=800&height=400&nologo=true`;
+          }
         } catch {
-          resolvedImageUrl = null;
+          const fallbackQuery = req.body.originalTopic || content.slice(0, 30);
+          resolvedImageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(fallbackQuery)}?width=800&height=400&nologo=true`;
         }
       }
 

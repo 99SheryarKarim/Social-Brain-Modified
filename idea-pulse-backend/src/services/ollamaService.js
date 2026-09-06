@@ -14,7 +14,7 @@ const OLLAMA_HOST = process.env.OLLAMA_HOST || "http://localhost:11434";
 async function isOllamaAvailable() {
   try {
     const response = await axios.get(`${OLLAMA_HOST}/api/tags`, {
-      timeout: 5000,
+      timeout: 1000,
     });
     return response.status === 200;
   } catch {
@@ -25,7 +25,7 @@ async function isOllamaAvailable() {
 async function getAvailableModels() {
   try {
     const response = await axios.get(`${OLLAMA_HOST}/api/tags`, {
-      timeout: 5000,
+      timeout: 1000,
     });
     return (response.data?.models || []).map((model) => model.name || model.model || "").filter(Boolean);
   } catch {

@@ -29,31 +29,37 @@ const publishDuePosts = async () => {
           const fullMessage = post.hashtags ? `${post.content}\n\n${post.hashtags}` : post.content;
 
           let fbResponse;
-          if (post.image_prompt) {
-            // Try to get a Pexels image for the post
+          let query = post.image_prompt || '';
+          if (!query) {
+            const rawText = post.original_topic || post.content || '';
+            const stopWords = new Set(['ideas', 'idea', 'post', 'posts', 'for', 'the', 'a', 'an', 'and', 'or', 'in', 'on', 'at', 'to', 'with', 'beginners', 'beginner', 'casual', 'professional', 'creative', 'friendly', 'witty', 'how', 'what', 'why', 'top', 'best', 'guide', 'tips', 'tricks', 'about']);
+            const words = rawText.replace(/[^\w\s]/gi, ' ').split(/\s+/).filter(w => w.length > 2 && !stopWords.has(w.toLowerCase()));
+            query = words.length > 0 ? words.slice(0, 3).join(' ') : 'social media';
+          }
+
+          let imageUrl = null;
+          if (process.env.PEXELS_API_KEY) {
             try {
               const pexelsRes = await axios.get(
-                `https://api.pexels.com/v1/search?query=${encodeURIComponent(post.original_topic || post.image_prompt)}&per_page=1`,
+                `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=1`,
                 { headers: { Authorization: process.env.PEXELS_API_KEY } }
               );
-              const imageUrl = pexelsRes.data?.photos?.[0]?.src?.landscape;
-
-              if (imageUrl) {
-                fbResponse = await axios.post(
-                  `https://graph.facebook.com/v19.0/${pageId}/photos`,
-                  { url: imageUrl, caption: fullMessage, access_token: accessToken }
-                );
-              } else {
-                throw new Error('No image found');
-              }
+              imageUrl = pexelsRes.data?.photos?.[0]?.src?.landscape || null;
             } catch {
-              // Fall back to text post if image fails
-              fbResponse = await axios.post(
-                `https://graph.facebook.com/v19.0/${pageId}/feed`,
-                { message: fullMessage, access_token: accessToken }
-              );
+              imageUrl = null;
             }
-          } else {
+          }
+
+          if (!imageUrl) {
+            imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(query)}?width=800&height=400&nologo=true`;
+          }
+
+          try {
+            fbResponse = await axios.post(
+              `https://graph.facebook.com/v19.0/${pageId}/photos`,
+              { url: imageUrl, caption: fullMessage, access_token: accessToken }
+            );
+          } catch {
             fbResponse = await axios.post(
               `https://graph.facebook.com/v19.0/${pageId}/feed`,
               { message: fullMessage, access_token: accessToken }

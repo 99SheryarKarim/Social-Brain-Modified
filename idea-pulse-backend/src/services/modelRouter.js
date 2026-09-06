@@ -155,7 +155,10 @@ async function generatePostPromptsWithFallback(
     }
   } catch (error) {
     console.error(`Model routing error for ${modelId}:`, error.message);
-    throw error;
+    const mock = Array.from({ length: numPosts }, (_, i) =>
+      `Post idea ${i + 1} about ${userTopic}`
+    );
+    return { prompts: mock, isMock: true, provider: "mock" };
   }
 }
 
@@ -182,10 +185,10 @@ async function generateIdeaRecommendationWithFallback(
     }
 
     if (provider === "huggingface" || provider === "together") {
-      return await geminiService.generateIdeaRecommendation(idea, originalTopic, tone, modelId);
+      return await geminiService.generateIdeaRecommendation(idea, originalTopic, tone, "gemini-2.5-flash");
     }
 
-    return await geminiService.generateIdeaRecommendation(idea, originalTopic, tone, modelId);
+    return await geminiService.generateIdeaRecommendation(idea, originalTopic, tone, "gemini-2.5-flash");
   } catch (error) {
     console.warn(`AI recommendation route failed for provider ${provider}:`, error.message);
     const lower = String(idea || "").toLowerCase();
@@ -365,7 +368,13 @@ async function generatePostContentWithFallback(
     }
   } catch (error) {
     console.error(`Model routing error for ${modelId}:`, error.message);
-    throw error;
+    return {
+      content: `A ${tone} post about ${originalTopic || idea}.`,
+      hashtags: `#${(originalTopic || idea).replace(/\s+/g, "")}`,
+      imagePrompt: `Image about ${originalTopic || idea}`,
+      isMock: true,
+      provider: "mock",
+    };
   }
 }
 

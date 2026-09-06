@@ -28,9 +28,9 @@ const AVAILABLE_MODELS = {
   },
 
   // Hugging Face Models
-  "mistralai/Mistral-7B-Instruct-v0.1": {
+  "mistralai/Mistral-7B-Instruct-v0.2": {
     provider: "huggingface",
-    name: "Mistral 7B Instruct",
+    name: "Mistral 7B Instruct v0.2",
     description: "Fast, open-source model by Mistral AI",
     free: true,
     requiresKey: true,
@@ -39,9 +39,9 @@ const AVAILABLE_MODELS = {
     priority: 3,
   },
 
-  "google/flan-t5-xl": {
+  "google/flan-t5-large": {
     provider: "huggingface",
-    name: "FLAN-T5 XL",
+    name: "FLAN-T5 Large",
     description: "Versatile open-source model, good for social media",
     free: true,
     requiresKey: true,
@@ -50,14 +50,14 @@ const AVAILABLE_MODELS = {
     priority: 4,
   },
 
-  "meta-llama/Llama-2-7b-chat": {
+  "Qwen/Qwen2.5-7B-Instruct": {
     provider: "huggingface",
-    name: "LLaMA 2 7B Chat",
-    description: "Meta's capable open-source conversational model",
+    name: "Qwen 2.5 7B Instruct",
+    description: "High performance open-source model",
     free: true,
     requiresKey: true,
     responseTime: "medium",
-    quality: "very-good",
+    quality: "excellent",
     priority: 5,
   },
 
