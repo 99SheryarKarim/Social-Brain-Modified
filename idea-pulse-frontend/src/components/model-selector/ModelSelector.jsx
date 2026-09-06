@@ -4,98 +4,53 @@ import styles from './ModelSelector.module.css';
 const ModelSelector = ({ selectedModel, onModelChange, disabled = false }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Available models configuration (matches backend)
+  // Available models configuration (matches backend) - EXACTLY 4 MODELS
   const AVAILABLE_MODELS = [
+    {
+      id: 'ideapulse-custom',
+      name: 'IdeaPulse Custom AI (Fine-Tuned)',
+      description: 'Custom fine-tuned AI model trained specifically for IdeaPulse',
+      provider: 'custom',
+      responseTime: 'fast',
+      quality: 'excellent',
+      iconClass: 'fas fa-wand-magic-sparkles',
+    },
     {
       id: 'gemini-2.5-flash',
       name: 'Google Gemini 2.5 Flash',
-      description: 'Fast & highly capable model by Google',
+      description: 'Fast & highly capable general model by Google',
       provider: 'gemini',
       responseTime: 'very-fast',
       quality: 'excellent',
       iconClass: 'fas fa-bolt',
     },
     {
-      id: 'mistralai/Mistral-7B-Instruct-v0.1',
+      id: 'mistralai/Mistral-7B-Instruct-v0.2',
       name: 'Mistral 7B Instruct (HuggingFace)',
-      description: 'Fast, open-source model by Mistral AI',
+      description: 'Fast, open-source instruction model by Mistral AI',
       provider: 'huggingface',
       responseTime: 'medium',
       quality: 'very-good',
       iconClass: 'fas fa-microchip',
     },
     {
-      id: 'meta-llama/Llama-2-7b-chat',
-      name: 'LLaMA 2 7B Chat (HuggingFace)',
-      description: "Meta's conversational model",
-      provider: 'huggingface',
-      responseTime: 'medium',
-      quality: 'very-good',
-      iconClass: 'fas fa-layer-group',
-    },
-    {
-      id: 'togethercomputer/llama-2-70b-chat',
-      name: 'LLaMA 2 70B (Together.ai)',
-      description: 'Most capable open-source model',
-      provider: 'together',
-      responseTime: 'fast',
-      quality: 'excellent',
-      iconClass: 'fas fa-fire',
-    },
-    {
-      id: 'mistralai/Mistral-7B-Instruct-v0.2',
-      name: 'Mistral 7B (Together.ai)',
-      description: 'Very fast Mistral via Together.ai',
-      provider: 'together',
-      responseTime: 'very-fast',
-      quality: 'very-good',
-      iconClass: 'fas fa-bolt',
-    },
-    {
-      id: 'NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO',
-      name: 'Nous Hermes 2 Mixtral (Together.ai)',
-      description: 'Advanced MoE model for complex tasks',
-      provider: 'together',
-      responseTime: 'fast',
-      quality: 'excellent',
-      iconClass: 'fas fa-brain',
-    },
-    {
-      id: 'ollama-mistral',
-      name: 'Mistral (Local)',
-      description: 'Run locally on your machine, no API key',
+      id: 'ollama-llama2',
+      name: 'LLaMA 2 (Local Ollama)',
+      description: "Meta's open-source model running locally",
       provider: 'ollama',
       responseTime: 'medium',
       quality: 'very-good',
       iconClass: 'fas fa-laptop-code',
     },
-    {
-      id: 'ollama-llama2',
-      name: 'LLaMA 2 (Local)',
-      description: "Meta's model running locally",
-      provider: 'ollama',
-      responseTime: 'medium',
-      quality: 'very-good',
-      iconClass: 'fas fa-server',
-    },
-    {
-      id: 'ollama-neural-chat',
-      name: 'Neural Chat (Local)',
-      description: 'Optimized for conversation locally',
-      provider: 'ollama',
-      responseTime: 'fast',
-      quality: 'good',
-      iconClass: 'fas fa-comments',
-    },
   ];
 
-  const currentModel = AVAILABLE_MODELS.find((m) => m.id === selectedModel);
+  const currentModel = AVAILABLE_MODELS.find((m) => m.id === selectedModel) || AVAILABLE_MODELS[0];
 
   const getProviderBadgeColor = (provider) => {
     const colors = {
+      custom: '#46a29f',      // Teal Accent
       gemini: '#4285f4',      // Blue
       huggingface: '#fbbf24', // Amber
-      together: '#10b981',    // Green
       ollama: '#8b5cf6',      // Purple
     };
     return colors[provider] || '#6b7280';

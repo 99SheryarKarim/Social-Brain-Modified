@@ -6,8 +6,8 @@
 
 const geminiService = require("./geminiService");
 const huggingFaceService = require("./huggingFaceService");
-const togetherService = require("./togetherService");
 const ollamaService = require("./ollamaService");
+const customModelService = require("./customModelService");
 const { getModelInfo } = require("../config/models");
 
 /**
@@ -36,6 +36,20 @@ async function generatePostPromptsWithFallback(
 
   try {
     switch (modelInfo.provider) {
+      case "custom":
+        try {
+          const prompts = await customModelService.generatePostPrompts(
+            userTopic,
+            tone,
+            numPosts,
+            brandSettings
+          );
+          return { prompts, isMock: false, provider: "custom" };
+        } catch (err) {
+          console.warn("Custom model generation failed, falling back to Gemini:", err.message);
+          return await generatePostPromptsWithTracking(userTopic, [], tone, numPosts, brandSettings, "gemini-2.5-flash");
+        }
+
       case "gemini":
         return await generatePostPromptsWithTracking(
           userTopic,
@@ -272,6 +286,15 @@ async function generatePostContentWithFallback(
 
   try {
     switch (modelInfo.provider) {
+      case "custom":
+        try {
+          const result = await customModelService.generatePostContent(idea, tone, numWords, originalTopic, brandSettings);
+          return { ...result, isMock: false, provider: "custom" };
+        } catch (err) {
+          console.warn("Custom model content generation failed, falling back to Gemini:", err.message);
+          return await generatePostContentWithTracking(idea, tone, numWords, originalTopic, brandSettings, "gemini-2.5-flash");
+        }
+
       case "gemini":
         return await generatePostContentWithTracking(
           idea,

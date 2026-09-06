@@ -124,49 +124,24 @@ const AIModelsSettings = () => {
           </div>
         </div>
 
-        {/* Together.ai */}
+        {/* IdeaPulse Custom Model */}
         <div className={styles.modelCard}>
           <div className={styles.modelHeader}>
             <span className={styles.modelIcon}>
-              <i className="fas fa-fire" style={{ color: '#ef4444' }} />
+              <i className="fas fa-wand-magic-sparkles" style={{ color: '#46a29f' }} />
             </span>
-            <h3>Together.ai</h3>
+            <h3>IdeaPulse Custom AI</h3>
           </div>
-          <p className={styles.description}>High-performance open-source models</p>
+          <p className={styles.description}>Your own fine-tuned custom AI model</p>
           <div className={styles.status}>
-            <span
-              className={styles.statusBadge}
-              style={{
-                backgroundColor: apiKeys.togetherAI ? '#10b981' : '#f59e0b',
-              }}
-            >
-              {getStatusIcon(modelStatus.together)} {apiKeys.togetherAI ? 'Configured' : 'Not Set'}
+            <span className={styles.statusBadge} style={{ backgroundColor: '#10b981' }}>
+              <i className="fas fa-circle-check me-1" /> Active
             </span>
           </div>
           <div className={styles.details}>
-            <p>• 70B+ parameter models</p>
-            <p>• Very fast inference</p>
-            <p>• Free tier available</p>
-          </div>
-          <div className={styles.inputGroup}>
-            <label>API Key:</label>
-            <input
-              type="password"
-              value={apiKeys.togetherAI}
-              onChange={(e) =>
-                setApiKeys((prev) => ({ ...prev, togetherAI: e.target.value }))
-              }
-              placeholder="Paste your Together.ai API key"
-              className={styles.input}
-            />
-            <a
-              href="https://www.together.ai/settings/keys"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.link}
-            >
-              Get API Key →
-            </a>
+            <p>• Fine-tuned for IdeaPulse</p>
+            <p>• Specialized content generation</p>
+            <p>• Custom PyTorch/Ollama backend</p>
           </div>
         </div>
 
@@ -284,6 +259,13 @@ const AIModelsSettings = () => {
           </thead>
           <tbody>
             <tr>
+              <td>IdeaPulse Custom AI</td>
+              <td>Custom FYP Model</td>
+              <td>Fast</td>
+              <td>Excellent</td>
+              <td><span style={{ color: '#10b981', fontWeight: 600 }}><i className="fas fa-circle-check me-1" /> Ready</span></td>
+            </tr>
+            <tr>
               <td>Gemini 2.5 Flash</td>
               <td>Google</td>
               <td>Very Fast</td>
@@ -291,21 +273,14 @@ const AIModelsSettings = () => {
               <td><span style={{ color: '#10b981', fontWeight: 600 }}><i className="fas fa-circle-check me-1" /> Ready</span></td>
             </tr>
             <tr>
-              <td>Mistral 7B</td>
+              <td>Mistral 7B Instruct</td>
               <td>Hugging Face</td>
               <td>Fast</td>
               <td>Very Good</td>
               <td><span style={{ color: '#10b981', fontWeight: 600 }}><i className="fas fa-circle-check me-1" /> Ready</span></td>
             </tr>
             <tr>
-              <td>LLaMA 2 70B</td>
-              <td>Together.ai</td>
-              <td>Fast</td>
-              <td>Excellent</td>
-              <td><span style={{ color: '#64748b', fontWeight: 500 }}>Optional</span></td>
-            </tr>
-            <tr>
-              <td>Mistral (Local)</td>
+              <td>LLaMA 2 (Local)</td>
               <td>Ollama</td>
               <td>Moderate</td>
               <td>Very Good</td>
