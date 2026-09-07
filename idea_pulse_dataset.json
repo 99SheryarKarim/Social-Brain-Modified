@@ -1,0 +1,502 @@
+[
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: AI in Healthcare, Tone: Professional, Niche: Startups",
+    "output": "POST: Artificial intelligence is revolutionizing patient diagnostics and streamlining hospital administrative workflows. By leveraging machine learning models for early risk detection, healthcare providers are saving critical time and improving patient outcomes. The future of medicine lies in the synergy between human expertise and computational precision.\nHASHTAGS: #HealthcareAI #HealthTech #MedicalInnovation #DigitalHealth #AIinHealthcare #Professional\nIMAGE_KEYWORDS: doctor medical AI hospital technology ai in healthcare"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: SaaS Growth Strategies, Tone: Creative, Niche: Tech",
+    "output": "POST: Scaling a SaaS company requires moving beyond customer acquisition to aggressive net revenue retention. Focus heavily on onboarding efficiency, proactive customer success interventions, and clear upsell paths. Sustainable growth is built on compounding retention.\nHASHTAGS: #SaaS #B2BGrowth #CustomerRetention #StartupStrategy #SaaSGrowthStrategies #Creative\nIMAGE_KEYWORDS: saas dashboard growth analytics office saas growth strategies"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Sustainable Fashion, Tone: Witty, Niche: Fashion",
+    "output": "POST: Fast fashion comes at a steep environmental cost. Transitioning to organic textiles, circular garment recycling, and ethical production isn't just a trend—it's a imperative. Every purchase decision shapes the future of our planet. Choose quality, sustainability, and consciousness.\nHASHTAGS: #SustainableFashion #EcoFriendly #EthicalStyle #SlowFashion #SustainableFashion #Witty\nIMAGE_KEYWORDS: sustainable clothing organic fabrics eco fashion sustainable fashion"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Startup Marketing, Tone: Motivational, Niche: Fitness",
+    "output": "POST: Don't sell product features; sell the transformation your users experience. High-converting startup marketing focuses on storytelling, organic founder-led content, and building genuine community loops. Find your core 100 super-fans before spending a dime on ads.\nHASHTAGS: #StartupMarketing #GrowthHacking #ContentStrategy #FounderBrand #StartupMarketing #Motivational\nIMAGE_KEYWORDS: marketing strategy whiteboard startup team startup marketing"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Remote Work Productivity, Tone: Friendly, Niche: Business",
+    "output": "POST: Working remotely gives us freedom, but without clear boundaries, burnout sneaks in fast. Try time-blocking your focus hours, establishing a firm shutdown routine, and keeping your workspace separate from resting areas. Balance is created intentionally every day!\nHASHTAGS: #RemoteWork #WorkLifeBalance #ProductivityTips #WFH #RemoteWorkProductivity #Friendly\nIMAGE_KEYWORDS: remote worker laptop home office coffee remote work productivity"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Fitness Tech Innovations, Tone: Casual, Niche: Healthcare",
+    "output": "POST: Smart wearables and real-time biometrics are transforming how we train. Tracking recovery, heart rate variability, and sleep quality lets you push harder while avoiding injury. Elevate your athletic potential with data-driven training habits!\nHASHTAGS: #FitnessTech #SmartWearables #Biohacking #WorkOutMotivation #FitnessTechInnovations #Casual\nIMAGE_KEYWORDS: smartwatch fitness athlete training biometric fitness tech innovations"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Cybersecurity Essentials, Tone: Educational, Niche: Finance",
+    "output": "POST: Over 80% of security breaches trace back to weak or reused credentials. Enforce mandatory multi-factor authentication (MFA), adopt zero-trust network principles, and conduct quarterly phishing awareness drills across your organization. Security starts with awareness.\nHASHTAGS: #Cybersecurity #DataProtection #InfoSec #TechSecurity #CybersecurityEssentials #Educational\nIMAGE_KEYWORDS: cybersecurity code security network data lock cybersecurity essentials"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: E-commerce Optimization, Tone: Empowering, Niche: Marketing",
+    "output": "POST: A 1-second delay in page load time can drop your conversions by 7%. If your checkout process feels like completing a tax return, your cart abandonment rate will prove it. Simplify forms, enable 1-click payments, and watch sales soar!\nHASHTAGS: #Ecommerce #ConversionRate #OnlineStore #UXDesign #E-commerceOptimization #Empowering\nIMAGE_KEYWORDS: ecommerce shopping cart mobile payment checkout e-commerce optimization"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Web3 and Crypto Trends, Tone: Concise, Niche: Education",
+    "output": "POST: Beyond market volatility, the core value of Web3 lies in decentralized ownership and trustless smart contracts. As tokenized real-world assets (RWA) gain institutional traction, the infrastructure is maturing rapidly for mainstream enterprise adoption.\nHASHTAGS: #Web3 #Crypto #Blockchain #DeFi #TechFuture #Web3andCryptoTrends #Concise\nIMAGE_KEYWORDS: blockchain cryptocurrency bitcoin digital network web3 and crypto trends"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Personal Finance Tips, Tone: Insightful, Niche: Lifestyle",
+    "output": "POST: Pay yourself first. Automate 20% of your income into index funds before paying expenses. Avoid high-interest debt, track net worth quarterly, and stay consistent. Wealth accumulation is a marathon of discipline, not short-term luck.\nHASHTAGS: #PersonalFinance #Investing #FinancialFreedom #WealthBuilding #PersonalFinanceTips #Insightful\nIMAGE_KEYWORDS: finance growth piggy bank coins investment personal finance tips"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: AI Content Creation, Tone: Professional, Niche: Startups",
+    "output": "POST: Artificial intelligence is revolutionizing patient diagnostics and streamlining hospital administrative workflows. By leveraging machine learning models for early risk detection, healthcare providers are saving critical time and improving patient outcomes. The future of medicine lies in the synergy between human expertise and computational precision.\nHASHTAGS: #HealthcareAI #HealthTech #MedicalInnovation #DigitalHealth #AIContentCreation #Professional\nIMAGE_KEYWORDS: doctor medical AI hospital technology ai content creation"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Leadership & Team Management, Tone: Creative, Niche: Tech",
+    "output": "POST: Scaling a SaaS company requires moving beyond customer acquisition to aggressive net revenue retention. Focus heavily on onboarding efficiency, proactive customer success interventions, and clear upsell paths. Sustainable growth is built on compounding retention.\nHASHTAGS: #SaaS #B2BGrowth #CustomerRetention #StartupStrategy #Leadership&TeamManagement #Creative\nIMAGE_KEYWORDS: saas dashboard growth analytics office leadership & team management"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Real Estate Investing, Tone: Witty, Niche: Fashion",
+    "output": "POST: Fast fashion comes at a steep environmental cost. Transitioning to organic textiles, circular garment recycling, and ethical production isn't just a trend—it's a imperative. Every purchase decision shapes the future of our planet. Choose quality, sustainability, and consciousness.\nHASHTAGS: #SustainableFashion #EcoFriendly #EthicalStyle #SlowFashion #RealEstateInvesting #Witty\nIMAGE_KEYWORDS: sustainable clothing organic fabrics eco fashion real estate investing"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Digital Nomad Lifestyle, Tone: Motivational, Niche: Fitness",
+    "output": "POST: Don't sell product features; sell the transformation your users experience. High-converting startup marketing focuses on storytelling, organic founder-led content, and building genuine community loops. Find your core 100 super-fans before spending a dime on ads.\nHASHTAGS: #StartupMarketing #GrowthHacking #ContentStrategy #FounderBrand #DigitalNomadLifestyle #Motivational\nIMAGE_KEYWORDS: marketing strategy whiteboard startup team digital nomad lifestyle"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Mental Health at Work, Tone: Friendly, Niche: Business",
+    "output": "POST: Working remotely gives us freedom, but without clear boundaries, burnout sneaks in fast. Try time-blocking your focus hours, establishing a firm shutdown routine, and keeping your workspace separate from resting areas. Balance is created intentionally every day!\nHASHTAGS: #RemoteWork #WorkLifeBalance #ProductivityTips #WFH #MentalHealthatWork #Friendly\nIMAGE_KEYWORDS: remote worker laptop home office coffee mental health at work"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: No-Code Development, Tone: Casual, Niche: Healthcare",
+    "output": "POST: Smart wearables and real-time biometrics are transforming how we train. Tracking recovery, heart rate variability, and sleep quality lets you push harder while avoiding injury. Elevate your athletic potential with data-driven training habits!\nHASHTAGS: #FitnessTech #SmartWearables #Biohacking #WorkOutMotivation #No-CodeDevelopment #Casual\nIMAGE_KEYWORDS: smartwatch fitness athlete training biometric no-code development"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Product-Led Growth, Tone: Educational, Niche: Finance",
+    "output": "POST: Over 80% of security breaches trace back to weak or reused credentials. Enforce mandatory multi-factor authentication (MFA), adopt zero-trust network principles, and conduct quarterly phishing awareness drills across your organization. Security starts with awareness.\nHASHTAGS: #Cybersecurity #DataProtection #InfoSec #TechSecurity #Product-LedGrowth #Educational\nIMAGE_KEYWORDS: cybersecurity code security network data lock product-led growth"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Social Media Branding, Tone: Empowering, Niche: Marketing",
+    "output": "POST: A 1-second delay in page load time can drop your conversions by 7%. If your checkout process feels like completing a tax return, your cart abandonment rate will prove it. Simplify forms, enable 1-click payments, and watch sales soar!\nHASHTAGS: #Ecommerce #ConversionRate #OnlineStore #UXDesign #SocialMediaBranding #Empowering\nIMAGE_KEYWORDS: ecommerce shopping cart mobile payment checkout social media branding"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Mobile App Development, Tone: Concise, Niche: Education",
+    "output": "POST: Beyond market volatility, the core value of Web3 lies in decentralized ownership and trustless smart contracts. As tokenized real-world assets (RWA) gain institutional traction, the infrastructure is maturing rapidly for mainstream enterprise adoption.\nHASHTAGS: #Web3 #Crypto #Blockchain #DeFi #TechFuture #MobileAppDevelopment #Concise\nIMAGE_KEYWORDS: blockchain cryptocurrency bitcoin digital network mobile app development"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Clean Energy Innovations, Tone: Insightful, Niche: Lifestyle",
+    "output": "POST: Pay yourself first. Automate 20% of your income into index funds before paying expenses. Avoid high-interest debt, track net worth quarterly, and stay consistent. Wealth accumulation is a marathon of discipline, not short-term luck.\nHASHTAGS: #PersonalFinance #Investing #FinancialFreedom #WealthBuilding #CleanEnergyInnovations #Insightful\nIMAGE_KEYWORDS: finance growth piggy bank coins investment clean energy innovations"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: AI in Healthcare, Tone: Professional, Niche: Startups",
+    "output": "POST: Artificial intelligence is revolutionizing patient diagnostics and streamlining hospital administrative workflows. By leveraging machine learning models for early risk detection, healthcare providers are saving critical time and improving patient outcomes. The future of medicine lies in the synergy between human expertise and computational precision.\nHASHTAGS: #HealthcareAI #HealthTech #MedicalInnovation #DigitalHealth #AIinHealthcare #Professional\nIMAGE_KEYWORDS: doctor medical AI hospital technology ai in healthcare"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: SaaS Growth Strategies, Tone: Creative, Niche: Tech",
+    "output": "POST: Scaling a SaaS company requires moving beyond customer acquisition to aggressive net revenue retention. Focus heavily on onboarding efficiency, proactive customer success interventions, and clear upsell paths. Sustainable growth is built on compounding retention.\nHASHTAGS: #SaaS #B2BGrowth #CustomerRetention #StartupStrategy #SaaSGrowthStrategies #Creative\nIMAGE_KEYWORDS: saas dashboard growth analytics office saas growth strategies"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Sustainable Fashion, Tone: Witty, Niche: Fashion",
+    "output": "POST: Fast fashion comes at a steep environmental cost. Transitioning to organic textiles, circular garment recycling, and ethical production isn't just a trend—it's a imperative. Every purchase decision shapes the future of our planet. Choose quality, sustainability, and consciousness.\nHASHTAGS: #SustainableFashion #EcoFriendly #EthicalStyle #SlowFashion #SustainableFashion #Witty\nIMAGE_KEYWORDS: sustainable clothing organic fabrics eco fashion sustainable fashion"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Startup Marketing, Tone: Motivational, Niche: Fitness",
+    "output": "POST: Don't sell product features; sell the transformation your users experience. High-converting startup marketing focuses on storytelling, organic founder-led content, and building genuine community loops. Find your core 100 super-fans before spending a dime on ads.\nHASHTAGS: #StartupMarketing #GrowthHacking #ContentStrategy #FounderBrand #StartupMarketing #Motivational\nIMAGE_KEYWORDS: marketing strategy whiteboard startup team startup marketing"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Remote Work Productivity, Tone: Friendly, Niche: Business",
+    "output": "POST: Working remotely gives us freedom, but without clear boundaries, burnout sneaks in fast. Try time-blocking your focus hours, establishing a firm shutdown routine, and keeping your workspace separate from resting areas. Balance is created intentionally every day!\nHASHTAGS: #RemoteWork #WorkLifeBalance #ProductivityTips #WFH #RemoteWorkProductivity #Friendly\nIMAGE_KEYWORDS: remote worker laptop home office coffee remote work productivity"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Fitness Tech Innovations, Tone: Casual, Niche: Healthcare",
+    "output": "POST: Smart wearables and real-time biometrics are transforming how we train. Tracking recovery, heart rate variability, and sleep quality lets you push harder while avoiding injury. Elevate your athletic potential with data-driven training habits!\nHASHTAGS: #FitnessTech #SmartWearables #Biohacking #WorkOutMotivation #FitnessTechInnovations #Casual\nIMAGE_KEYWORDS: smartwatch fitness athlete training biometric fitness tech innovations"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Cybersecurity Essentials, Tone: Educational, Niche: Finance",
+    "output": "POST: Over 80% of security breaches trace back to weak or reused credentials. Enforce mandatory multi-factor authentication (MFA), adopt zero-trust network principles, and conduct quarterly phishing awareness drills across your organization. Security starts with awareness.\nHASHTAGS: #Cybersecurity #DataProtection #InfoSec #TechSecurity #CybersecurityEssentials #Educational\nIMAGE_KEYWORDS: cybersecurity code security network data lock cybersecurity essentials"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: E-commerce Optimization, Tone: Empowering, Niche: Marketing",
+    "output": "POST: A 1-second delay in page load time can drop your conversions by 7%. If your checkout process feels like completing a tax return, your cart abandonment rate will prove it. Simplify forms, enable 1-click payments, and watch sales soar!\nHASHTAGS: #Ecommerce #ConversionRate #OnlineStore #UXDesign #E-commerceOptimization #Empowering\nIMAGE_KEYWORDS: ecommerce shopping cart mobile payment checkout e-commerce optimization"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Web3 and Crypto Trends, Tone: Concise, Niche: Education",
+    "output": "POST: Beyond market volatility, the core value of Web3 lies in decentralized ownership and trustless smart contracts. As tokenized real-world assets (RWA) gain institutional traction, the infrastructure is maturing rapidly for mainstream enterprise adoption.\nHASHTAGS: #Web3 #Crypto #Blockchain #DeFi #TechFuture #Web3andCryptoTrends #Concise\nIMAGE_KEYWORDS: blockchain cryptocurrency bitcoin digital network web3 and crypto trends"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Personal Finance Tips, Tone: Insightful, Niche: Lifestyle",
+    "output": "POST: Pay yourself first. Automate 20% of your income into index funds before paying expenses. Avoid high-interest debt, track net worth quarterly, and stay consistent. Wealth accumulation is a marathon of discipline, not short-term luck.\nHASHTAGS: #PersonalFinance #Investing #FinancialFreedom #WealthBuilding #PersonalFinanceTips #Insightful\nIMAGE_KEYWORDS: finance growth piggy bank coins investment personal finance tips"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: AI Content Creation, Tone: Professional, Niche: Startups",
+    "output": "POST: Artificial intelligence is revolutionizing patient diagnostics and streamlining hospital administrative workflows. By leveraging machine learning models for early risk detection, healthcare providers are saving critical time and improving patient outcomes. The future of medicine lies in the synergy between human expertise and computational precision.\nHASHTAGS: #HealthcareAI #HealthTech #MedicalInnovation #DigitalHealth #AIContentCreation #Professional\nIMAGE_KEYWORDS: doctor medical AI hospital technology ai content creation"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Leadership & Team Management, Tone: Creative, Niche: Tech",
+    "output": "POST: Scaling a SaaS company requires moving beyond customer acquisition to aggressive net revenue retention. Focus heavily on onboarding efficiency, proactive customer success interventions, and clear upsell paths. Sustainable growth is built on compounding retention.\nHASHTAGS: #SaaS #B2BGrowth #CustomerRetention #StartupStrategy #Leadership&TeamManagement #Creative\nIMAGE_KEYWORDS: saas dashboard growth analytics office leadership & team management"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Real Estate Investing, Tone: Witty, Niche: Fashion",
+    "output": "POST: Fast fashion comes at a steep environmental cost. Transitioning to organic textiles, circular garment recycling, and ethical production isn't just a trend—it's a imperative. Every purchase decision shapes the future of our planet. Choose quality, sustainability, and consciousness.\nHASHTAGS: #SustainableFashion #EcoFriendly #EthicalStyle #SlowFashion #RealEstateInvesting #Witty\nIMAGE_KEYWORDS: sustainable clothing organic fabrics eco fashion real estate investing"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Digital Nomad Lifestyle, Tone: Motivational, Niche: Fitness",
+    "output": "POST: Don't sell product features; sell the transformation your users experience. High-converting startup marketing focuses on storytelling, organic founder-led content, and building genuine community loops. Find your core 100 super-fans before spending a dime on ads.\nHASHTAGS: #StartupMarketing #GrowthHacking #ContentStrategy #FounderBrand #DigitalNomadLifestyle #Motivational\nIMAGE_KEYWORDS: marketing strategy whiteboard startup team digital nomad lifestyle"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Mental Health at Work, Tone: Friendly, Niche: Business",
+    "output": "POST: Working remotely gives us freedom, but without clear boundaries, burnout sneaks in fast. Try time-blocking your focus hours, establishing a firm shutdown routine, and keeping your workspace separate from resting areas. Balance is created intentionally every day!\nHASHTAGS: #RemoteWork #WorkLifeBalance #ProductivityTips #WFH #MentalHealthatWork #Friendly\nIMAGE_KEYWORDS: remote worker laptop home office coffee mental health at work"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: No-Code Development, Tone: Casual, Niche: Healthcare",
+    "output": "POST: Smart wearables and real-time biometrics are transforming how we train. Tracking recovery, heart rate variability, and sleep quality lets you push harder while avoiding injury. Elevate your athletic potential with data-driven training habits!\nHASHTAGS: #FitnessTech #SmartWearables #Biohacking #WorkOutMotivation #No-CodeDevelopment #Casual\nIMAGE_KEYWORDS: smartwatch fitness athlete training biometric no-code development"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Product-Led Growth, Tone: Educational, Niche: Finance",
+    "output": "POST: Over 80% of security breaches trace back to weak or reused credentials. Enforce mandatory multi-factor authentication (MFA), adopt zero-trust network principles, and conduct quarterly phishing awareness drills across your organization. Security starts with awareness.\nHASHTAGS: #Cybersecurity #DataProtection #InfoSec #TechSecurity #Product-LedGrowth #Educational\nIMAGE_KEYWORDS: cybersecurity code security network data lock product-led growth"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Social Media Branding, Tone: Empowering, Niche: Marketing",
+    "output": "POST: A 1-second delay in page load time can drop your conversions by 7%. If your checkout process feels like completing a tax return, your cart abandonment rate will prove it. Simplify forms, enable 1-click payments, and watch sales soar!\nHASHTAGS: #Ecommerce #ConversionRate #OnlineStore #UXDesign #SocialMediaBranding #Empowering\nIMAGE_KEYWORDS: ecommerce shopping cart mobile payment checkout social media branding"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Mobile App Development, Tone: Concise, Niche: Education",
+    "output": "POST: Beyond market volatility, the core value of Web3 lies in decentralized ownership and trustless smart contracts. As tokenized real-world assets (RWA) gain institutional traction, the infrastructure is maturing rapidly for mainstream enterprise adoption.\nHASHTAGS: #Web3 #Crypto #Blockchain #DeFi #TechFuture #MobileAppDevelopment #Concise\nIMAGE_KEYWORDS: blockchain cryptocurrency bitcoin digital network mobile app development"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Clean Energy Innovations, Tone: Insightful, Niche: Lifestyle",
+    "output": "POST: Pay yourself first. Automate 20% of your income into index funds before paying expenses. Avoid high-interest debt, track net worth quarterly, and stay consistent. Wealth accumulation is a marathon of discipline, not short-term luck.\nHASHTAGS: #PersonalFinance #Investing #FinancialFreedom #WealthBuilding #CleanEnergyInnovations #Insightful\nIMAGE_KEYWORDS: finance growth piggy bank coins investment clean energy innovations"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: AI in Healthcare, Tone: Professional, Niche: Startups",
+    "output": "POST: Artificial intelligence is revolutionizing patient diagnostics and streamlining hospital administrative workflows. By leveraging machine learning models for early risk detection, healthcare providers are saving critical time and improving patient outcomes. The future of medicine lies in the synergy between human expertise and computational precision.\nHASHTAGS: #HealthcareAI #HealthTech #MedicalInnovation #DigitalHealth #AIinHealthcare #Professional\nIMAGE_KEYWORDS: doctor medical AI hospital technology ai in healthcare"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: SaaS Growth Strategies, Tone: Creative, Niche: Tech",
+    "output": "POST: Scaling a SaaS company requires moving beyond customer acquisition to aggressive net revenue retention. Focus heavily on onboarding efficiency, proactive customer success interventions, and clear upsell paths. Sustainable growth is built on compounding retention.\nHASHTAGS: #SaaS #B2BGrowth #CustomerRetention #StartupStrategy #SaaSGrowthStrategies #Creative\nIMAGE_KEYWORDS: saas dashboard growth analytics office saas growth strategies"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Sustainable Fashion, Tone: Witty, Niche: Fashion",
+    "output": "POST: Fast fashion comes at a steep environmental cost. Transitioning to organic textiles, circular garment recycling, and ethical production isn't just a trend—it's a imperative. Every purchase decision shapes the future of our planet. Choose quality, sustainability, and consciousness.\nHASHTAGS: #SustainableFashion #EcoFriendly #EthicalStyle #SlowFashion #SustainableFashion #Witty\nIMAGE_KEYWORDS: sustainable clothing organic fabrics eco fashion sustainable fashion"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Startup Marketing, Tone: Motivational, Niche: Fitness",
+    "output": "POST: Don't sell product features; sell the transformation your users experience. High-converting startup marketing focuses on storytelling, organic founder-led content, and building genuine community loops. Find your core 100 super-fans before spending a dime on ads.\nHASHTAGS: #StartupMarketing #GrowthHacking #ContentStrategy #FounderBrand #StartupMarketing #Motivational\nIMAGE_KEYWORDS: marketing strategy whiteboard startup team startup marketing"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Remote Work Productivity, Tone: Friendly, Niche: Business",
+    "output": "POST: Working remotely gives us freedom, but without clear boundaries, burnout sneaks in fast. Try time-blocking your focus hours, establishing a firm shutdown routine, and keeping your workspace separate from resting areas. Balance is created intentionally every day!\nHASHTAGS: #RemoteWork #WorkLifeBalance #ProductivityTips #WFH #RemoteWorkProductivity #Friendly\nIMAGE_KEYWORDS: remote worker laptop home office coffee remote work productivity"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Fitness Tech Innovations, Tone: Casual, Niche: Healthcare",
+    "output": "POST: Smart wearables and real-time biometrics are transforming how we train. Tracking recovery, heart rate variability, and sleep quality lets you push harder while avoiding injury. Elevate your athletic potential with data-driven training habits!\nHASHTAGS: #FitnessTech #SmartWearables #Biohacking #WorkOutMotivation #FitnessTechInnovations #Casual\nIMAGE_KEYWORDS: smartwatch fitness athlete training biometric fitness tech innovations"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Cybersecurity Essentials, Tone: Educational, Niche: Finance",
+    "output": "POST: Over 80% of security breaches trace back to weak or reused credentials. Enforce mandatory multi-factor authentication (MFA), adopt zero-trust network principles, and conduct quarterly phishing awareness drills across your organization. Security starts with awareness.\nHASHTAGS: #Cybersecurity #DataProtection #InfoSec #TechSecurity #CybersecurityEssentials #Educational\nIMAGE_KEYWORDS: cybersecurity code security network data lock cybersecurity essentials"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: E-commerce Optimization, Tone: Empowering, Niche: Marketing",
+    "output": "POST: A 1-second delay in page load time can drop your conversions by 7%. If your checkout process feels like completing a tax return, your cart abandonment rate will prove it. Simplify forms, enable 1-click payments, and watch sales soar!\nHASHTAGS: #Ecommerce #ConversionRate #OnlineStore #UXDesign #E-commerceOptimization #Empowering\nIMAGE_KEYWORDS: ecommerce shopping cart mobile payment checkout e-commerce optimization"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Web3 and Crypto Trends, Tone: Concise, Niche: Education",
+    "output": "POST: Beyond market volatility, the core value of Web3 lies in decentralized ownership and trustless smart contracts. As tokenized real-world assets (RWA) gain institutional traction, the infrastructure is maturing rapidly for mainstream enterprise adoption.\nHASHTAGS: #Web3 #Crypto #Blockchain #DeFi #TechFuture #Web3andCryptoTrends #Concise\nIMAGE_KEYWORDS: blockchain cryptocurrency bitcoin digital network web3 and crypto trends"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Personal Finance Tips, Tone: Insightful, Niche: Lifestyle",
+    "output": "POST: Pay yourself first. Automate 20% of your income into index funds before paying expenses. Avoid high-interest debt, track net worth quarterly, and stay consistent. Wealth accumulation is a marathon of discipline, not short-term luck.\nHASHTAGS: #PersonalFinance #Investing #FinancialFreedom #WealthBuilding #PersonalFinanceTips #Insightful\nIMAGE_KEYWORDS: finance growth piggy bank coins investment personal finance tips"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: AI Content Creation, Tone: Professional, Niche: Startups",
+    "output": "POST: Artificial intelligence is revolutionizing patient diagnostics and streamlining hospital administrative workflows. By leveraging machine learning models for early risk detection, healthcare providers are saving critical time and improving patient outcomes. The future of medicine lies in the synergy between human expertise and computational precision.\nHASHTAGS: #HealthcareAI #HealthTech #MedicalInnovation #DigitalHealth #AIContentCreation #Professional\nIMAGE_KEYWORDS: doctor medical AI hospital technology ai content creation"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Leadership & Team Management, Tone: Creative, Niche: Tech",
+    "output": "POST: Scaling a SaaS company requires moving beyond customer acquisition to aggressive net revenue retention. Focus heavily on onboarding efficiency, proactive customer success interventions, and clear upsell paths. Sustainable growth is built on compounding retention.\nHASHTAGS: #SaaS #B2BGrowth #CustomerRetention #StartupStrategy #Leadership&TeamManagement #Creative\nIMAGE_KEYWORDS: saas dashboard growth analytics office leadership & team management"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Real Estate Investing, Tone: Witty, Niche: Fashion",
+    "output": "POST: Fast fashion comes at a steep environmental cost. Transitioning to organic textiles, circular garment recycling, and ethical production isn't just a trend—it's a imperative. Every purchase decision shapes the future of our planet. Choose quality, sustainability, and consciousness.\nHASHTAGS: #SustainableFashion #EcoFriendly #EthicalStyle #SlowFashion #RealEstateInvesting #Witty\nIMAGE_KEYWORDS: sustainable clothing organic fabrics eco fashion real estate investing"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Digital Nomad Lifestyle, Tone: Motivational, Niche: Fitness",
+    "output": "POST: Don't sell product features; sell the transformation your users experience. High-converting startup marketing focuses on storytelling, organic founder-led content, and building genuine community loops. Find your core 100 super-fans before spending a dime on ads.\nHASHTAGS: #StartupMarketing #GrowthHacking #ContentStrategy #FounderBrand #DigitalNomadLifestyle #Motivational\nIMAGE_KEYWORDS: marketing strategy whiteboard startup team digital nomad lifestyle"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Mental Health at Work, Tone: Friendly, Niche: Business",
+    "output": "POST: Working remotely gives us freedom, but without clear boundaries, burnout sneaks in fast. Try time-blocking your focus hours, establishing a firm shutdown routine, and keeping your workspace separate from resting areas. Balance is created intentionally every day!\nHASHTAGS: #RemoteWork #WorkLifeBalance #ProductivityTips #WFH #MentalHealthatWork #Friendly\nIMAGE_KEYWORDS: remote worker laptop home office coffee mental health at work"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: No-Code Development, Tone: Casual, Niche: Healthcare",
+    "output": "POST: Smart wearables and real-time biometrics are transforming how we train. Tracking recovery, heart rate variability, and sleep quality lets you push harder while avoiding injury. Elevate your athletic potential with data-driven training habits!\nHASHTAGS: #FitnessTech #SmartWearables #Biohacking #WorkOutMotivation #No-CodeDevelopment #Casual\nIMAGE_KEYWORDS: smartwatch fitness athlete training biometric no-code development"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Product-Led Growth, Tone: Educational, Niche: Finance",
+    "output": "POST: Over 80% of security breaches trace back to weak or reused credentials. Enforce mandatory multi-factor authentication (MFA), adopt zero-trust network principles, and conduct quarterly phishing awareness drills across your organization. Security starts with awareness.\nHASHTAGS: #Cybersecurity #DataProtection #InfoSec #TechSecurity #Product-LedGrowth #Educational\nIMAGE_KEYWORDS: cybersecurity code security network data lock product-led growth"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Social Media Branding, Tone: Empowering, Niche: Marketing",
+    "output": "POST: A 1-second delay in page load time can drop your conversions by 7%. If your checkout process feels like completing a tax return, your cart abandonment rate will prove it. Simplify forms, enable 1-click payments, and watch sales soar!\nHASHTAGS: #Ecommerce #ConversionRate #OnlineStore #UXDesign #SocialMediaBranding #Empowering\nIMAGE_KEYWORDS: ecommerce shopping cart mobile payment checkout social media branding"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Mobile App Development, Tone: Concise, Niche: Education",
+    "output": "POST: Beyond market volatility, the core value of Web3 lies in decentralized ownership and trustless smart contracts. As tokenized real-world assets (RWA) gain institutional traction, the infrastructure is maturing rapidly for mainstream enterprise adoption.\nHASHTAGS: #Web3 #Crypto #Blockchain #DeFi #TechFuture #MobileAppDevelopment #Concise\nIMAGE_KEYWORDS: blockchain cryptocurrency bitcoin digital network mobile app development"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Clean Energy Innovations, Tone: Insightful, Niche: Lifestyle",
+    "output": "POST: Pay yourself first. Automate 20% of your income into index funds before paying expenses. Avoid high-interest debt, track net worth quarterly, and stay consistent. Wealth accumulation is a marathon of discipline, not short-term luck.\nHASHTAGS: #PersonalFinance #Investing #FinancialFreedom #WealthBuilding #CleanEnergyInnovations #Insightful\nIMAGE_KEYWORDS: finance growth piggy bank coins investment clean energy innovations"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: AI in Healthcare, Tone: Professional, Niche: Startups",
+    "output": "POST: Artificial intelligence is revolutionizing patient diagnostics and streamlining hospital administrative workflows. By leveraging machine learning models for early risk detection, healthcare providers are saving critical time and improving patient outcomes. The future of medicine lies in the synergy between human expertise and computational precision.\nHASHTAGS: #HealthcareAI #HealthTech #MedicalInnovation #DigitalHealth #AIinHealthcare #Professional\nIMAGE_KEYWORDS: doctor medical AI hospital technology ai in healthcare"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: SaaS Growth Strategies, Tone: Creative, Niche: Tech",
+    "output": "POST: Scaling a SaaS company requires moving beyond customer acquisition to aggressive net revenue retention. Focus heavily on onboarding efficiency, proactive customer success interventions, and clear upsell paths. Sustainable growth is built on compounding retention.\nHASHTAGS: #SaaS #B2BGrowth #CustomerRetention #StartupStrategy #SaaSGrowthStrategies #Creative\nIMAGE_KEYWORDS: saas dashboard growth analytics office saas growth strategies"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Sustainable Fashion, Tone: Witty, Niche: Fashion",
+    "output": "POST: Fast fashion comes at a steep environmental cost. Transitioning to organic textiles, circular garment recycling, and ethical production isn't just a trend—it's a imperative. Every purchase decision shapes the future of our planet. Choose quality, sustainability, and consciousness.\nHASHTAGS: #SustainableFashion #EcoFriendly #EthicalStyle #SlowFashion #SustainableFashion #Witty\nIMAGE_KEYWORDS: sustainable clothing organic fabrics eco fashion sustainable fashion"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Startup Marketing, Tone: Motivational, Niche: Fitness",
+    "output": "POST: Don't sell product features; sell the transformation your users experience. High-converting startup marketing focuses on storytelling, organic founder-led content, and building genuine community loops. Find your core 100 super-fans before spending a dime on ads.\nHASHTAGS: #StartupMarketing #GrowthHacking #ContentStrategy #FounderBrand #StartupMarketing #Motivational\nIMAGE_KEYWORDS: marketing strategy whiteboard startup team startup marketing"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Remote Work Productivity, Tone: Friendly, Niche: Business",
+    "output": "POST: Working remotely gives us freedom, but without clear boundaries, burnout sneaks in fast. Try time-blocking your focus hours, establishing a firm shutdown routine, and keeping your workspace separate from resting areas. Balance is created intentionally every day!\nHASHTAGS: #RemoteWork #WorkLifeBalance #ProductivityTips #WFH #RemoteWorkProductivity #Friendly\nIMAGE_KEYWORDS: remote worker laptop home office coffee remote work productivity"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Fitness Tech Innovations, Tone: Casual, Niche: Healthcare",
+    "output": "POST: Smart wearables and real-time biometrics are transforming how we train. Tracking recovery, heart rate variability, and sleep quality lets you push harder while avoiding injury. Elevate your athletic potential with data-driven training habits!\nHASHTAGS: #FitnessTech #SmartWearables #Biohacking #WorkOutMotivation #FitnessTechInnovations #Casual\nIMAGE_KEYWORDS: smartwatch fitness athlete training biometric fitness tech innovations"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Cybersecurity Essentials, Tone: Educational, Niche: Finance",
+    "output": "POST: Over 80% of security breaches trace back to weak or reused credentials. Enforce mandatory multi-factor authentication (MFA), adopt zero-trust network principles, and conduct quarterly phishing awareness drills across your organization. Security starts with awareness.\nHASHTAGS: #Cybersecurity #DataProtection #InfoSec #TechSecurity #CybersecurityEssentials #Educational\nIMAGE_KEYWORDS: cybersecurity code security network data lock cybersecurity essentials"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: E-commerce Optimization, Tone: Empowering, Niche: Marketing",
+    "output": "POST: A 1-second delay in page load time can drop your conversions by 7%. If your checkout process feels like completing a tax return, your cart abandonment rate will prove it. Simplify forms, enable 1-click payments, and watch sales soar!\nHASHTAGS: #Ecommerce #ConversionRate #OnlineStore #UXDesign #E-commerceOptimization #Empowering\nIMAGE_KEYWORDS: ecommerce shopping cart mobile payment checkout e-commerce optimization"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Web3 and Crypto Trends, Tone: Concise, Niche: Education",
+    "output": "POST: Beyond market volatility, the core value of Web3 lies in decentralized ownership and trustless smart contracts. As tokenized real-world assets (RWA) gain institutional traction, the infrastructure is maturing rapidly for mainstream enterprise adoption.\nHASHTAGS: #Web3 #Crypto #Blockchain #DeFi #TechFuture #Web3andCryptoTrends #Concise\nIMAGE_KEYWORDS: blockchain cryptocurrency bitcoin digital network web3 and crypto trends"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Personal Finance Tips, Tone: Insightful, Niche: Lifestyle",
+    "output": "POST: Pay yourself first. Automate 20% of your income into index funds before paying expenses. Avoid high-interest debt, track net worth quarterly, and stay consistent. Wealth accumulation is a marathon of discipline, not short-term luck.\nHASHTAGS: #PersonalFinance #Investing #FinancialFreedom #WealthBuilding #PersonalFinanceTips #Insightful\nIMAGE_KEYWORDS: finance growth piggy bank coins investment personal finance tips"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: AI Content Creation, Tone: Professional, Niche: Startups",
+    "output": "POST: Artificial intelligence is revolutionizing patient diagnostics and streamlining hospital administrative workflows. By leveraging machine learning models for early risk detection, healthcare providers are saving critical time and improving patient outcomes. The future of medicine lies in the synergy between human expertise and computational precision.\nHASHTAGS: #HealthcareAI #HealthTech #MedicalInnovation #DigitalHealth #AIContentCreation #Professional\nIMAGE_KEYWORDS: doctor medical AI hospital technology ai content creation"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Leadership & Team Management, Tone: Creative, Niche: Tech",
+    "output": "POST: Scaling a SaaS company requires moving beyond customer acquisition to aggressive net revenue retention. Focus heavily on onboarding efficiency, proactive customer success interventions, and clear upsell paths. Sustainable growth is built on compounding retention.\nHASHTAGS: #SaaS #B2BGrowth #CustomerRetention #StartupStrategy #Leadership&TeamManagement #Creative\nIMAGE_KEYWORDS: saas dashboard growth analytics office leadership & team management"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Real Estate Investing, Tone: Witty, Niche: Fashion",
+    "output": "POST: Fast fashion comes at a steep environmental cost. Transitioning to organic textiles, circular garment recycling, and ethical production isn't just a trend—it's a imperative. Every purchase decision shapes the future of our planet. Choose quality, sustainability, and consciousness.\nHASHTAGS: #SustainableFashion #EcoFriendly #EthicalStyle #SlowFashion #RealEstateInvesting #Witty\nIMAGE_KEYWORDS: sustainable clothing organic fabrics eco fashion real estate investing"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Digital Nomad Lifestyle, Tone: Motivational, Niche: Fitness",
+    "output": "POST: Don't sell product features; sell the transformation your users experience. High-converting startup marketing focuses on storytelling, organic founder-led content, and building genuine community loops. Find your core 100 super-fans before spending a dime on ads.\nHASHTAGS: #StartupMarketing #GrowthHacking #ContentStrategy #FounderBrand #DigitalNomadLifestyle #Motivational\nIMAGE_KEYWORDS: marketing strategy whiteboard startup team digital nomad lifestyle"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Mental Health at Work, Tone: Friendly, Niche: Business",
+    "output": "POST: Working remotely gives us freedom, but without clear boundaries, burnout sneaks in fast. Try time-blocking your focus hours, establishing a firm shutdown routine, and keeping your workspace separate from resting areas. Balance is created intentionally every day!\nHASHTAGS: #RemoteWork #WorkLifeBalance #ProductivityTips #WFH #MentalHealthatWork #Friendly\nIMAGE_KEYWORDS: remote worker laptop home office coffee mental health at work"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: No-Code Development, Tone: Casual, Niche: Healthcare",
+    "output": "POST: Smart wearables and real-time biometrics are transforming how we train. Tracking recovery, heart rate variability, and sleep quality lets you push harder while avoiding injury. Elevate your athletic potential with data-driven training habits!\nHASHTAGS: #FitnessTech #SmartWearables #Biohacking #WorkOutMotivation #No-CodeDevelopment #Casual\nIMAGE_KEYWORDS: smartwatch fitness athlete training biometric no-code development"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Product-Led Growth, Tone: Educational, Niche: Finance",
+    "output": "POST: Over 80% of security breaches trace back to weak or reused credentials. Enforce mandatory multi-factor authentication (MFA), adopt zero-trust network principles, and conduct quarterly phishing awareness drills across your organization. Security starts with awareness.\nHASHTAGS: #Cybersecurity #DataProtection #InfoSec #TechSecurity #Product-LedGrowth #Educational\nIMAGE_KEYWORDS: cybersecurity code security network data lock product-led growth"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Social Media Branding, Tone: Empowering, Niche: Marketing",
+    "output": "POST: A 1-second delay in page load time can drop your conversions by 7%. If your checkout process feels like completing a tax return, your cart abandonment rate will prove it. Simplify forms, enable 1-click payments, and watch sales soar!\nHASHTAGS: #Ecommerce #ConversionRate #OnlineStore #UXDesign #SocialMediaBranding #Empowering\nIMAGE_KEYWORDS: ecommerce shopping cart mobile payment checkout social media branding"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Mobile App Development, Tone: Concise, Niche: Education",
+    "output": "POST: Beyond market volatility, the core value of Web3 lies in decentralized ownership and trustless smart contracts. As tokenized real-world assets (RWA) gain institutional traction, the infrastructure is maturing rapidly for mainstream enterprise adoption.\nHASHTAGS: #Web3 #Crypto #Blockchain #DeFi #TechFuture #MobileAppDevelopment #Concise\nIMAGE_KEYWORDS: blockchain cryptocurrency bitcoin digital network mobile app development"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Clean Energy Innovations, Tone: Insightful, Niche: Lifestyle",
+    "output": "POST: Pay yourself first. Automate 20% of your income into index funds before paying expenses. Avoid high-interest debt, track net worth quarterly, and stay consistent. Wealth accumulation is a marathon of discipline, not short-term luck.\nHASHTAGS: #PersonalFinance #Investing #FinancialFreedom #WealthBuilding #CleanEnergyInnovations #Insightful\nIMAGE_KEYWORDS: finance growth piggy bank coins investment clean energy innovations"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: AI in Healthcare, Tone: Professional, Niche: Startups",
+    "output": "POST: Artificial intelligence is revolutionizing patient diagnostics and streamlining hospital administrative workflows. By leveraging machine learning models for early risk detection, healthcare providers are saving critical time and improving patient outcomes. The future of medicine lies in the synergy between human expertise and computational precision.\nHASHTAGS: #HealthcareAI #HealthTech #MedicalInnovation #DigitalHealth #AIinHealthcare #Professional\nIMAGE_KEYWORDS: doctor medical AI hospital technology ai in healthcare"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: SaaS Growth Strategies, Tone: Creative, Niche: Tech",
+    "output": "POST: Scaling a SaaS company requires moving beyond customer acquisition to aggressive net revenue retention. Focus heavily on onboarding efficiency, proactive customer success interventions, and clear upsell paths. Sustainable growth is built on compounding retention.\nHASHTAGS: #SaaS #B2BGrowth #CustomerRetention #StartupStrategy #SaaSGrowthStrategies #Creative\nIMAGE_KEYWORDS: saas dashboard growth analytics office saas growth strategies"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Sustainable Fashion, Tone: Witty, Niche: Fashion",
+    "output": "POST: Fast fashion comes at a steep environmental cost. Transitioning to organic textiles, circular garment recycling, and ethical production isn't just a trend—it's a imperative. Every purchase decision shapes the future of our planet. Choose quality, sustainability, and consciousness.\nHASHTAGS: #SustainableFashion #EcoFriendly #EthicalStyle #SlowFashion #SustainableFashion #Witty\nIMAGE_KEYWORDS: sustainable clothing organic fabrics eco fashion sustainable fashion"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Startup Marketing, Tone: Motivational, Niche: Fitness",
+    "output": "POST: Don't sell product features; sell the transformation your users experience. High-converting startup marketing focuses on storytelling, organic founder-led content, and building genuine community loops. Find your core 100 super-fans before spending a dime on ads.\nHASHTAGS: #StartupMarketing #GrowthHacking #ContentStrategy #FounderBrand #StartupMarketing #Motivational\nIMAGE_KEYWORDS: marketing strategy whiteboard startup team startup marketing"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Remote Work Productivity, Tone: Friendly, Niche: Business",
+    "output": "POST: Working remotely gives us freedom, but without clear boundaries, burnout sneaks in fast. Try time-blocking your focus hours, establishing a firm shutdown routine, and keeping your workspace separate from resting areas. Balance is created intentionally every day!\nHASHTAGS: #RemoteWork #WorkLifeBalance #ProductivityTips #WFH #RemoteWorkProductivity #Friendly\nIMAGE_KEYWORDS: remote worker laptop home office coffee remote work productivity"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Fitness Tech Innovations, Tone: Casual, Niche: Healthcare",
+    "output": "POST: Smart wearables and real-time biometrics are transforming how we train. Tracking recovery, heart rate variability, and sleep quality lets you push harder while avoiding injury. Elevate your athletic potential with data-driven training habits!\nHASHTAGS: #FitnessTech #SmartWearables #Biohacking #WorkOutMotivation #FitnessTechInnovations #Casual\nIMAGE_KEYWORDS: smartwatch fitness athlete training biometric fitness tech innovations"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Cybersecurity Essentials, Tone: Educational, Niche: Finance",
+    "output": "POST: Over 80% of security breaches trace back to weak or reused credentials. Enforce mandatory multi-factor authentication (MFA), adopt zero-trust network principles, and conduct quarterly phishing awareness drills across your organization. Security starts with awareness.\nHASHTAGS: #Cybersecurity #DataProtection #InfoSec #TechSecurity #CybersecurityEssentials #Educational\nIMAGE_KEYWORDS: cybersecurity code security network data lock cybersecurity essentials"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: E-commerce Optimization, Tone: Empowering, Niche: Marketing",
+    "output": "POST: A 1-second delay in page load time can drop your conversions by 7%. If your checkout process feels like completing a tax return, your cart abandonment rate will prove it. Simplify forms, enable 1-click payments, and watch sales soar!\nHASHTAGS: #Ecommerce #ConversionRate #OnlineStore #UXDesign #E-commerceOptimization #Empowering\nIMAGE_KEYWORDS: ecommerce shopping cart mobile payment checkout e-commerce optimization"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Web3 and Crypto Trends, Tone: Concise, Niche: Education",
+    "output": "POST: Beyond market volatility, the core value of Web3 lies in decentralized ownership and trustless smart contracts. As tokenized real-world assets (RWA) gain institutional traction, the infrastructure is maturing rapidly for mainstream enterprise adoption.\nHASHTAGS: #Web3 #Crypto #Blockchain #DeFi #TechFuture #Web3andCryptoTrends #Concise\nIMAGE_KEYWORDS: blockchain cryptocurrency bitcoin digital network web3 and crypto trends"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Personal Finance Tips, Tone: Insightful, Niche: Lifestyle",
+    "output": "POST: Pay yourself first. Automate 20% of your income into index funds before paying expenses. Avoid high-interest debt, track net worth quarterly, and stay consistent. Wealth accumulation is a marathon of discipline, not short-term luck.\nHASHTAGS: #PersonalFinance #Investing #FinancialFreedom #WealthBuilding #PersonalFinanceTips #Insightful\nIMAGE_KEYWORDS: finance growth piggy bank coins investment personal finance tips"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: AI Content Creation, Tone: Professional, Niche: Startups",
+    "output": "POST: Artificial intelligence is revolutionizing patient diagnostics and streamlining hospital administrative workflows. By leveraging machine learning models for early risk detection, healthcare providers are saving critical time and improving patient outcomes. The future of medicine lies in the synergy between human expertise and computational precision.\nHASHTAGS: #HealthcareAI #HealthTech #MedicalInnovation #DigitalHealth #AIContentCreation #Professional\nIMAGE_KEYWORDS: doctor medical AI hospital technology ai content creation"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Leadership & Team Management, Tone: Creative, Niche: Tech",
+    "output": "POST: Scaling a SaaS company requires moving beyond customer acquisition to aggressive net revenue retention. Focus heavily on onboarding efficiency, proactive customer success interventions, and clear upsell paths. Sustainable growth is built on compounding retention.\nHASHTAGS: #SaaS #B2BGrowth #CustomerRetention #StartupStrategy #Leadership&TeamManagement #Creative\nIMAGE_KEYWORDS: saas dashboard growth analytics office leadership & team management"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Real Estate Investing, Tone: Witty, Niche: Fashion",
+    "output": "POST: Fast fashion comes at a steep environmental cost. Transitioning to organic textiles, circular garment recycling, and ethical production isn't just a trend—it's a imperative. Every purchase decision shapes the future of our planet. Choose quality, sustainability, and consciousness.\nHASHTAGS: #SustainableFashion #EcoFriendly #EthicalStyle #SlowFashion #RealEstateInvesting #Witty\nIMAGE_KEYWORDS: sustainable clothing organic fabrics eco fashion real estate investing"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Digital Nomad Lifestyle, Tone: Motivational, Niche: Fitness",
+    "output": "POST: Don't sell product features; sell the transformation your users experience. High-converting startup marketing focuses on storytelling, organic founder-led content, and building genuine community loops. Find your core 100 super-fans before spending a dime on ads.\nHASHTAGS: #StartupMarketing #GrowthHacking #ContentStrategy #FounderBrand #DigitalNomadLifestyle #Motivational\nIMAGE_KEYWORDS: marketing strategy whiteboard startup team digital nomad lifestyle"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Mental Health at Work, Tone: Friendly, Niche: Business",
+    "output": "POST: Working remotely gives us freedom, but without clear boundaries, burnout sneaks in fast. Try time-blocking your focus hours, establishing a firm shutdown routine, and keeping your workspace separate from resting areas. Balance is created intentionally every day!\nHASHTAGS: #RemoteWork #WorkLifeBalance #ProductivityTips #WFH #MentalHealthatWork #Friendly\nIMAGE_KEYWORDS: remote worker laptop home office coffee mental health at work"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: No-Code Development, Tone: Casual, Niche: Healthcare",
+    "output": "POST: Smart wearables and real-time biometrics are transforming how we train. Tracking recovery, heart rate variability, and sleep quality lets you push harder while avoiding injury. Elevate your athletic potential with data-driven training habits!\nHASHTAGS: #FitnessTech #SmartWearables #Biohacking #WorkOutMotivation #No-CodeDevelopment #Casual\nIMAGE_KEYWORDS: smartwatch fitness athlete training biometric no-code development"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Product-Led Growth, Tone: Educational, Niche: Finance",
+    "output": "POST: Over 80% of security breaches trace back to weak or reused credentials. Enforce mandatory multi-factor authentication (MFA), adopt zero-trust network principles, and conduct quarterly phishing awareness drills across your organization. Security starts with awareness.\nHASHTAGS: #Cybersecurity #DataProtection #InfoSec #TechSecurity #Product-LedGrowth #Educational\nIMAGE_KEYWORDS: cybersecurity code security network data lock product-led growth"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Social Media Branding, Tone: Empowering, Niche: Marketing",
+    "output": "POST: A 1-second delay in page load time can drop your conversions by 7%. If your checkout process feels like completing a tax return, your cart abandonment rate will prove it. Simplify forms, enable 1-click payments, and watch sales soar!\nHASHTAGS: #Ecommerce #ConversionRate #OnlineStore #UXDesign #SocialMediaBranding #Empowering\nIMAGE_KEYWORDS: ecommerce shopping cart mobile payment checkout social media branding"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Mobile App Development, Tone: Concise, Niche: Education",
+    "output": "POST: Beyond market volatility, the core value of Web3 lies in decentralized ownership and trustless smart contracts. As tokenized real-world assets (RWA) gain institutional traction, the infrastructure is maturing rapidly for mainstream enterprise adoption.\nHASHTAGS: #Web3 #Crypto #Blockchain #DeFi #TechFuture #MobileAppDevelopment #Concise\nIMAGE_KEYWORDS: blockchain cryptocurrency bitcoin digital network mobile app development"
+  },
+  {
+    "instruction": "You are Idea Pulse AI, a social media engine. Given a topic, tone, and target niche, generate a complete post, relevant hashtags, and image search keywords.",
+    "input": "Topic: Clean Energy Innovations, Tone: Insightful, Niche: Lifestyle",
+    "output": "POST: Pay yourself first. Automate 20% of your income into index funds before paying expenses. Avoid high-interest debt, track net worth quarterly, and stay consistent. Wealth accumulation is a marathon of discipline, not short-term luck.\nHASHTAGS: #PersonalFinance #Investing #FinancialFreedom #WealthBuilding #CleanEnergyInnovations #Insightful\nIMAGE_KEYWORDS: finance growth piggy bank coins investment clean energy innovations"
+  }
+]

@@ -75,7 +75,7 @@ async function generatePostPrompts(
   tone,
   numPosts,
   brandSettings = {},
-  modelId = "mistralai/Mistral-7B-Instruct-v0.1"
+  modelId = "mistralai/Mistral-7B-Instruct-v0.2"
 ) {
   const brandContext = brandSettings.brand_description
     ? `\nYou are creating content for: ${brandSettings.brand_description}`

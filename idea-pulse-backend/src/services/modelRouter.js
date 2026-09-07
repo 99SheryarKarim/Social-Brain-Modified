@@ -38,16 +38,19 @@ async function generatePostPromptsWithFallback(
     switch (modelInfo.provider) {
       case "custom":
         try {
-          const prompts = await customModelService.generatePostPrompts(
+          const res = await customModelService.generatePostPrompts(
             userTopic,
             tone,
             numPosts,
             brandSettings
           );
-          return { prompts, isMock: false, provider: "custom" };
+          const prompts = res.prompts || res;
+          const provider = res.provider || "custom";
+          return { prompts, isMock: false, provider };
         } catch (err) {
           console.warn("Custom model generation failed, falling back to Gemini:", err.message);
-          return await generatePostPromptsWithTracking(userTopic, [], tone, numPosts, brandSettings, "gemini-2.5-flash");
+          const fallback = await generatePostPromptsWithTracking(userTopic, [], tone, numPosts, brandSettings, "gemini-2.5-flash");
+          return { ...fallback, provider: "gemini-fallback" };
         }
 
       case "gemini":

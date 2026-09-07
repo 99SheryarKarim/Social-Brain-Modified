@@ -25,3 +25,11 @@
 **/Thumbs.db
 **/.vscode/
 **/.idea/
+
+# Large Model Weights & Adapters
+**/*.safetensors
+**/*.bin
+**/*.pt
+**/*.pth
+**/*.onnx
+

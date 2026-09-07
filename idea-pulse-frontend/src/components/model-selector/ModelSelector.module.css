@@ -240,6 +240,38 @@
   font-weight: 500;
 }
 
+/* "OUR MODEL" badge shown on the custom fine-tuned model option */
+.ourModelBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  font-size: 9px;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(135deg, #46a29f 0%, #0ea5e9 100%);
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  margin-right: 2px;
+  box-shadow: 0 1px 4px rgba(70, 162, 159, 0.4);
+}
+
+/* Highlight border for the custom model row */
+.customModel {
+  border-left: 3px solid #46a29f !important;
+  background: linear-gradient(90deg, rgba(70, 162, 159, 0.06) 0%, transparent 100%) !important;
+}
+
+.customModel:hover {
+  background: linear-gradient(90deg, rgba(70, 162, 159, 0.12) 0%, rgba(70, 162, 159, 0.04) 100%) !important;
+}
+
+.customModel.selected {
+  border-left: 3px solid #0ea5e9 !important;
+  background: linear-gradient(90deg, rgba(14, 165, 233, 0.1) 0%, transparent 100%) !important;
+}
+
 /* Scrollbar styling for dropdown */
 .dropdown::-webkit-scrollbar {
   width: 8px;

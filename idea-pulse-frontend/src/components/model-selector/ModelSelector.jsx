@@ -4,21 +4,22 @@ import styles from './ModelSelector.module.css';
 const ModelSelector = ({ selectedModel, onModelChange, disabled = false }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Available models configuration (matches backend) - EXACTLY 4 MODELS
+  // Available models configuration (matches backend) — exactly 4 models
   const AVAILABLE_MODELS = [
     {
       id: 'ideapulse-custom',
-      name: 'IdeaPulse Custom AI (Fine-Tuned)',
-      description: 'Custom fine-tuned AI model trained specifically for IdeaPulse',
+      name: 'Idea Pulse AI (Fine-Tuned)',
+      description: 'Our own fine-tuned AI model trained on Idea Pulse data. Auto-falls back to Gemini if sidecar offline.',
       provider: 'custom',
       responseTime: 'fast',
       quality: 'excellent',
       iconClass: 'fas fa-wand-magic-sparkles',
+      badge: '🧠 OUR MODEL',
     },
     {
       id: 'gemini-2.5-flash',
       name: 'Google Gemini 2.5 Flash',
-      description: 'Fast & highly capable general model by Google',
+      description: 'Fast & highly capable general model by Google (also used as fallback).',
       provider: 'gemini',
       responseTime: 'very-fast',
       quality: 'excellent',
@@ -27,7 +28,7 @@ const ModelSelector = ({ selectedModel, onModelChange, disabled = false }) => {
     {
       id: 'mistralai/Mistral-7B-Instruct-v0.2',
       name: 'Mistral 7B Instruct (HuggingFace)',
-      description: 'Fast, open-source instruction model by Mistral AI',
+      description: 'Fast, open-source instruction model by Mistral AI via Hugging Face.',
       provider: 'huggingface',
       responseTime: 'medium',
       quality: 'very-good',
@@ -36,7 +37,7 @@ const ModelSelector = ({ selectedModel, onModelChange, disabled = false }) => {
     {
       id: 'ollama-llama2',
       name: 'LLaMA 2 (Local Ollama)',
-      description: "Meta's open-source model running locally",
+      description: "Meta's open-source model running locally via Ollama.",
       provider: 'ollama',
       responseTime: 'medium',
       quality: 'very-good',
@@ -86,7 +87,7 @@ const ModelSelector = ({ selectedModel, onModelChange, disabled = false }) => {
             {AVAILABLE_MODELS.map((model) => (
               <div
                 key={model.id}
-                className={`${styles.modelOption} ${selectedModel === model.id ? styles.selected : ''}`}
+                className={`${styles.modelOption} ${selectedModel === model.id ? styles.selected : ''} ${model.provider === 'custom' ? styles.customModel : ''}`}
                 onClick={() => {
                   onModelChange(model.id);
                   setIsOpen(false);
@@ -98,11 +99,14 @@ const ModelSelector = ({ selectedModel, onModelChange, disabled = false }) => {
                       <i className={model.iconClass} style={{ color: getProviderBadgeColor(model.provider) }} />
                     </span>
                     <span className={styles.modelOptionName}>{model.name}</span>
+                    {model.badge && (
+                      <span className={styles.ourModelBadge}>{model.badge}</span>
+                    )}
                     <span
                       className={styles.modelOptionProvider}
                       style={{ backgroundColor: getProviderBadgeColor(model.provider) }}
                     >
-                      {model.provider === 'huggingface' ? 'HF' : model.provider.substring(0, 3).toUpperCase()}
+                      {model.provider === 'huggingface' ? 'HF' : model.provider === 'custom' ? 'FYP' : model.provider.substring(0, 3).toUpperCase()}
                     </span>
                   </div>
                   <p className={styles.modelOptionDesc}>{model.description}</p>
